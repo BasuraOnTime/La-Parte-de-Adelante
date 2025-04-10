@@ -1,18 +1,85 @@
 #botones {background-color: #0AC47A;
     font-size: 90px;
-    padding: 15px 30px;
+    
     border-radius:  0px 0px 10px 10px;
     cursor: url('../img/freddy-fazbear.gif');
-    height: 70px;
+    display: flex;
+    align-items: end;
+    justify-content: center;
     transition: height 0.3s ease, padding 0.3s ease;
     overflow: hidden;
+    padding-bottom: 5px;
+    
   }
   
   #botones:hover {
-    height: 80px;
+    height: 120px;
     padding-top: 25px;
-    padding-bottom: 75px;
+    align-items: end;
+    justify-content: center;
     
   }
-
   
+
+  .main{
+    height:20px;
+    width: 20px;
+  }
+  
+  .logo {
+    font-size: 80px;
+    width: 100px;
+    height: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: transform 0.6s ease;
+    transform-style: preserve-3d;
+  }
+  
+  .logo:hover {
+    animation: girar 4s linear infinite;
+  }
+  
+  @keyframes girar {
+    0% { transform: rotateY(0deg); }
+    100% { transform: rotateY(360deg); }
+  }
+
+  .poli{
+    height: 200px;
+    width: 200px;
+    background-color: rgb(0, 0, 0);
+    clip-path: polygon(50% 0, 100% 0%, 50% 100%, 0% 100%);
+  }
+
+  #logo{
+    z-index: 2;
+  }
+
+  .camion {
+    font-size: 4rem;
+    animation: moverCamion 50s ease-in-out infinite;
+    z-index: 0;
+  }
+  
+  /* Animación */
+  @keyframes moverCamion {
+    0% {
+      left: 1%;
+      transform: translateX(0px);
+    }
+    20% {
+      transform: translateX(40rem); /* Avanza lento */
+    }
+    40% {
+      transform: translateX(50rem); /* Sigue lento */
+    }
+    60% {
+      transform: translateX(); /* Comienza a acelerar */
+    }
+    100% {
+      transform: translateX(100rem); /* Termina más rápido */
+    }
+  }
