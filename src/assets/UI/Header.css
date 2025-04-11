@@ -80,6 +80,26 @@
       transform: translateX(); /* Comienza a acelerar */
     }
     100% {
-      transform: translateX(100rem); /* Termina más rápido */
+      transform: translateX(1000rem); /* Termina más rápido */
     }
+  }
+
+  #login{
+    background-color: rgb(255, 255, 255);
+    width: 120px;
+    height: 50px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+  }
+  #login-2{
+    background-color: rgb(0, 0, 0);
+    width: 120px;
+    height: 50px;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    display: flex;
+    color: white;
   }
