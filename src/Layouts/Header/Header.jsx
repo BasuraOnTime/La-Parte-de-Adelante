@@ -1,6 +1,7 @@
 import logo from '../../assets/img/icons/logo.png';
 import './Header.css';
 import Button from '../../UI/Button/Button';
+import camion from '../../assets/img/icons/ezgif-367675f0653ab4.gif';
 
 
 
@@ -16,9 +17,9 @@ export function Header() {
                     <img src={logo} alt="logo" className='  w-auto  ' />
                 </div>
 
-                <img src="https://media.tenor.com/JowhCmKT628AAAAj/oacmn.gif" 
+                <img src={camion}
                     alt="gif divertido" 
-                    className='camion h-13  fixed top-6 left-9  '  />
+                    className='camion h-30  fixed top-6 left-9  '  />
                 {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
                 <div className="fixed top-22 left-1/2 transform -translate-x-1/3  grid grid-cols-4 gap-20">
                     <Button />
