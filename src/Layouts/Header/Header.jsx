@@ -20,7 +20,7 @@ export function Header() {
                     alt="gif divertido" 
                     className='camion h-13  fixed top-6 left-9  '  />
                 {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
-                <div className="fixed top-22 left-1/2 transform -translate-x-1/2 grid grid-cols-4 gap-20">
+                <div className="fixed top-22 left-1/2 transform -translate-x-1/3  grid grid-cols-4 gap-20">
                     <Button />
                     <Button />
                     <Button />                
