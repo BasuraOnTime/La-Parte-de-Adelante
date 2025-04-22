@@ -38,24 +38,46 @@
     transform-style: preserve-3d;
   }
   
-  .logo:hover {
-    animation: girar 4s linear infinite;
+  .logo {
+    z-index: 2;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    position: relative;
+    overflow: hidden;
   }
   
-  @keyframes girar {
-    0% { transform: rotateY(0deg); }
-    100% { transform: rotateY(360deg); }
+  /* Efecto de destello */
+  .logo::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(
+      120deg,
+      rgba(255, 255, 255, 0) 0%,
+      rgba(255, 255, 255, 0.6) 50%,
+      rgba(255, 255, 255, 0) 100%
+    );
+    transform: rotate(25deg);
+    animation: destello 2s infinite;
   }
-
-  .poli{
-    height: 200px;
-    width: 200px;
-    background-color: rgb(0, 0, 0);
-    clip-path: polygon(50% 0, 100% 0%, 50% 100%, 0% 100%);
-  }
-
-  #logo{
-    z-index: 2;
+  
+  /* Keyframes del destello */
+  @keyframes destello {
+    0% {
+      transform: translateX(-100%) rotate(25deg);
+      opacity: 0;
+    }
+    50% {
+      opacity: 1;
+    }
+    100% {
+      transform: translateX(100%) rotate(25deg);
+      opacity: 0;
+    }
   }
 
   .camion {
