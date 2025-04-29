@@ -1,5 +1,7 @@
 import './App.css'
 import Header from './Layouts/Header/Header'
+import Register from './pages/Register/Register'
+import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Home2 from './pages/Home/Home2'
 import Home3 from './pages/Home/Home3'
@@ -11,11 +13,13 @@ export function App() {
      <>
      
       < Header/>
-      <Home/>
-      <Home2/>
-      <Home3/>
-      <Home4/>
-    
+      <Routes>
+        <Route path="/Register" element={<Register/>} />
+      </Routes>
+        <Home/>
+        <Home2/>
+        <Home3/>
+        <Home4/>
      </>
       
   )
