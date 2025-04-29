@@ -3,6 +3,7 @@ import Header from './Layouts/Header/Header'
 import Home from './pages/Home/Home'
 import Home2 from './pages/Home/Home2'
 import Home3 from './pages/Home/Home3'
+import Home4 from './pages/Home/Home4'
 
 export function App() {
 
@@ -13,9 +14,7 @@ export function App() {
       <Home/>
       <Home2/>
       <Home3/>
-     
-
-     
+      <Home4/>
     
      </>
       

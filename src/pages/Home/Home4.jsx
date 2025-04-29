@@ -1,13 +1,10 @@
-export default function Home() {
+
+
+
+export default function Home4() {
     return (
-      <main className="font-sans">
-  
-      
-  
-      
-  
-        {/* Stats Section */}
-        <section className="bg-green-100 py-16 px-6 text-center">
+       <>
+       <section className="bg-green-100 py-16 px-6 text-center">
           <h2 className="text-3xl font-semibold mb-10">Impacto positivo</h2>
           <div className="grid md:grid-cols-4 gap-6">
             <div>
@@ -28,8 +25,10 @@ export default function Home() {
             </div>
           </div>
         </section>
-  
-      </main>
+        
+       
+       </>
+      
     );
   }
-
+    

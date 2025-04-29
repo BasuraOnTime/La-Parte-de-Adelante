@@ -13,13 +13,13 @@ export function Header() {
       
           
             <div className=" sticky top-0 bg-[rgb(10,196,122)] h-30 grid grid-cols-3 grid-rows-1     justify-center items-center border-b-3  border-l-3 border-r-3 border-t-2 " >
-                <div id='logo' className="logo  shadow-md shadow-black border-2 bg-[rgb(255,255,255)] h-24 w-24 m-4 rounded-full justify-center flex ">
+                <div id='logo' className="logo  shadow-md shadow-black border-2 bg-[rgb(255,255,255)] h-20 w-24 m-4 rounded-full justify-center flex ">
                     <img src={logo} alt="logo" className='  w-auto  ' />
                 </div>
 
                 <img src={camion}
                     alt="gif divertido" 
-                    className='camion h-30  fixed top-6 left-9  '  />
+                    className='camion h-19 fixed top-6 left-9  '  />
                 {/* //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////// */}
                 <div className="fixed top-22 left-1/2 transform -translate-x-1/3  grid grid-cols-4 gap-20">
                     <Button />
