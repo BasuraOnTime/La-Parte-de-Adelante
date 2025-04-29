@@ -5,7 +5,6 @@ import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
 
 
-
 export function App() {
 
   return (
@@ -13,9 +12,10 @@ export function App() {
   
       < Header/>
       <Routes>
+        <Route path="/" element={<Home/>} />
         <Route path="/Register" element={<Register/>} />
       </Routes>
-        <Home/>  
+        
      </>
       
   )

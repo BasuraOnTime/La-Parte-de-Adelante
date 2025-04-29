@@ -2,6 +2,7 @@ import logo from '../../assets/img/icons/logo.png';
 import './Header.css';
 import Button from '../../UI/Button/Button';
 import camion from '../../assets/img/icons/ezgif-367675f0653ab4.gif';
+import {ItemNavBar} from '../../UI/ItemNavBar/ItemNavBar';
 
 
 
@@ -29,20 +30,11 @@ export function Header() {
                   {/*///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  */}
 
                   <div className="fixed top-8 right-0 grid grid-cols-2 pr-4 gap-4">
-                    <button id='login'  className=" shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-4  w-14 h-18  "><a href="https://www.youtube.com/watch?v=Pke3A2XuBLg&list=RD0WyyLN8K6os&index=16&ab_channel=MolotovVEVO"> login </a></button>
-                    <button id='login-2'  className=" shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-4  w-14 h-18   "><a href="https://www.youtube.com/watch?v=Pke3A2XuBLg&list=RD0WyyLN8K6os&index=16&ab_channel=MolotovVEVO"> login up </a></button>
+                    <ItemNavBar route='/' content='inicio' />
+                    <ItemNavBar route='/Register' content='Registro' />
                   </div>
 
-
-                
-               
             </div>
-
-           
-            
-
-        
-      
       
     </>
   )
