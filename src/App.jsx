@@ -3,23 +3,19 @@ import Header from './Layouts/Header/Header'
 import Register from './pages/Register/Register'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
-import Home2 from './pages/Home/Home2'
-import Home3 from './pages/Home/Home3'
-import Home4 from './pages/Home/Home4'
+
+
 
 export function App() {
 
   return (
      <>
-     
+  
       < Header/>
       <Routes>
         <Route path="/Register" element={<Register/>} />
       </Routes>
-        <Home/>
-        <Home2/>
-        <Home3/>
-        <Home4/>
+        <Home/>  
      </>
       
   )
