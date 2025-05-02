@@ -1,22 +1,23 @@
 import React from 'react'
-import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.jpg'
+import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png'
 import "./Register.css"
 
 const Register = () => {
   return (
     <>
-    <section className='bg-[var(--back_ll)] h-screen grid grid-cols-2 place-items-center'>
-      <div className=''> 
-        <img className='h-160' src={logoBasuraOnTime} alt="" />
-        <p className='text-6xl fixed top-180 right-300 text-amber-50 font-mono'>BASURA ON TIME</p>
+    <section className='sectFirst glass p-[50px] place-items-center '>
+      <div className='flex flex-col justify-center items-center '> 
+        <img className='img_logo' src={logoBasuraOnTime} alt="" />
+        <p id='FontCursive' className='text-6xl text-center text-amber-50'>BASURA ON TIME</p>
       </div>
-      <div className='flex flex-col justify-center items-center gap-1.5'>
-        <input className='' type="text" placeholder='Nombres' />
-        <input className='' type="text" placeholder='Apellidos' />
-        <input className='' type="text" placeholder='Correo electronico o numero de telefono' />
-        <input className='' type="password" placeholder='Contraseña' />
-        <button className='' >Registrarse</button>
-        <button className=''>Direccion</button>
+      <div className='flex flex-col justify-center items-center gap-3.5 bg-[var(--Voscuro2)] w-120 h-130 rounded-4xl '>
+        <p id='FontCursive' className='text-5xl p-10 text-amber-50' >Register</p>
+        <input className='rounded-xl bg-[var(--Vclaro2)] w-100 h-9 text-center placeholder:text-center text-white  ' type="text" placeholder='Nombres' />
+        <input className='rounded-xl bg-[var(--Vclaro2)] w-100 h-9 text-center placeholder:text-center text-white ' type="text" placeholder='Apellidos' />
+        <input className='rounded-xl bg-[var(--Vclaro2)] w-100 h-9 text-center placeholder:text-center text-white ' type="text" placeholder='Correo electronico o numero de telefono' />
+        <input className='rounded-xl bg-[var(--Vclaro2)] w-100 h-9 text-center placeholder:text-center text-white ' type="password" placeholder='Contraseña' />
+        <button className='rounded-xl w-100 h-9 bg-[var(--Vclaro)] text-amber-50' >Registrarse</button>
+        <button className='rounded-xl w-100 h-9 bg-[var(--Voscuro3)] text-amber-50'>Direccion</button>
       </div>
     </section>
     </>
