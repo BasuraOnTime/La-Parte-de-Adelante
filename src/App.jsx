@@ -1,8 +1,8 @@
 import './App.css'
-import Header from './Layouts/Header/Header'
 import Register from './pages/Register/Register'
-import { Route, Routes } from 'react-router-dom'
+import {Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
+import Admin from './pages/Admin/Admin'
 
 
 export function App() {
@@ -13,6 +13,7 @@ export function App() {
       <Routes>
         <Route path="/" element={<Home/>} />
         <Route path="/Register" element={<Register/>} />
+        <Route path="/Admin" element={<Admin/>} />
       </Routes>
         
      </>

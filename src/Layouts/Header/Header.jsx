@@ -8,7 +8,7 @@ export function Header() {
  
   return (
     <>
-            <div className=" sticky top-0 bg-[rgb(10,196,122)] h-30 grid grid-cols-3 grid-rows-1     justify-center items-center border-b-3  border-l-3 border-r-3 border-t-2 " >
+            <div className=" sticky top-0 bg-[var(--Vclaro3)] h-30 grid grid-cols-3 grid-rows-1     justify-center items-center border-b-3  border-l-3 border-r-3 border-t-2 " >
                 <div id='logo' className="logo  shadow-md shadow-black border-2 bg-[rgb(255,255,255)] h-20 w-24 m-4 rounded-full justify-center flex ">
                     <img src={logo} alt="logo" className='  w-auto  ' />
                 </div>

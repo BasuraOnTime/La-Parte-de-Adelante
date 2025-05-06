@@ -1,6 +1,6 @@
-#botones {background-color: #0AC47A;
+#botones {
+    background-color: #004435;
     font-size: 90px;
-    
     border-radius:  0px 0px 10px 10px;
     cursor: url('../img/freddy-fazbear.gif');
     display: flex;

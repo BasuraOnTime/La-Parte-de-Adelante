@@ -3,6 +3,7 @@
 :root {
   --Vclaro: #008D5D;
   --Vclaro2: #0A372D;
+  --Vclaro3: #004435;
   --Voscuro: #001F14;
   --Voscuro2: #032C22;
   --Voscuro3: #001004;
@@ -26,6 +27,10 @@
 .img_logo {
   max-width: 320px;
   min-width: 180px;
+}
+
+.FontArial{
+  font-family: 'Arial', sans-serif;
 }
 
 /* .glass {
