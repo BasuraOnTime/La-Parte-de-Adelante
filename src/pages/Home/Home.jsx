@@ -4,7 +4,7 @@ import Header from '../../Layouts/Header/Header';
 export default function Home() {
     return (
      <>
-        
+        <Header/>
         <Main/>
      </>
     );
