@@ -3,6 +3,7 @@ import Logo from '../../UI/logo/Logo';
 import './Register.css';
 import DividerB from '../../UI/dividerB/DividerB';
 import PageWrapper from '../../UI/sas/sas';
+import {ItemNavBar} from '../../UI/BotonBack/BotonBack';
 
 const XLanding = () => {
   // Estados para controlar los inputs de correo y contraseña
@@ -27,6 +28,10 @@ const XLanding = () => {
 
   return (
     <PageWrapper>
+      <div>
+        <div><ItemNavBar route='/' content='<--' /></div> 
+        
+      </div>
       <div className="flex flex-col justify-between bg-[rgb(255,255,255)] text-black">
         <div className="flex flex-1">
           <Logo />
