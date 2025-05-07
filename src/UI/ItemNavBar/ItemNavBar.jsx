@@ -1,12 +1,11 @@
-import { NavLink } from "react-router-dom"
-import './ItemNavBar.css'
+// ItemNavBar.jsx
+import { NavLink } from "react-router-dom";
+import './ItemNavBar.css';
 
-export const ItemNavBar=({content, route})=> {
+export const ItemNavBar = ({ route, children }) => {
   return (
-    <div>
-      <li className="">
-        <NavLink className='' to={route}>{content}</NavLink>
-      </li>
-    </div>
-  )
-}
+    <NavLink to={route} className="w-full h-full">
+      {children}
+    </NavLink>
+  );
+};

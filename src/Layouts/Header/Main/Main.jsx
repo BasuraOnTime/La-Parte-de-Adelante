@@ -1,14 +1,15 @@
 import React from 'react'
 import TextBox from '../../../UI/Text-Box/Text-Box'
 import Button2 from '../../../UI/Button2/Button2'
+import './Main.css'
 
 const Main = () => {
   return (
     <>
-       <main className="font-sans">
+       <main className="FontGeologica">
   
   {/* Hero Section */}
-  <section className="bg-[var(--Voscuro)] text-white py-30  text-center px-6 border-b-4 border-l-4 border-r-4 border-black">
+  <section className="bg-[var(--Voscuro)] text-white py-30  text-center px-6">
     <h1 className="text-4xl font-bold mb-4">Tu ciudad más limpia empieza contigo</h1>
     <p className="text-lg mb-6">Solicitá la recolección de residuos en tu zona con un solo clic.</p>
     <Button2/>
