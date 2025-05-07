@@ -10,7 +10,7 @@ const Register = () => {
         <img className='img_logo' src={logoBasuraOnTime} alt="" />
         <p id='FontCursive' className='text-6xl text-center text-white'>BASURA ON TIME</p>
       </div>
-      <div className='FontArial flex flex-col justify-center items-center gap-3.5 bg-[var(--Voscuro2)] w-120 h-130 rounded-4xl '>
+      <div className='FontGeologica flex flex-col justify-center items-center gap-3.5 bg-[var(--Voscuro2)] w-120 h-130 rounded-4xl '>
         <p id='FontCursive' className='text-5xl p-10 text-white' >Register</p>
         <input className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white  ' type="text" placeholder='Nombres' />
         <input className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white ' type="text" placeholder='Apellidos' />
