@@ -7,15 +7,22 @@
     font-family: 'geologica', sans-serif;
 }
 
-.DivPanelAdmin{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-left: 500px;
-    margin-top: 230px;
-    width: 100%;
+.DivCamion {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  padding-top: 60px; /* más espacio arriba */
+  margin: 0 auto 0 850px;
+  width: 800px;
+  height: 600px;
+  border-radius: 1rem;
+  border: 2px solid var(--colorBorde);
+  background-color: var(--Voscuro2);
+  gap: 2rem; /* espacio entre los elementos hijos */
 }
+
+
 
 .FontCursive {
     font-family: 'lobster', cursive;
