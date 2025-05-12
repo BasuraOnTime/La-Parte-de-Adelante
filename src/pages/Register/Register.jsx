@@ -3,80 +3,76 @@ import Logo from '../../UI/logo/Logo';
 import './Register.css';
 import DividerB from '../../UI/dividerB/DividerB';
 import PageWrapper from '../../UI/sas/sas';
-import {ItemNavBar} from '../../UI/BotonBack/BotonBack';
+import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 
 const XLanding = () => {
-  // Estados para controlar los inputs de correo y contraseña
   const [correo, setCorreo] = useState('');
   const [contraseña, setContraseña] = useState('');
 
-  // Función para manejar el envío del formulario de inicio de sesión
   const handleLoginSubmit = (e) => {
     e.preventDefault();
     const formData = { correo, contraseña };
     console.log('Datos de inicio de sesión:', formData);
-    // Aquí puedes agregar la lógica para enviar estos datos a tu API de inicio de sesión.
   };
 
-  // Función para manejar el envío del formulario de creación de cuenta
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
     const formData = { correo, contraseña };
     console.log('Datos para crear cuenta:', formData);
-    // Aquí puedes agregar la lógica para enviar estos datos a tu API de creación de cuenta.
   };
 
   return (
     <PageWrapper>
-      <div>
-        <div><ItemNavBar route='/' content='<--' /></div> 
-        
-      </div>
-      <div className="flex flex-col justify-between bg-[rgb(255,255,255)] text-black">
-        <div className="flex flex-1">
-          <Logo />
+      <div className="relative flex justify-center items-center h-screen bg-gradient-to-r bg-[(10, 55, 45)]">
+        {/* Botón de volver arriba a la izquierda */}
+        <div className="absolute top-4 left-4 z-50">
+          <ItemNavBar route="/" content="<--" />
+        </div>
 
-          <div
-            id="Box-R"
-            className="Register w-1/3 h-3/4 p-6 top-1/5 sticky flex flex-col justify-center px-8"
-          >
-            <h1 className="text-5xl text-center font-bold mb-12 leading-tight">
+        {/* Panel de Glassmorphism */}
+        <div className="w-full max-w-md p-8 space-y-6 bg-white/30 backdrop-blur-xl rounded-2xl shadow-lg">
+          <div className="flex flex-col items-center">
+            <Logo />
+
+            <h1 className="text-4xl text-center font-bold text-white mb-6">
               Bienvenido a un lugar <br /> más limpio
             </h1>
+
             <DividerB />
-            <div className="flex flex-col justify-center items-center">
+
+            <div className="flex flex-col items-center space-y-4 w-full">
               <input
-                className="rounded-xl bg-[var(--Vclaro2)] w-full h-9 text-center placeholder:text-center bg-white"
+                className="w-full h-12 px-4 rounded-xl bg-white/70 text-center placeholder:text-center text-gray-800"
                 type="text"
                 placeholder="Correo"
                 value={correo}
-                onChange={(e) => setCorreo(e.target.value)} // Actualiza el estado con el valor del input
+                onChange={(e) => setCorreo(e.target.value)}
               />
-              <br />
               <input
-                className="rounded-xl bg-[var(--Vclaro2)] w-full h-9 text-center placeholder:text-center bg-white"
+                className="w-full h-12 px-4 rounded-xl bg-white/70 text-center placeholder:text-center text-gray-800"
                 type="password"
                 placeholder="Contraseña"
                 value={contraseña}
-                onChange={(e) => setContraseña(e.target.value)} // Actualiza el estado con el valor del input
+                onChange={(e) => setContraseña(e.target.value)}
               />
             </div>
+
             <DividerB />
-            {/* Botón para el inicio de sesión */}
-            <button
-              className="w-full border border-gray-300 text-blue-500 font-bold py-2 rounded-full hover:bg-gray-100 transition"
-              onClick={handleLoginSubmit}
-            >
-              Iniciar sesión
-            </button>
-            <br />
-            {/* Botón para la creación de cuenta */}
-            <button
-              className="w-full bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 rounded-full transition mb-2"
-              onClick={handleSignUpSubmit}
-            >
-              Crear cuenta
-            </button>
+
+            <div className="flex flex-col gap-4 w-full">
+              <button
+                className="w-full py-2 border border-gray-300 text-blue-500 font-bold rounded-full hover:bg-gray-100 transition"
+                onClick={handleLoginSubmit}
+              >
+                Iniciar sesión
+              </button>
+              <button
+                className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-full transition"
+                onClick={handleSignUpSubmit}
+              >
+                Crear cuenta
+              </button>
+            </div>
           </div>
         </div>
       </div>
