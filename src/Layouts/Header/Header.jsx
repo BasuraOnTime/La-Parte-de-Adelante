@@ -32,6 +32,8 @@ export function Header() {
                   <div className="fixed top-8 right-0 grid grid-cols-2 pr-4 gap-4">
                     <ItemNavBar route='/' content='inicio' />
                     <ItemNavBar route='/Register' content='Registro' />
+                    <ItemNavBar route='/Usuario' content='Usuario' />
+                     <ItemNavBar route='/ContraR' content='ContraR' />
                   </div>
 
             </div>
