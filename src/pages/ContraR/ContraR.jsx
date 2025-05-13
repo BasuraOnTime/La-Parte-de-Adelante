@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 
 const ContraR = () => {
   const [email, setEmail] = useState('');
@@ -9,7 +10,11 @@ const ContraR = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[rgb(240,250,245)] flex items-center justify-center p-4">
+    
+    <div className="min-h-screen bg-[rgb(0,26,19)] flex items-center justify-center p-4">
+        <div className="absolute top-4 left-4 z-50">
+                <ItemNavBar route="/" content="<--" />
+              </div>
       <div className="bg-white p-8 rounded-2xl shadow-lg w-full max-w-md">
         <h2 className="text-2xl font-bold text-[rgb(0,50,37)] mb-6 text-center">
           Recuperar contraseña

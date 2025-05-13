@@ -23,7 +23,7 @@ const XLanding = () => {
 
   return (
     <PageWrapper>
-      <div className="relative flex justify-center items-center h-screen bg-gradient-to-r bg-[(10, 55, 45)]">
+      <div className="relative flex justify-center items-center h-screen bg-gradient-to-r bg-[rgb(0,26,19)]">
         {/* Botón de volver arriba a la izquierda */}
         <div className="absolute top-4 left-4 z-50">
           <ItemNavBar route="/" content="<--" />
@@ -61,13 +61,13 @@ const XLanding = () => {
 
             <div className="flex flex-col gap-4 w-full">
               <button
-                className="w-full py-2 border border-gray-300 text-blue-500 font-bold rounded-full hover:bg-gray-100 transition"
+                className="w-full py-2 border border-gray-300 text-green-500 font-bold rounded-full hover:bg-gray-100 transition"
                 onClick={handleLoginSubmit}
               >
                 Iniciar sesión
               </button>
               <button
-                className="w-full py-2 bg-blue-500 hover:bg-blue-600 text-white font-bold rounded-full transition"
+                className="w-full py-2 bg-green-400 hover:bg-green-900 text-white font-bold rounded-full transition"
                 onClick={handleSignUpSubmit}
               >
                 Crear cuenta
