@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Logo from '../../UI/logo/Logo';
-import './Register.css';
+import '../InicioS/InicioS.css';
 import DividerB from '../../UI/dividerB/DividerB';
 import PageWrapper from '../../UI/sas/sas';
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';

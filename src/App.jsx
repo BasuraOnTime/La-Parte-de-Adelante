@@ -1,6 +1,6 @@
 import './App.css'
 import Header from './Layouts/Header/Header'
-import Register from './pages/Register/Register'
+import Register from './pages/InicioS/InicioS'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home/Home'
 import Usuario from './pages/Usuario/Usuario'
