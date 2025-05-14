@@ -7,73 +7,66 @@ import Registrarme from '../../assets/img/icons/registrarme.png';
 import { BiLogIn } from "react-icons/bi";
 
 export function Header() {
-
   return (
     <>
-<<<<<<< HEAD
-      
-          
-            <div className=" sticky top-0 bg-[rgb(255,255,255)] h-30 grid grid-cols-3 grid-rows-1     justify-center items-center border-b-3  border-l-3 border-r-3 border-t-2 " >
-                <div id='logo' className="logo  shadow-md shadow-black border-2 bg-[rgb(255,255,255)] h-20 w-24 m-4 rounded-full justify-center flex ">
-                    <img src={logo} alt="logo" className='  w-auto  ' />
-                </div>
-=======
-      <div className=" sticky top-0 bg-[var(--Vclaro3)] h-30 grid grid-cols-3 grid-rows-1 justify-center items-center " >
-        <div id='logo' className="logo bg-[rgb(255,255,255)] h-20 w-24 m-4  justify-center flex ">
-          <img src={logo} alt="logo" className='  w-auto  ' />
+      <div className="sticky top-0 bg-white h-30 grid grid-cols-3 items-center border-b-2 shadow-md z-50">
+        
+        {/* Logo */}
+        <div className="logo border-2 bg-white h-20 w-24 m-4 rounded-full shadow-md flex justify-center items-center">
+          <img src={logo} alt="logo" className="w-auto" />
         </div>
-        <img src={camion}
-          alt="gif divertido"
-          className='camion h-19 fixed top-6 left-9  ' />
-        <div className="fixed top-22 left-1/2 transform -translate-x-1/3 grid grid-cols-4 gap-20">
+
+        {/* Camión decorativo */}
+        <div className="flex justify-center">
+          <img src={camion} alt="gif divertido" className="h-16" />
+        </div>
+
+        {/* Botones de navegación con íconos */}
+        <div className="flex justify-end gap-4 pr-4">
           <ItemNavBar route='/'>
-            <button
-              id='botones'
-              className='boton1 shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-b-3 border-l-3 border-r-3 w-14 h-18 flex items-center justify-center'
-            >
-              <div className="icon-c bg-white w-10 h-10 border-2 rounded-full flex justify-center items-center">
-                <img className='main' src={main} alt="Inicio" id="icon" />
+            <button className="shadow-2xl border bg-white w-14 h-14 flex items-center justify-center rounded-full">
+              <div className="w-10 h-10 border-2 rounded-full flex justify-center items-center bg-white">
+                <img src={main} alt="Inicio" className="w-6 h-6" />
               </div>
             </button>
           </ItemNavBar>
->>>>>>> 95ba988477a27b41a06fa618982b81a5522c1cc7
 
           <ItemNavBar route='/Register'>
-            <button
-              id='botones'
-              className='boton1 shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-b-3 border-l-3 border-r-3 w-14 h-18 flex items-center justify-center'
-            >
-              <div className="icon-c bg-white w-10 h-10 border-2 rounded-full flex justify-center items-center">
-                <img className='main' src={Registrarme} alt="Registrarme" id="icon" />
+            <button className="shadow-2xl border bg-white w-14 h-14 flex items-center justify-center rounded-full">
+              <div className="w-10 h-10 border-2 rounded-full flex justify-center items-center bg-white">
+                <img src={Registrarme} alt="Registrarme" className="w-6 h-6" />
               </div>
             </button>
           </ItemNavBar>
 
-<<<<<<< HEAD
-                  <div className="fixed top-8 right-0 grid grid-cols-2 pr-4 gap-4">
-                    <ItemNavBar route='/' content='inicio' />
-                    <ItemNavBar route='/Register' content='Registro' />
-                    <ItemNavBar route='/Usuario' content='Usuario' />
-                     <ItemNavBar route='/ContraR' content='ContraR' />
-                  </div>
-=======
-          <ItemNavBar route='/login'>
-            <button
-              id='botones'
-              className='boton1 shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-b-3 border-l-3 border-r-3 w-14 h-18 flex items-center justify-center'
-            >
-              <div className="icon-c bg-white w-10 h-10 border-2 rounded-full flex justify-center items-center">
-                <BiLogIn className='h-7 w-7' />
+          <ItemNavBar route='/Usuario'>
+            <button className="shadow-2xl border bg-white w-14 h-14 flex items-center justify-center rounded-full">
+              <div className="w-10 h-10 border-2 rounded-full flex justify-center items-center bg-white">
+                <BiLogIn className="w-6 h-6" />
+              </div>
+            </button>
+          </ItemNavBar>
+          <ItemNavBar route='/ContraR'>
+            <button className="shadow-2xl border bg-white w-14 h-14 flex items-center justify-center rounded-full">
+              <div className="w-10 h-10 border-2 rounded-full flex justify-center items-center bg-white">
+                <BiLogIn className="w-6 h-6" />
+              </div>
+            </button>
+          </ItemNavBar>
+          <ItemNavBar route='/InicioS'>
+            <button className="shadow-2xl border bg-white w-14 h-14 flex items-center justify-center rounded-full">
+              <div className="w-10 h-10 border-2 rounded-full flex justify-center items-center bg-white">
+                <BiLogIn className="w-6 h-6" />
               </div>
             </button>
           </ItemNavBar>
         </div>
-
       </div>
->>>>>>> 95ba988477a27b41a06fa618982b81a5522c1cc7
 
+      {/* Navegación textual (opcional, se puede ocultar en móvil) */}
+     
     </>
-  )
+  );
 }
 
-export default Header
+export default Header;

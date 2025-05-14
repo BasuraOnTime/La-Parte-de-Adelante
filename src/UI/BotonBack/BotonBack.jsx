@@ -1,35 +1,23 @@
-import { NavLink } from "react-router-dom";
+import React from 'react';
+import { NavLink } from 'react-router-dom';
 
-export const ItemNavBar = ({ content, route }) => {
+export const ItemNavBar = ({ content = 'Go Back', route = '/', icon }) => {
   return (
-    <NavLink to={route}>
-      <div className="fixed top-4 left-4 z-50">
+    <div className="fixed top-4 left-4 z-50">
+      <NavLink to={route}>
         <button
-          className="bg-white text-center w-48 rounded-2xl h-14 relative text-black text-xl font-semibold group"
-          type="button"
+          id="botones"
+          className="boton1 shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-b-3 border-l-3 border-r-3 w-14 h-18"
+          title={content}
+          aria-label={content}
         >
-          <div
-            className="bg-green-400 rounded-xl h-12 w-1/4 flex items-center justify-center absolute left-1 top-[4px] group-hover:w-[184px] z-10 duration-500"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 1024 1024"
-              height="25px"
-              width="25px"
-            >
-              <path
-                d="M224 480h640a32 32 0 1 1 0 64H224a32 32 0 0 1 0-64z"
-                fill="#000000"
-              ></path>
-              <path
-                d="m237.248 512 265.408 265.344a32 32 0 0 1-45.312 45.312l-288-288a32 32 0 0 1 0-45.312l288-288a32 32 0 1 1 45.312 45.312L237.248 512z"
-                fill="#000000"
-              ></path>
-            </svg>
+          <div className="icon-c bg-white w-10 h-10 border-2 rounded-full justify-center items-center flex mx-auto">
+            <img className="main" src={icon} alt={content} id="icon" />
           </div>
-          <p className="translate-x-2">Go Back</p>
         </button>
-      </div>
-    </NavLink>
+      </NavLink>
+    </div>
   );
 };
+
+export default ItemNavBar;
