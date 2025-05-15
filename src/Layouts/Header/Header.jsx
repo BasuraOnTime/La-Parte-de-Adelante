@@ -60,6 +60,13 @@ export function Header() {
               </div>
             </button>
           </ItemNavBar>
+          <ItemNavBar route='/panelAdmin'>
+            <button className="shadow-2xl border bg-white w-14 h-14 flex items-center justify-center rounded-full">
+              <div className="w-10 h-10 border-2 rounded-full flex justify-center items-center bg-white">
+                <BiLogIn className="w-6 h-6" />
+              </div>
+            </button>
+          </ItemNavBar>
         </div>
       </div>
 

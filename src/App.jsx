@@ -16,7 +16,7 @@ export function App() {
   return (
     <>
       {/* Puedes dejar Header aquí si quieres que esté siempre visible */}
-      <Header />
+      
 
       <Routes>
         <Route path="/InicioS" element={<InicioS />} />
