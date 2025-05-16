@@ -1,32 +1,10 @@
 import React from 'react'
-import axios from 'axios';
 import './Camiones.css'
-
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png'
 import { MdEdit } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
-import { useEffect } from 'react';
 
 const Camiones = () => {
-    const token = localStorage.getItem('token')
-
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await axios.get('http://localhost:10101/settingsTruck', {
-                    headers: {
-                        'Authorization': `Bearer ${token}`
-                    }
-                });
-                console.log(response);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
-        };
-
-        fetchData();
-    })
-    
     return (
         <section className='sectFirst'>
             <div className='min-h-max flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] position fixed left-0'>
