@@ -11,6 +11,7 @@ import Solicitudes from './pages/Solicitudes/Solicitudes'
 import Rutas from './pages/Rutas/Rutas'
 import Camiones from './pages/Camiones/Camiones'
 import InicioS from './pages/InicioS/InicioS'
+import Pedidos from './pages/Pedidos/Pedidos'
 
 export function App() {
   return (
@@ -30,6 +31,7 @@ export function App() {
         <Route path="/Camiones" element={<Camiones />} />
         <Route path="/Rutas" element={<Rutas />} />
         <Route path="/Solicitudes" element={<Solicitudes />} />
+        <Route path="/Pedidos" element={<Pedidos />} />
       </Routes>
     </>
   )
