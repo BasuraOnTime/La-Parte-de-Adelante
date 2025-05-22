@@ -5,6 +5,9 @@ import { MdEdit } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
 
 const Camiones = () => {
+    const [modoEdicion, setModoEdicion] = useState(false);
+    const [camionEditarIndex, setCamionEditarIndex] = useState(null);
+    const [busqueda, setBusqueda] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [nuevoCamion, setNuevoCamion] = useState({
         placa: '',
@@ -27,7 +30,7 @@ const Camiones = () => {
             modelo: 'Modelo Y',
             capacidad: 'Media',
             estado_Camion: 'Inactivo',
-            Tipo_camion: 'Recolección'
+            Tipo_camion: 'normal'
         }
     ]);
 
@@ -38,7 +41,16 @@ const Camiones = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        setCamiones([...camiones, nuevoCamion]);
+        if (modoEdicion) {
+            const camionesActualizados = [...camiones];
+            camionesActualizados[camionEditarIndex] = nuevoCamion;
+            setCamiones(camionesActualizados);
+            setModoEdicion(false);
+            setCamionEditarIndex(null);
+        } else {
+            setCamiones([...camiones, nuevoCamion]);
+        }
+
         setNuevoCamion({
             placa: '',
             modelo: '',
@@ -49,10 +61,24 @@ const Camiones = () => {
         setShowForm(false);
     };
 
+    const handleEliminar = (placa) => {
+        const confirmacion = window.confirm("¿Estás seguro que deseas eliminar este camión?");
+        if (confirmacion) {
+            const nuevosCamiones = camiones.filter(camion => camion.placa !== placa);
+            setCamiones(nuevosCamiones);
+        }
+    };
+
+    const camionesFiltrados = camiones.filter((camion) =>
+    Object.values(camion).some(valor =>
+        valor.toLowerCase().includes(busqueda.toLowerCase())
+    )
+    );
+
     return (
         <section className='sectFirst'>
             {/* Sidebar */}
-            <div className='min-h-max flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] position fixed left-0'>
+            <div className='min-h-max flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] position fixed left-0'>
                 <img className='ImgLogo' src={logoBasuraOnTime} alt="" />
                 <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
             </div>
@@ -61,17 +87,23 @@ const Camiones = () => {
             <div className='DivCamion FontGeologica bg-[var(--Voscuro2)] ml-[250px] h-[calc(100vh-40px)] mt-5 overflow-y-auto p-5 relative'>
                 <h1 className='text-5xl text-white mb-6'>Gestión de camiones</h1>
 
-                <div className='flex flex-wrap gap-6 mb-6'>
+                <div className='flex flex-initial gap-30'>
                     <button onClick={() => setShowForm(true)} className='group cursor-pointer rounded-md w-40 h-12 bg-[var(--Vclaro3)] text-white text-xl transition-all duration-300 ease-in-out
                         hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>Agregar</button>
-                    <input type="text" className='text-white rounded-md border border-[var(--Vclaro3)] text-center w-80 text-xl' placeholder='Buscar camión...' />
+                    <input
+                        type="text"
+                        className='text-white rounded-md border border-[var(--Vclaro3)] text-center w-120 text-xl'
+                        placeholder='Buscar camión...'
+                        value={busqueda}
+                        onChange={(e) => setBusqueda(e.target.value)}
+                    />
                 </div>
 
                 {/* Modal flotante sin fondo oscuro */}
                 {showForm && (
-                    <div className="absolute top-0 left-0 w-full h-full flex justify-center items-start z-50 mt-10 bg-transparent">
+                    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
                         <form onSubmit={handleSubmit} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
-                            <h2 className="text-2xl mb-2">Agregar Camión</h2>
+                            <h2 className="text-2xl mb-2">Agregar Camión | Editar camion</h2>
                             <input
                                 type="text"
                                 name="placa"
@@ -120,14 +152,15 @@ const Camiones = () => {
                                 <option value="Recolección">Recolección</option>
                             </select>
                             <div className="flex justify-end gap-4">
-                                <button type="button" onClick={() => setShowForm(false)} className="bg-gray-500 px-4 py-2 rounded">Cancelar</button>
+                                <button type="button" onClick={() => setShowForm(false)} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
                                 <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
                             </div>
                         </form>
                     </div>
                 )}
+
                 <div className='text-white w-full'>
-                    <div className='flex justify-around items-center text-center rounded-t-md h-14 gap-3 text-xl border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]'>
+                    <div className='flex justify-around items-center text-center rounded-t-md h-14 gap-3 text-lg border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]'>
                         <p>Placa</p>
                         <p>Modelo</p>
                         <p>Capacidad</p>
@@ -135,16 +168,32 @@ const Camiones = () => {
                         <p>Tipo</p>
                         <p>Acción</p>
                     </div>
-                    {camiones.map((camion, index) => (
-                        <div key={index} className='flex justify-around items-center text-center h-14 gap-3 border border-[var(--Vclaro3)] text-lg'>
+                    {camionesFiltrados.map((camion, index) => (
+                        <div key={index} className='flex flex-initial justify-around items-center gap-10 p-4 h-15 border border-[var(--Vclaro3)] text-lg'>
                             <p>{camion.placa}</p>
                             <p>{camion.modelo}</p>
                             <p>{camion.capacidad}</p>
                             <p>{camion.estado_Camion}</p>
                             <p>{camion.Tipo_camion}</p>
-                            <div className='flex gap-2 justify-center'>
-                                <button className='rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105'><MdEdit /></button>
-                                <button className='rounded-md w-10 h-10 bg-[var(--Rojo)] text-white hover:scale-105'><AiOutlineDelete /></button>
+                            <div className='flex gap-2'>
+                                <button
+                                    onClick={() => {
+                                        setShowForm(true);
+                                        setModoEdicion(true);
+                                        setCamionEditarIndex(index);
+                                        setNuevoCamion(camion);
+                                    }}
+                                    className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105'
+                                >
+                                    <MdEdit />
+                                </button>
+                                <button
+                                    onClick={() => handleEliminar(camion.placa)}
+                                    className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Rojo)] text-white hover:scale-105'
+                                >
+                                    <AiOutlineDelete />
+                                </button>
+
                             </div>
                         </div>
                     ))}
