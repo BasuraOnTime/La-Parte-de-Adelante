@@ -21,7 +21,8 @@ const SolicitudForm = () => {
   };
 
   return (
-    <div className="max-w-md mx-auto mt-10 p-6 bg-gradient-to-br from-green-100 to-white border-4 border-green-300 rounded-[30px] shadow-xl cartoon-style">
+    <div className="bg-[rgb(0,26,19)] h-100vh flex items-center justify-center p-4 "> 
+       <div className="  max-w-md mx-auto mt-10 p-6 bg-gradient-to-br from-green-100 to-white border-4 border-green-300 rounded-[30px] shadow-xl cartoon-style">
       <div className="absolute top-4 left-4 z-50">
         <ItemNavBar route="/" content="<--" />
       </div>
@@ -41,6 +42,8 @@ const SolicitudForm = () => {
         </button>
       </form>
     </div>
+    </div>
+   
   );
 };
 

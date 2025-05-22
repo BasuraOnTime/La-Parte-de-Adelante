@@ -27,7 +27,9 @@ export function Header() {
           <ItemNavBar route='/ContraR' icon={FaLock} label="Contraseña" />
           <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
           <ItemNavBar route='/panelAdmin' icon={FaTools} label="Admin" />
-          <ItemNavBar route='/Pedidos' icon={FaTools} label="Pedidos" />
+          <ItemNavBar route='/LocacionC' icon={FaTools} label="LocacionC" />
+          <ItemNavBar route='/Solicitudes' icon={FaTools} label="Solicitudes" />
+
         </div>
       </div>
     </>

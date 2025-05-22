@@ -5,13 +5,13 @@ import Home from './pages/Home/Home'
 import Usuario from './pages/Usuario/Usuario'
 import ContraR from './pages/ContraR/ContraR'
 import Register from './pages/Register/Register'
-import Admin from './pages/Admin/Admin'
+import Admin from './pages/PanelAdmin/PanelAdmin'
 import PanelAdmin from './pages/PanelAdmin/PanelAdmin'
 import Solicitudes from './pages/Solicitudes/Solicitudes'
 import Rutas from './pages/Rutas/Rutas'
 import Camiones from './pages/Camiones/Camiones'
 import InicioS from './pages/InicioS/InicioS'
-import Pedidos from './pages/Pedidos/Pedidos'
+import LocacionC from './pages/LocacionC/LocacionC'
 
 export function App() {
   return (
@@ -31,7 +31,7 @@ export function App() {
         <Route path="/Camiones" element={<Camiones />} />
         <Route path="/Rutas" element={<Rutas />} />
         <Route path="/Solicitudes" element={<Solicitudes />} />
-        <Route path="/Pedidos" element={<Pedidos />} />
+        <Route path="/LocacionC" element={<LocacionC />} />
       </Routes>
     </>
   )
