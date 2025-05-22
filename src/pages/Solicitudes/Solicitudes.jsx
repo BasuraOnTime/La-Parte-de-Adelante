@@ -11,7 +11,7 @@ const Solicitudes = () => {
         <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
       </div >
       <div className='DivCamion gap-10 FontGeologica bg-[var(--Voscuro2)]'>
-        <h1 className='text-6xl text-white text-left'>Gestion de Solicitudes</h1>
+        <h1 className='text-5xl text-white text-left'>Gestion de Solicitudes</h1>
         <div className='flex justify-start w-180'>
           <input
             type="text"

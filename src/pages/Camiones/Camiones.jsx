@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import './Camiones.css';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { MdEdit } from "react-icons/md";
