@@ -1,7 +1,11 @@
 import React, { useState } from "react";
+import axios from "axios";
+
+import { useNavigate } from "react-router-dom";
 import { ItemNavBar } from "../../UI/BotonBack/BotonBack";
 
 const SolicitudForm = () => {
+  const URL = 'http://localhost:10101/requests'
   const [formData, setFormData] = useState({
     id_solicitud: "",
     zona: "",
@@ -14,10 +18,24 @@ const SolicitudForm = () => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Datos enviados:", formData);
-  };
+    try {
+      const response = await axios.post(URL, formData);
+      console.log(response.data);
+      alert("Solicitud enviada con éxito");
+      setFormData({
+        id_solicitud: "",
+        zona: "",
+        cantidad: "",
+        tipo_residuo: "",
+        tamano: "",
+      });
+    } catch (error) {
+      console.error("Error al enviar la solicitud", error);
+      alert("Error al enviar la solicitud");
+    }
+  }
 
   return (
     <div className="min-h-screen bg-[rgb(0,26,19)] flex items-center justify-center px-4">
