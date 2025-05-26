@@ -3,8 +3,167 @@ import './Camiones.css';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { MdEdit } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
+import Swal from 'sweetalert2';
+
 
 const Camiones = () => {
+
+    const handleEliminar = (index) => {
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción eliminará el camión permanentemente.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        cancelButtonColor: '#0A372D',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+    }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Eliminando...',
+                text: 'Estamos eliminando el camión',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timer: 2000,
+                timerProgressBar: true,
+                didOpen: () => {
+                    Swal.showLoading();
+                }
+            });
+
+            setTimeout(() => {
+                const nuevosCamiones = [...camiones];
+                nuevosCamiones.splice(index, 1); 
+                setCamiones(nuevosCamiones);
+
+                Swal.fire({
+                    title: 'Camión eliminado',
+                    text: 'El camión ha sido eliminado correctamente',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
+            }, 2000);
+        }
+    });
+};
+
+
+    const driveCancelTruck = () => {
+        Swal.fire({
+            title: 'Procesando...',
+            text: 'Estamos procesando tu solicitud',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        });
+
+        setTimeout(() => {
+            Swal.fire({
+                title: 'Cancelación',
+                text: "Se ha cancelado el ingreso del camión / Edicion del camion",
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                icon: 'info',
+                showConfirmButton: false,
+                confirmButtonColor: '#0A372D',
+                timer: 2000,
+                timerProgressBar: true,
+            }).then((result) => {
+                if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+                    setShowForm(false); 
+
+                
+                    setNuevoCamion({
+                        placa: '',
+                        modelo: '',
+                        capacidad: 'Alta',
+                        estado_Camion: 'Activo',
+                        Tipo_camion: 'Especial'
+                    });
+
+                
+                    setModoEdicion(false);
+                    setCamionEditarIndex(null);
+                }
+            });
+        }, 2000);
+    };
+
+
+
+
+    const handleSubmitTruck = (e) => {
+        e.preventDefault();
+
+        const { placa, modelo, capacidad, estado_Camion, Tipo_camion } = nuevoCamion;
+        if (!placa || !modelo || !capacidad || !estado_Camion || !Tipo_camion) {
+            Swal.fire({
+                title: 'Error',
+                text: 'Todos los campos son obligatorios.',
+                icon: 'warning',
+                confirmButtonText: 'Entendido',
+                confirmButtonColor: '#0A372D',
+            });
+            return;
+        }
+
+        Swal.fire({
+            title: 'Procesando...',
+            text: 'Estamos procesando tu solicitud',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            timer: 2000,
+            timerProgressBar: true,
+            didOpen: () => {
+                Swal.showLoading();
+            }
+        })
+        setTimeout(() => {
+
+
+
+            if (modoEdicion) {
+                const camionesActualizados = [...camiones];
+                camionesActualizados[camionEditarIndex] = nuevoCamion;
+                setCamiones(camionesActualizados);
+                setModoEdicion(false);
+                setCamionEditarIndex(null);
+            } else {
+                setCamiones([...camiones, nuevoCamion]);
+
+                
+                Swal.fire({
+                    title: 'Camión registrado',
+                    text: 'El camión se ha agregado correctamente',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
+            }
+
+           
+            setNuevoCamion({
+                placa: '',
+                modelo: '',
+                capacidad: 'Alta',
+                estado_Camion: 'Activo',
+                Tipo_camion: 'Especial',
+            });
+            setShowForm(false);
+        }, 2000);
+    };
+
     const [modoEdicion, setModoEdicion] = useState(false);
     const [camionEditarIndex, setCamionEditarIndex] = useState(null);
     const [busqueda, setBusqueda] = useState('');
@@ -61,18 +220,10 @@ const Camiones = () => {
         setShowForm(false);
     };
 
-    const handleEliminar = (placa) => {
-        const confirmacion = window.confirm("¿Estás seguro que deseas eliminar este camión?");
-        if (confirmacion) {
-            const nuevosCamiones = camiones.filter(camion => camion.placa !== placa);
-            setCamiones(nuevosCamiones);
-        }
-    };
-
     const camionesFiltrados = camiones.filter((camion) =>
-    Object.values(camion).some(valor =>
-        valor.toLowerCase().includes(busqueda.toLowerCase())
-    )
+        Object.values(camion).some(valor =>
+            valor.toLowerCase().includes(busqueda.toLowerCase())
+        )
     );
 
     return (
@@ -152,8 +303,8 @@ const Camiones = () => {
                                 <option value="Recolección">Recolección</option>
                             </select>
                             <div className="flex justify-end gap-4">
-                                <button type="button" onClick={() => setShowForm(false)} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
-                                <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
+                                <button type="button" onClick={driveCancelTruck} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
+                                <button onClick={handleSubmitTruck} type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
                             </div>
                         </form>
                     </div>
@@ -202,5 +353,6 @@ const Camiones = () => {
         </section>
     );
 };
+
 
 export default Camiones;
