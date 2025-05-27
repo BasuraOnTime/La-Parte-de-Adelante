@@ -7,34 +7,83 @@ import "./Register.css";
 const Register = () => {
   const navigate = useNavigate();
 
-  const handleRegister = () => {
-    const success = false;
+  const handleDirection = () => {
+  Swal.fire({
+            title: 'Procesando...',
+            text: 'Estamos procesando tu solicitud',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            timer: 2000,
+            timerProgressBar: true, 
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          })
 
-    if (success) {
-      Swal.fire({
-        title: 'Bienvenido a Basura on time',
-        text: 'Te has registrado con exito',
-        icon: 'success',
-        showConfirmButton: false,
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-        timer: 2000,
-        timerProgressBar: true
-      }).then((result) => {
-        if (result.dismiss === Swal.DismissReason.timer) {
-          navigate('/');
-        }
-      });
-    } else {
-      Swal.fire({
-        title: 'Error',
-        text: 'No se pudo completar el registro',
-        icon: 'error',
-        confirmButtonText: 'Intentar de nuevo',
-        confirmButtonColor: '#0A372D',
-      });
-    }
-  };
+          
+          
+            const Ubi = true;
+            
+            setTimeout(() => {
+            if (Ubi) {
+              
+              Swal.fire({
+                title: 'Ubicación',
+                text: 'Ubicación registrada correctamente',
+                icon: 'success', 
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timer: 2000,
+                timerProgressBar: true
+              })
+            }
+        }, 3000);
+      }
+          
+          const handleRegister = () => {
+
+            Swal.fire({
+            title: 'Procesando...',
+            text: 'Estamos procesando tu solicitud',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            timer: 2000,
+            timerProgressBar: true, 
+            didOpen: () => {
+              Swal.showLoading();
+            }
+          })
+          setTimeout(() => {
+            
+            const success = true;
+            
+            if (success) {
+              Swal.fire({
+                title: 'Bienvenido a Basura on time',
+                text: 'Te has registrado con exito',
+                icon: 'success',
+                showConfirmButton: false,
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                timer: 2000,
+                timerProgressBar: true
+              }).then((result) => {
+                if (result.dismiss === Swal.DismissReason.timer) {
+                  navigate('/');
+                }
+              });
+            } else {
+              Swal.fire({
+                title: 'Error',
+                text: 'No se pudo completar el registro',
+                icon: 'error',
+                confirmButtonText: 'Intentar de nuevo',
+                confirmButtonColor: '#0A372D',
+              });
+            }
+        }, 2000);
+      }
 
   return (
     <section className='sectFirst glass p-[50px] place-items-center '>
@@ -50,17 +99,22 @@ const Register = () => {
         <input className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white' type="text" placeholder='Número de teléfono'/>
         <input className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white' type="password" placeholder='Contraseña' />
         <button
-          className='rounded-md w-100 h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
+          className='rounded-md w-100 h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105
+           hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
           onClick={handleRegister}
         >
           Registrarse
         </button>
-        <button className='rounded-md w-100 h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>
-          Dirección
+        <button className='rounded-md w-100 h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105
+         hover:shadow-2xl hover:bg-opacity-90 active:scale-95' onClick={handleDirection}>
+          Guardar Dirección
         </button>
       </div>
     </section>
+  
   );
 };
+
+
 
 export default Register;
