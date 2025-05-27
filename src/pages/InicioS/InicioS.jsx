@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
 import Logo from '../../UI/logo/Logo';
-import '../InicioS/InicioS.css';
 import DividerB from '../../UI/dividerB/DividerB';
 import PageWrapper from '../../UI/sas/sas';
+import axios from 'axios';
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
+import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
+import '../InicioS/InicioS.css';
+
 
 const XLanding = () => {
-  const [correo, setCorreo] = useState('');
-  const [contraseña, setContraseña] = useState('');
+  const URL = 'http://localhost:10101/auth'; 
+  const navigator = useNavigate();
+  const [email, setCorreo] = useState('');
+  const [password, setContraseña] = useState('');
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
-    const formData = { correo, contraseña };
-    console.log('Datos de inicio de sesión:', formData);
+    const formData = { email, password };
+    try{
+      const response = await axios.post(URL, formData);
+      const token = response.data.token
+      if (token) {
+      localStorage.setItem('token', token);
+      navigator('/'); 
+      }
+      console.log('Datos de inicio de sesión:', response.data);
+    } catch (error) {
+      alert('Error al iniciar sesión. Por favor, verifica tus credenciales.');
+    }
   };
 
   const handleSignUpSubmit = (e) => {
     e.preventDefault();
-    const formData = { correo, contraseña };
+    const formData = { email, password };
     console.log('Datos para crear cuenta:', formData);
   };
 
@@ -45,14 +60,14 @@ const XLanding = () => {
                 className="w-full h-12 px-4 rounded-xl bg-white/70 text-center placeholder:text-center text-gray-800"
                 type="text"
                 placeholder="Correo"
-                value={correo}
+                value={email}
                 onChange={(e) => setCorreo(e.target.value)}
               />
               <input
                 className="w-full h-12 px-4 rounded-xl bg-white/70 text-center placeholder:text-center text-gray-800"
                 type="password"
                 placeholder="Contraseña"
-                value={contraseña}
+                value={password}
                 onChange={(e) => setContraseña(e.target.value)}
               />
             </div>
