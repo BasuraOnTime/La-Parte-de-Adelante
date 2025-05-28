@@ -1,41 +1,58 @@
-import React, { useState } from "react";
 import axios from "axios";
-
 import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
 import { ItemNavBar } from "../../UI/BotonBack/BotonBack";
 
 const SolicitudForm = () => {
-  const URL = 'http://localhost:10101/requests'
-  const [formData, setFormData] = useState({
-    id_solicitud: "",
-    zona: "",
-    cantidad: "",
-    tipo_residuo: "",
-    tamano: "",
-  });
+  const token = localStorage.getItem("token");
+  const URL = "http://localhost:10101/requests";
+  const [zona, setZona] = useState("");
+  const [fecha_solicitud, setFechaSolicitud] = useState("");
+  const [cantidad, setCantidad] = useState("");
+  const [tipo_residuo, setTipoResiduo] = useState("");
+  const [tamano, setTamano] = useState("");
 
-  const handleChange = (e) => {
-    setFormData({ ...formData, [e.target.name]: e.target.value });
-  };
-
+const handleZonaChange = (e) => {
+  setZona(e.target.value);
+}
+const handleFechaSolicitudChange = (e) => {
+  setFechaSolicitud(e.target.value);
+} 
+const handleCantidadChange = (e) => {
+  setCantidad(e.target.value);
+}
+const handleTipoResiduoChange = (e) => {
+  setTipoResiduo(e.target.value);
+}
+const handleTamanoChange = (e) => {
+  setTamano(e.target.value);
+}
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post(URL, formData);
-      console.log(response.data);
-      alert("Solicitud enviada con éxito");
-      setFormData({
-        id_solicitud: "",
-        zona: "",
-        cantidad: "",
-        tipo_residuo: "",
-        tamano: "",
-      });
-    } catch (error) {
-      console.error("Error al enviar la solicitud", error);
-      alert("Error al enviar la solicitud");
+    const formData = {
+      zona,
+      fecha_solicitud,
+      cantidad,
+      tipo_residuo,
+      tamano
     }
-  }
+    e.preventDefault();
+    console.log("Datos enviados:", formData);
+    try{
+      console.log("Token:", token);
+      if (token) {
+        const response = await axios.post(URL, formData ,{
+        headers: {
+          'Authorization' : `Bearer ${token}`
+        },  
+      })
+      alert("Solicitud enviada correctamente");
+      } else {
+        alert("No se pudo enviar la solicitud, por favor inicia sesión");
+      }
+    } catch (error) {
+      console.log("Error al enviar la solicitud:", error);
+    }
+  };
 
   return (
     <div className="min-h-screen bg-[rgb(0,26,19)] flex items-center justify-center px-4">
@@ -47,42 +64,38 @@ const SolicitudForm = () => {
         <h2 className="text-4xl font-extrabold text-center mb-8 text-[#0f0303]">
          Solicitud Especial
         </h2>
-        <form onSubmit={handleSubmit} className="space-y-5">
-          <InputField
-            label=" ID Solicitud"
-            name="id_solicitud"
-            value={formData.id_solicitud}
-            onChange={handleChange}
-          />
+        <form className="space-y-5">
           <InputField
             label="Zona"
             name="zona"
-            value={formData.zona}
-            onChange={handleChange}
+            onChange={handleZonaChange}
+          />
+          <InputField
+            label="fecha de Solicitud"
+            name="fecha_solicitud"
+            onChange={handleFechaSolicitudChange}
           />
           <InputField
             label="Cantidad"
             name="cantidad"
             type="number"
-            value={formData.cantidad}
-            onChange={handleChange}
+            onChange={handleCantidadChange}
           />
           <InputField
             label="Tipo de Residuo"
             name="tipo_residuo"
-            value={formData.tipo_residuo}
-            onChange={handleChange}
+            onChange={handleTipoResiduoChange}
           />
           <InputField
             label="Tamaño"
             name="tamano"
-            value={formData.tamano}
-            onChange={handleChange}
+            onChange={handleTamanoChange}
           />
 
           <button
             type="submit"
             className="w-full bg-[#d1fd40] hover:bg-[#7dff7d] text-black font-bold py-3 px-6 rounded-full border-[3px] border-black shadow-[4px_4px_0px_rgba(0,0,0,1)] transition-all"
+            onClick={handleSubmit}
           >
             Enviar 
           </button>
