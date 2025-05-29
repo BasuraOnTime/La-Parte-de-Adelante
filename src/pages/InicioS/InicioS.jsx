@@ -1,94 +1,95 @@
+import Logo from '../../UI/logo/Logo';
+import DividerB from '../../UI/dividerB/DividerB';
+import PageWrapper from '../../UI/sas/sas';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+//import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import React, { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
+import '../InicioS/InicioS.css';
+
 
 const XLanding = () => {
-  const URL = 'http://localhost:10101/auth';
-  const navigate = useNavigate();
+  const URL = 'http://localhost:10101/auth'; 
+  const navigator = useNavigate();
   const [email, setCorreo] = useState('');
   const [password, setContraseña] = useState('');
 
-  const handleLoginSubmit = async (e) => {
-    e.preventDefault();
+  const handleLoginSubmit = async () => {
     const formData = { email, password };
-    try {
+    try{
       const response = await axios.post(URL, formData);
-      const token = response.data.token;
+      const token = response.data.token
       if (token) {
-        localStorage.setItem('token', token);
-        navigate('/');
+      localStorage.setItem('token', token);
+      navigator('/'); 
       }
+      console.log('Datos de inicio de sesión:', response.data);
     } catch (error) {
-      alert('Error al iniciar sesión. Verifica tus credenciales.');
+      alert('Error al iniciar sesión. Por favor, verifica tus credenciales.');
     }
   };
 
-  return (
-    <div className="flex h-screen bg-[#20C997] text-black font-sans">
-      {/* Lado izquierdo con ícono */}
-      <div className="w-1/2 flex items-center justify-center">
-        <img
-          src="/icons/recycle-truck.png"
-          alt="Recycle Icon"
-          className="w-2/3 max-w-sm"
-        />
-      </div>
+  const handleSignUpSubmit = (e) => {
+    e.preventDefault();
+    const formData = { email, password };
+    console.log('Datos para crear cuenta:', formData);
+  };
 
-      {/* Lado derecho - formulario */}
-      <div className="w-full lg:w-1/2 flex flex-col justify-center items-center bg-white text-center px-6 lg:px-10 min-h-screen pt-24 lg:pt-32">
-        {/* Logo */}
-        <div
-          className="bg-emerald-500 px-6 py-3 rounded-lg shadow-2xl text-4xl lg:text-5xl font-extrabold text-white leading-tight mb-10"
-          style={{ textShadow: '2px 2px 4px rgba(0, 0, 0, 0.5)' }}
-        >
-          Basura <span className="italic text-gray-100">on Time</span>
+  return (
+    <PageWrapper>
+      <div className="relative flex justify-center items-center h-screen bg-gradient-to-r bg-[rgb(0,26,19)]">
+        {/* Botón de volver arriba a la izquierda */}
+        <div className="absolute top-4 left-4 z-50">
         </div>
 
-        {/* Título */}
-        <h2 className="text-xl lg:text-2xl font-bold mb-4">
-          Bienvenido a un lugar más ordenado
-        </h2>
+        {/* Panel de Glassmorphism */}
+        <div className="w-full max-w-md p-8 space-y-6 bg-white/30 backdrop-blur-xl rounded-2xl shadow-lg">
+          <div className="flex flex-col items-center">
+            <Logo />
 
-        {/* Línea negra decorativa */}
-        <div className="h-px w-1/3 bg-black mx-auto mb-6" />
+            <h1 className="text-4xl text-center font-bold text-white mb-6">
+              Bienvenido a un lugar <br /> más limpio
+            </h1>
 
-        {/* Formulario */}
-        <form onSubmit={handleLoginSubmit} className="w-full max-w-sm space-y-6 pt-4">
-          <input
-            type="text"
-            placeholder="Usuario/Correo"
-            value={email}
-            onChange={(e) => setCorreo(e.target.value)}
-            className="w-full py-2.5 px-4 rounded-lg text-left bg-white border border-gray-400 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
+            <DividerB />
 
-          <input
-            type="password"
-            placeholder="Contraseña"
-            value={password}
-            onChange={(e) => setContraseña(e.target.value)}
-            className="w-full py-2.5 px-4 rounded-lg text-left bg-white border border-gray-400 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-emerald-500"
-          />
+            <div className="flex flex-col items-center space-y-4 w-full">
+              <input
+                className="w-full h-12 px-4 rounded-xl bg-white/70 text-center placeholder:text-center text-gray-800"
+                type="text"
+                placeholder="Correo"
+                value={email}
+                onChange={(e) => setCorreo(e.target.value)}
+              />
+              <input
+                className="w-full h-12 px-4 rounded-xl bg-white/70 text-center placeholder:text-center text-gray-800"
+                type="password"
+                placeholder="Contraseña"
+                value={password}
+                onChange={(e) => setContraseña(e.target.value)}
+              />
+            </div>
 
-          {/* Botón de Iniciar sesión */}
-          <button
-            type="submit"
-            className="w-56 mx-auto py-4 rounded-lg bg-emerald-600 text-white font-semibold shadow-md hover:bg-emerald-700 active:scale-95 transition duration-300"
-          >
-            Iniciar sesión
-          </button>
+            <DividerB />
 
-          {/* Botón de Crear Cuenta */}
-          <button
-            type="button"
-            onClick={() => Item}
-            className="w-56 mx-auto py-4 rounded-lg border border-emerald-600 text-emerald-600 font-semibold bg-white shadow-md hover:bg-emerald-50 active:scale-95 transition duration-300"
-          >
-            Crear Cuenta
-          </button>
-        </form>
+            <div className="flex flex-col gap-4 w-full">
+              <button
+                className="w-full py-2 border border-gray-300 text-green-500 font-bold rounded-full hover:bg-gray-100 transition"
+                onClick={handleLoginSubmit}
+              >
+                Iniciar sesión
+              </button>
+              <button
+                className="w-full py-2 bg-green-400 hover:bg-green-900 text-white font-bold rounded-full transition"
+                onClick={handleSignUpSubmit}
+              >
+                Crear cuenta
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </PageWrapper>
   );
 };
 
