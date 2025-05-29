@@ -32,6 +32,7 @@ export function App() {
         <Route path="/Rutas" element={<Rutas />} />
         <Route path="/Solicitudes" element={<Solicitudes />} />
         <Route path="/SolicitudesE" element={<SolicitudesE />} />
+        <Route path="/InicioS" element={<InicioS />} />
       </Routes>
     </>
   )
