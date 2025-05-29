@@ -5,6 +5,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 import "./Register.css";
+import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
+
+
 
 const Register = () => {
   let success = false;
@@ -85,8 +88,12 @@ const Register = () => {
 
   return (
     <>
+    <div className="absolute top-4 left-4 z-50">
+        <ItemNavBar route="/" content="<--" />
+    </div>
      <div className="absolute top-4 left-4 z-50">
-          </div>
+      
+    </div>
     <section className='sectFirst glass p-[50px] place-items-center '>
       <div className='flex flex-col justify-center items-center '> 
         <img className='img_logo' src={logoBasuraOnTime} alt="" />
