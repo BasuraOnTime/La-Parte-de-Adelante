@@ -14,3 +14,12 @@ If you are developing a production application, we recommend using TypeScript an
 instalar 
 npm install
 npm install sweetalert2
+npm install react-icons
+npm install framer-motion
+npm install @fortawesome/react-fontawesome @fortawesome/free-solid-svg-icons @fortawesome/fontawesome-svg-core,
+npm install swiper,
+npm install react-router-dom,
+npm install tailwindcss @tailwindcss/vite,
+npm install gsap
+npm install axios
+npm install @heroicons/react

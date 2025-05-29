@@ -1,61 +1,41 @@
+import { FaHome, FaUserPlus, FaUser, FaLock, FaSignInAlt, FaTools } from "react-icons/fa";
 import logo from '../../assets/img/icons/logo.png';
-import './Header.css';
 import camion from '../../assets/img/icons/ezgif-367675f0653ab4.gif';
 import { ItemNavBar } from '../../UI/ItemNavBar/ItemNavBar';
-import main from '../../assets/img/icons/casa.png';
-import Registrarme from '../../assets/img/icons/registrarme.png';
-import { BiLogIn } from "react-icons/bi";
+import './Header.css';
 
 export function Header() {
-
   return (
     <>
-      <div className=" sticky top-0 bg-[var(--Vclaro3)] h-30 grid grid-cols-3 grid-rows-1 justify-center items-center " >
-        <div id='logo' className="logo bg-[rgb(255,255,255)] h-20 w-24 m-4  justify-center flex ">
-          <img src={logo} alt="logo" className='  w-auto  ' />
-        </div>
-        <img src={camion}
-          alt="gif divertido"
-          className='camion h-19 fixed top-6 left-9  ' />
-        <div className="fixed top-22 left-1/2 transform -translate-x-1/3 grid grid-cols-4 gap-20">
-          <ItemNavBar route='/'>
-            <button
-              id='botones'
-              className='boton1 shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-b-3 border-l-3 border-r-3 w-14 h-18 flex items-center justify-center'
-            >
-              <div className="icon-c bg-white w-10 h-10 border-2 rounded-full flex justify-center items-center">
-                <img className='main' src={main} alt="Inicio" id="icon" />
-              </div>
-            </button>
-          </ItemNavBar>
-
-          <ItemNavBar route='/Register'>
-            <button
-              id='botones'
-              className='boton1 shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-b-3 border-l-3 border-r-3 w-14 h-18 flex items-center justify-center'
-            >
-              <div className="icon-c bg-white w-10 h-10 border-2 rounded-full flex justify-center items-center">
-                <img className='main' src={Registrarme} alt="Registrarme" id="icon" />
-              </div>
-            </button>
-          </ItemNavBar>
-
-          <ItemNavBar route='/login'>
-            <button
-              id='botones'
-              className='boton1 shadow-2xl shadow-[#000000a9] border-t-2 bg-white border-b-3 border-l-3 border-r-3 w-14 h-18 flex items-center justify-center'
-            >
-              <div className="icon-c bg-white w-10 h-10 border-2 rounded-full flex justify-center items-center">
-                <BiLogIn className='h-7 w-7' />
-              </div>
-            </button>
-          </ItemNavBar>
+      <div className="sticky top-0 bg-white h-30 grid grid-cols-3 items-center border-b-2 shadow-md z-50">
+        
+        {/* Logo */}
+        <div className="logo border-2 bg-white h-20 w-24 m-4 rounded-full shadow-md flex justify-center items-center">
+          <img src={logo} alt="logo" className="w-auto" />
         </div>
 
+        {/* Camión decorativo */}
+        <div className="flex justify-center">
+          <img src={camion} alt="gif divertido" className="h-16" />
+        </div>
+
+        {/* Botones de navegación con íconos */}
+        <div className="flex justify-end gap-4 pr-4">
+          <ItemNavBar route='/' icon={FaHome} label="Inicio" />
+          <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
+          <ItemNavBar route='/Usuario' icon={FaUser} label="Usuario" />
+          <ItemNavBar route='/ContraR' icon={FaLock} label="Contraseña" />
+          <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
+          <ItemNavBar route='/Admin' icon={FaTools} label="Admin" />
+          <ItemNavBar route='/Camiones' icon={FaTools} label="Camiones" />
+          <ItemNavBar route='/Rutas' icon={FaTools} label="Rutas" />
+          <ItemNavBar route='/Solicitudes' icon={FaTools} label="Solicitudes" />
+          <ItemNavBar route='/SolicitudesE' icon={FaTools} label="SolicitudesE" />
+
+        </div>
       </div>
-
     </>
-  )
+  );
 }
 
-export default Header
+export default Header;

@@ -3,6 +3,7 @@ import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { FcOk } from "react-icons/fc";
 import { MdOutlineCancel } from "react-icons/md";
 import Swal from 'sweetalert2';
+import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import './Solicitudes.css'; // Asegúrate de tener el CSS correspondiente
 
 const Solicitudes = () => {
@@ -79,10 +80,13 @@ const Solicitudes = () => {
   return (
     <section className='sectFirst'>
       <div className='min-h-max flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] fixed left-0'>
+        <div className="absolute top-4 left-4 z-50">
+          <ItemNavBar route="/PanelAdmin" content=" " />
+        </div>
         <img className='ImgLogo' src={logoBasuraOnTime} alt="Logo Basura On Time" />
         <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
       </div >
-      <div className='DivCamion gap-10 FontGeologica bg-[var(--Voscuro2)]'>
+      <div className='DivCamionSolicitudes gap-10 FontGeologica bg-[var(--Voscuro2)]'>
         <h1 className='text-5xl text-white text-left'>Gestión de Solicitudes</h1>
         <div className='flex justify-start w-180'>
           <input

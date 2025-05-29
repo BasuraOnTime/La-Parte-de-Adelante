@@ -3,55 +3,56 @@ import './Camiones.css';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { MdEdit } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
+import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import Swal from 'sweetalert2';
 
 
 const Camiones = () => {
 
     const handleEliminar = (index) => {
-    Swal.fire({
-        title: '¿Estás seguro?',
-        text: 'Esta acción eliminará el camión permanentemente.',
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonText: 'Sí, eliminar',
-        cancelButtonText: 'Cancelar',
-        confirmButtonColor: '#d33',
-        cancelButtonColor: '#3085d6',
-        cancelButtonColor: '#0A372D',
-        allowEscapeKey: false,
-        allowOutsideClick: false,
-    }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-                title: 'Eliminando...',
-                text: 'Estamos eliminando el camión',
-                allowEscapeKey: false,
-                allowOutsideClick: false,
-                timer: 2000,
-                timerProgressBar: true,
-                didOpen: () => {
-                    Swal.showLoading();
-                }
-            });
-
-            setTimeout(() => {
-                const nuevosCamiones = [...camiones];
-                nuevosCamiones.splice(index, 1); 
-                setCamiones(nuevosCamiones);
-
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: 'Esta acción eliminará el camión permanentemente.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar',
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            cancelButtonColor: '#0A372D',
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+        }).then((result) => {
+            if (result.isConfirmed) {
                 Swal.fire({
-                    title: 'Camión eliminado',
-                    text: 'El camión ha sido eliminado correctamente',
-                    icon: 'success',
-                    showConfirmButton: false,
+                    title: 'Eliminando...',
+                    text: 'Estamos eliminando el camión',
+                    allowEscapeKey: false,
+                    allowOutsideClick: false,
                     timer: 2000,
                     timerProgressBar: true,
+                    didOpen: () => {
+                        Swal.showLoading();
+                    }
                 });
-            }, 2000);
-        }
-    });
-};
+
+                setTimeout(() => {
+                    const nuevosCamiones = [...camiones];
+                    nuevosCamiones.splice(index, 1);
+                    setCamiones(nuevosCamiones);
+
+                    Swal.fire({
+                        title: 'Camión eliminado',
+                        text: 'El camión ha sido eliminado correctamente',
+                        icon: 'success',
+                        showConfirmButton: false,
+                        timer: 2000,
+                        timerProgressBar: true,
+                    });
+                }, 2000);
+            }
+        });
+    };
 
 
     const driveCancelTruck = () => {
@@ -80,9 +81,9 @@ const Camiones = () => {
                 timerProgressBar: true,
             }).then((result) => {
                 if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-                    setShowForm(false); 
+                    setShowForm(false);
 
-                
+
                     setNuevoCamion({
                         placa: '',
                         modelo: '',
@@ -91,7 +92,7 @@ const Camiones = () => {
                         Tipo_camion: 'Especial'
                     });
 
-                
+
                     setModoEdicion(false);
                     setCamionEditarIndex(null);
                 }
@@ -141,7 +142,7 @@ const Camiones = () => {
             } else {
                 setCamiones([...camiones, nuevoCamion]);
 
-                
+
                 Swal.fire({
                     title: 'Camión registrado',
                     text: 'El camión se ha agregado correctamente',
@@ -152,7 +153,7 @@ const Camiones = () => {
                 });
             }
 
-           
+
             setNuevoCamion({
                 placa: '',
                 modelo: '',
@@ -230,6 +231,9 @@ const Camiones = () => {
         <section className='sectFirst'>
             {/* Sidebar */}
             <div className='min-h-max flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] position fixed left-0'>
+                <div className="absolute top-4 left-4 z-50">
+                    <ItemNavBar route="/PanelAdmin" content=" " />
+                </div>
                 <img className='ImgLogo' src={logoBasuraOnTime} alt="" />
                 <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
             </div>

@@ -1,35 +1,33 @@
-export default function Home() {
-    return (
-      <main className="font-sans">
-  
-      
-  
-      
-  
-        {/* Stats Section */}
-        <section className="bg-green-100 py-16 px-6 text-center">
-          <h2 className="text-3xl font-semibold mb-10">Impacto positivo</h2>
-          <div className="grid md:grid-cols-4 gap-6">
-            <div>
-              <h3 className="text-4xl font-bold text-green-700">+10,000</h3>
-              <p>Usuarios registrados</p>
-            </div>
-            <div>
-              <h3 className="text-4xl font-bold text-green-700">+50 Tn</h3>
-              <p>Residuos reciclados</p>
-            </div>
-            <div>
-              <h3 className="text-4xl font-bold text-green-700">+120</h3>
-              <p>Camiones activos</p>
-            </div>
-            <div>
-              <h3 className="text-4xl font-bold text-green-700">24/7</h3>
-              <p>Servicio disponible</p>
-            </div>
-          </div>
-        </section>
-  
-      </main>
-    );
-  }
+import Logo from '../components/Logo';
+import GoogleLoginButton from '../components/GoogleLoginButton';
+import AppleLoginButton from '../components/AppleLoginButton';
+import Divider from '../components/Divider';
+import CreateAccountForm from '../components/CreateAccountForm';
+import Footer from '../components/Footer';
 
+const XLanding = () => {
+  return (
+    <div className="min-h-screen flex flex-col justify-between bg-white text-black">
+      <div className="flex flex-1">
+        <Logo />
+
+        <div className="w-1/2 flex flex-col justify-center px-8">
+          <h1 className="text-5xl font-bold mb-12 leading-tight">
+            Lo que está <br /> pasando ahora
+          </h1>
+
+          <h2 className="text-2xl font-bold mb-6">Únete Hoy</h2>
+
+          <GoogleLoginButton />
+          <AppleLoginButton />
+          <Divider />
+          <CreateAccountForm />
+        </div>
+      </div>
+
+      <Footer />
+    </div>
+  );
+};
+
+export default XLanding;

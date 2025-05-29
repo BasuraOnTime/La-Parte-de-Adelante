@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import './Rutas.css';
+import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import Swal from 'sweetalert2';
 
 const Rutas = () => {
@@ -36,6 +37,9 @@ const Rutas = () => {
     <>
       <section className='sectFirst'>
         <div className='min-h-max flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] fixed left-0'>
+          <div className="absolute top-4 left-4 z-50">
+            <ItemNavBar route="/PanelAdmin" content=" " />
+          </div>
           <img className='ImgLogo' src={logoBasuraOnTime} alt="" />
           <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
         </div>
