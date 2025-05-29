@@ -27,7 +27,7 @@ export function Header() {
       {/* Logo a la izquierda */}
       <div className="flex items-center gap-2">
         <div className="h-14 w-14 rounded-full bg-white border shadow flex justify-center items-center">
-          <img src={logo} alt="logo" className="h-10 w-auto" />
+          <img src={logo} alt="logo" className="h-15 w-auto" />
         </div>
         <span className="text-xl font-bold text-green-800 hidden sm:inline">Basura on Time</span>
       </div>
