@@ -50,7 +50,7 @@ export function Header() {
         ) : (
           <>
             <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
-            <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Inicio de Sesion" />
+            <ItemNavBar route='/PanelDU' icon={FaSignInAlt} label="Inicio de Sesion" />
           </>
         )}
       </nav>
