@@ -8,30 +8,35 @@ const Rutas = () => {
   const [pdfUrl, setPdfUrl] = useState(null);
 
   const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file && file.type === 'application/pdf') {
-      const fileUrl = URL.createObjectURL(file);
-      setPdfUrl(fileUrl);
+  const file = e.target.files[0];
 
-      setTimeout(() => {
-        Swal.fire({
-          icon: 'success',
-          title: '¡PDF importado!',
-          text: 'El documento se cargó correctamente.',
-          showConfirmButton: false,
-          timer: 2000
-        });
-      }, 500);
-    } else {
+  if (file && file.type === 'application/pdf') {
+    const fileUrl = URL.createObjectURL(file);
+    setPdfUrl(fileUrl);
+
+    // Guardar URL en localStorage
+    localStorage.setItem('pdfHorarioBOT', fileUrl);
+
+    setTimeout(() => {
       Swal.fire({
-        icon: 'error',
-        title: 'Archivo no válido',
-        text: 'Por favor selecciona un PDF válido.',
+        icon: 'success',
+        title: '¡PDF importado!',
+        text: 'El documento se cargó correctamente.',
         showConfirmButton: false,
         timer: 2000
       });
-    }
-  };
+    }, 500);
+  } else {
+    Swal.fire({
+      icon: 'error',
+      title: 'Archivo no válido',
+      text: 'Por favor selecciona un PDF válido.',
+      showConfirmButton: false,
+      timer: 2000
+    });
+  }
+};
+
 
   return (
     <>

@@ -29,6 +29,7 @@ export function Header() {
           <ItemNavBar route='/Admin' icon={FaTools} label="Admin" />
           <ItemNavBar route='/Camiones' icon={FaTools} label="Camiones" />
           <ItemNavBar route='/Rutas' icon={FaTools} label="Rutas" />
+          <ItemNavBar route='/RutasU' icon={FaTools} label="RutasU" />
           <ItemNavBar route='/Solicitudes' icon={FaTools} label="Solicitudes" />
           <ItemNavBar route='/SolicitudesE' icon={FaTools} label="SolicitudesE" />
 
