@@ -1,11 +1,13 @@
 import axios from "axios";
 import React, { useState } from "react";
+import Swal from "sweetalert2";
 import { ItemNavBar } from "../../UI/BotonBack/BotonBack";
 import logoBasuraOnTime from "../../assets/img/icons/logoBasuraOnTime.png";
 
 const SolicitudForm = () => {
   const token = localStorage.getItem("token");
   const URL = "http://localhost:10101/requests";
+
   const [zona, setZona] = useState("");
   const [fecha_solicitud, setFechaSolicitud] = useState("");
   const [cantidad, setCantidad] = useState("");
@@ -21,33 +23,70 @@ const SolicitudForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const formData = { zona, fecha_solicitud, cantidad, tipo_residuo, tamano };
-    console.log("Datos enviados:", formData);
+
     try {
-      if (token) {
-        await axios.post(URL, formData, {
-          headers: { Authorization: `Bearer ${token}` },
+      if (!token) {
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "No se pudo enviar la solicitud, por favor inicia sesión",
+          showConfirmButton: false,
         });
-        alert("Solicitud enviada correctamente");
-      } else {
-        alert("No se pudo enviar la solicitud, por favor inicia sesión");
+        return;
       }
+
+      Swal.fire({
+        title: "Enviando solicitud...",
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+          Swal.showLoading();
+        },
+      });
+
+      await axios.post(URL, formData, {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      Swal.close();
+
+      Swal.fire({
+        icon: "success",
+        title: "Solicitud enviada",
+        text: "Tu solicitud especial fue enviada correctamente",
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+
+      // Limpiar formulario
+      setZona("");
+      setFechaSolicitud("");
+      setCantidad("");
+      setTipoResiduo("");
+      setTamano("");
     } catch (error) {
-      console.log("Error al enviar la solicitud:", error);
+      Swal.close();
+      Swal.fire({
+        icon: "error",
+        title: "Error al enviar",
+        text: "Ocurrió un problema al enviar la solicitud. Intenta nuevamente.",
+      });
+      console.error("Error al enviar la solicitud:", error);
     }
   };
 
   return (
     <div className="FontGeologica min-h-screen bg-[var(--Voscuro)] flex items-center justify-center px-4">
-      <div className='flex flex-col justify-center items-center'>
-              <img className='Img-logo' src={logoBasuraOnTime} alt="" />
-              <p className='FontCursive text-6xl text-center text-white'>BASURA ON TIME</p>
-            </div>
+      <div className="flex flex-col justify-center items-center">
+        <img className="Img-logo" src={logoBasuraOnTime} alt="Logo Basura on Time" />
+        <p className="FontCursive text-6xl text-center text-white">BASURA ON TIME</p>
+      </div>
 
       <div className="absolute top-4 left-4 z-50">
         <ItemNavBar route="/" content=" " />
       </div>
 
-      {/* Aquí aumenté el tamaño del contenedor: max-w-lg y w-[480px] para que sea más ancho */}
       <div className="relative w-[520px] max-w-lg p-8 bg-[var(--Voscuro2)] rounded-4xl ml-[16rem] sm:ml-[10rem]">
         <h2 className="FontCursive text-4xl text-center mb-8 text-white">Solicitud Especial</h2>
         <form className="space-y-5" onSubmit={handleSubmit}>
@@ -82,8 +121,7 @@ const SolicitudForm = () => {
 
 const InputField = ({ label, name, type = "text", value, onChange }) => (
   <div className="flex flex-col">
-    <label htmlFor={name} className="mb-1 text-white">
-    </label>
+    <label htmlFor={name} className="mb-1 text-white" />
     <input
       type={type}
       name={name}

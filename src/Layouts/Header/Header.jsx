@@ -1,4 +1,4 @@
-import { FaHome, FaUserPlus, FaUser, FaLock, FaSignInAlt, FaTools } from "react-icons/fa";
+import { FaUserPlus, FaSignInAlt, FaRegClock } from "react-icons/fa";
 import logo from '../../assets/img/icons/logo.png';
 import camion from '../../assets/img/icons/ezgif-367675f0653ab4.gif';
 import { ItemNavBar } from '../../UI/ItemNavBar/ItemNavBar';
@@ -7,32 +7,27 @@ import './Header.css';
 export function Header() {
   return (
     <>
-      <div className="sticky top-0 bg-white h-30 grid grid-cols-3 items-center border-b-2 shadow-md z-50">
-        
-        {/* Logo */}
-        <div className="logo border-2 bg-white h-20 w-24 m-4 rounded-full shadow-md flex justify-center items-center">
-          <img src={logo} alt="logo" className="w-auto" />
+      <div className="sticky top-0 bg-[var(--Voscuro2)] h-40 grid grid-cols-2 items-center z-50 FontGeologica text-white shadow-lg">
+
+        {/* Logo con texto y frase inspiradora */}
+        <div className="flex items-center gap-4 m-8">
+          {/* Logo */}
+          <div className="border-2 bg-white h-25 w-25 rounded-full shadow-md flex justify-center items-center">
+            <img src={logo} alt="logo" className="w-auto h-14" />
+          </div>
+
+          {/* Título y frase */}
+          <div className="text-white">
+            <p className="FontCursive text-3xl">Basura On Time</p>
+            <p className="text-sm text-gray-200 italic">Por un futuro más limpio, empezamos hoy.</p>
+          </div>
         </div>
 
-        {/* Camión decorativo */}
-        <div className="flex justify-center">
-          <img src={camion} alt="gif divertido" className="h-16" />
-        </div>
-
-        {/* Botones de navegación con íconos */}
-        <div className="flex justify-end gap-4 pr-4">
-          <ItemNavBar route='/' icon={FaHome} label="Inicio" />
+        {/* Botones de navegación */}
+        <div className="flex justify-end gap-4 pr-4 me-15">
           <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
-          <ItemNavBar route='/Usuario' icon={FaUser} label="Usuario" />
-          <ItemNavBar route='/ContraR' icon={FaLock} label="Contraseña" />
           <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
-          <ItemNavBar route='/Admin' icon={FaTools} label="Admin" />
-          <ItemNavBar route='/Camiones' icon={FaTools} label="Camiones" />
-          <ItemNavBar route='/Rutas' icon={FaTools} label="Rutas" />
-          <ItemNavBar route='/RutasU' icon={FaTools} label="RutasU" />
-          <ItemNavBar route='/Solicitudes' icon={FaTools} label="Solicitudes" />
-          <ItemNavBar route='/SolicitudesE' icon={FaTools} label="SolicitudesE" />
-
+          <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
         </div>
       </div>
     </>

@@ -4,7 +4,7 @@ import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
-import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline'; // 👈 Importa los íconos
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import "./Register.css";
 
 const Register = () => {
@@ -73,6 +73,32 @@ const Register = () => {
     }
   };
 
+  const handleGuardarDireccion = async () => {
+    try {
+      // Simula el guardado (puedes reemplazarlo con una API real)
+      await new Promise((resolve) => setTimeout(resolve, 1500));
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Dirección guardada',
+        text: 'La dirección se guardó correctamente.',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+
+    } catch (error) {
+      Swal.fire({
+        icon: 'error',
+        title: 'Error',
+        text: 'No se pudo guardar la dirección.',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+    }
+  };
+
   return (
     <>
       <div className="absolute top-4 left-4 z-50" />
@@ -120,7 +146,11 @@ const Register = () => {
           >
             Registrarse
           </button>
-          <button className='rounded-md w-100 h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>
+
+          <button
+            className='rounded-md w-100 h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
+            onClick={handleGuardarDireccion}
+          >
             Guardar Dirección
           </button>
         </div>
