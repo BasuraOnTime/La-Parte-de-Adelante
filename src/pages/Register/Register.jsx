@@ -11,7 +11,7 @@ import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 
 const Register = () => {
   let success = false;
-  const URL = 'http://localhost:10101/register';
+  const URL = 'https://express-latest-6gmf.onrender.com/register';
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nombres, setNombres] = useState('');

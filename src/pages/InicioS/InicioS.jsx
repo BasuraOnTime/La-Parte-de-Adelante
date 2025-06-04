@@ -10,7 +10,7 @@ import { ArrowLeft } from "lucide-react";
 
 
 const XLanding = () => {
-  const URL = 'http://localhost:10101/auth'; 
+  const URL = 'https://express-latest-6gmf.onrender.com/auth'; 
   const navigator = useNavigate();
   const [email, setCorreo] = useState('');
   const [password, setContraseña] = useState('');

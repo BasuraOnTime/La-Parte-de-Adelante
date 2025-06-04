@@ -5,7 +5,7 @@ import { ItemNavBar } from "../../UI/BotonBack/BotonBack";
 
 const SolicitudForm = () => {
   const token = localStorage.getItem("token");
-  const URL = "http://localhost:10101/requests";
+  const URL = "https://express-latest-6gmf.onrender.com/requests";
   const [zona, setZona] = useState("");
   const [fecha_solicitud, setFechaSolicitud] = useState("");
   const [cantidad, setCantidad] = useState("");
