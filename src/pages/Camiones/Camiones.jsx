@@ -175,6 +175,7 @@ const Camiones = () => {
         capacidad: 'Alta',
         estado_Camion: 'Activo',
         Tipo_camion: 'Especial',
+        marca: '',
     });
 
     const [camiones, setCamiones] = useState([
@@ -183,14 +184,16 @@ const Camiones = () => {
             modelo: 'Modelo X',
             capacidad: 'Alta',
             estado_Camion: 'Activo',
-            Tipo_camion: 'Especial'
+            Tipo_camion: 'Especial',
+            marca: 'Marca A',
         },
         {
             placa: 'DEF-456',
             modelo: 'Modelo Y',
             capacidad: 'Media',
             estado_Camion: 'Inactivo',
-            Tipo_camion: 'normal'
+            Tipo_camion: 'normal',
+            marca: 'Marca B',
         }
     ]);
 
@@ -306,6 +309,15 @@ const Camiones = () => {
                                 <option value="Especial">Especial</option>
                                 <option value="Recolección">Recolección</option>
                             </select>
+                            <input
+                                type="text"
+                                name="marca"
+                                value={nuevoCamion.marca}
+                                onChange={handleInputChange}
+                                placeholder="marca"
+                                required
+                                className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
+                            />
                             <div className="flex justify-end gap-4">
                                 <button type="button" onClick={driveCancelTruck} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
                                 <button onClick={handleSubmitTruck} type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
@@ -315,43 +327,39 @@ const Camiones = () => {
                 )}
 
                 <div className='text-white w-full'>
-                    <div className='flex justify-around items-center text-center rounded-t-md h-14 gap-3 text-lg border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]'>
+                    <div className='grid grid-cols-7 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]'>
                         <p>Placa</p>
                         <p>Modelo</p>
                         <p>Capacidad</p>
                         <p>Estado</p>
                         <p>Tipo</p>
+                        <p>Marca</p>
                         <p>Acción</p>
                     </div>
                     {camionesFiltrados.map((camion, index) => (
-                        <div key={index} className='flex flex-initial justify-around items-center gap-10 p-4 h-15 border border-[var(--Vclaro3)] text-lg'>
-                            <p>{camion.placa}</p>
-                            <p>{camion.modelo}</p>
-                            <p>{camion.capacidad}</p>
-                            <p>{camion.estado_Camion}</p>
-                            <p>{camion.Tipo_camion}</p>
-                            <div className='flex gap-2'>
-                                <button
-                                    onClick={() => {
-                                        setShowForm(true);
-                                        setModoEdicion(true);
-                                        setCamionEditarIndex(index);
-                                        setNuevoCamion(camion);
-                                    }}
-                                    className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105'
-                                >
+                        <div key={index} className='grid grid-cols-7 gap-3 items-center text-center text-lg p-4 border border-[var(--Vclaro3)]'>
+                            <p className='truncate'>{camion.placa}</p>
+                            <p className='truncate'>{camion.modelo}</p>
+                            <p className='truncate'>{camion.capacidad}</p>
+                            <p className='truncate'>{camion.estado_Camion}</p>
+                            <p className='truncate'>{camion.Tipo_camion}</p>
+                            <p className='truncate'>{camion.marca}</p>
+                            <div className='flex gap-2 justify-center'>
+                                <button onClick={() => {
+                                    setShowForm(true);
+                                    setModoEdicion(true);
+                                    setCamionEditarIndex(index);
+                                    setNuevoCamion(camion);
+                                }} className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105'>
                                     <MdEdit />
                                 </button>
-                                <button
-                                    onClick={() => handleEliminar(camion.placa)}
-                                    className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Rojo)] text-white hover:scale-105'
-                                >
+                                <button onClick={() => handleEliminar(index)} className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Rojo)] text-white hover:scale-105'>
                                     <AiOutlineDelete />
                                 </button>
-
                             </div>
                         </div>
                     ))}
+
                 </div>
             </div>
         </section>
