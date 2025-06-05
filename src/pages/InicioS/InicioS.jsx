@@ -8,37 +8,73 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import './inicioS.css';
 
 const XLanding = () => {
-  const URL = 'http://localhost:10101/auth';
-  const navigate = useNavigate();
+
+   const navigate = useNavigate();
   const [email, setCorreo] = useState('');
   const [password, setContraseña] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
+  // const URL = 'http://localhost:10101/auth';
+  // const navigate = useNavigate();
+  // const [email, setCorreo] = useState('');
+  // const [password, setContraseña] = useState('');
+  // const [showPassword, setShowPassword] = useState(false);
 
-  const handleLoginSubmit = async (e) => {
+  // const toggleShowPassword = () => setShowPassword(!showPassword);
+
+  // const handleLoginSubmit = async (e) => {
+  //   e.preventDefault();
+  //   try {
+  //     const response = await axios.post(URL, { email, password });
+  //     const token = response.data.token;
+  //     if (token) {
+  //       localStorage.setItem('token', token);
+  //       Swal.fire({
+  //         icon: 'success',
+  //         title: 'Inicio de sesión exitoso',
+  //         showConfirmButton: false,
+  //         timer: 1500,
+  //       }).then(() => navigate('/'));
+  //     }
+  //   } catch (error) {
+  //     Swal.fire({
+  //       icon: 'error',
+  //       title: 'Error al iniciar sesión',
+  //       text: 'Verifica tus credenciales.',
+  //       showConfirmButton: false,
+  //     });
+  //   }
+  // };
+
+  const handleLoginSubmit = (e) => {
     e.preventDefault();
-    try {
-      const response = await axios.post(URL, { email, password });
-      const token = response.data.token;
-      if (token) {
-        localStorage.setItem('token', token);
-        Swal.fire({
-          icon: 'success',
-          title: 'Inicio de sesión exitoso',
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => navigate('/'));
-      }
-    } catch (error) {
+
+    // Simula los datos válidos del admin (puedes cambiarlos)
+    const adminEmail = 'admin@bot.com';
+    const adminPass = 'admin123';
+
+    if (email === adminEmail && password === adminPass) {
+      // Guardamos la sesión en el localStorage
+      localStorage.setItem('token', 'soyadmin');
+      localStorage.setItem('rol', 'admin');
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Inicio de sesión exitoso',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => navigate('/PanelAdmin'));
+    } else {
       Swal.fire({
         icon: 'error',
-        title: 'Error al iniciar sesión',
-        text: 'Verifica tus credenciales.',
+        title: 'Credenciales inválidas',
+        text: 'Correo o contraseña incorrectos',
         showConfirmButton: false,
       });
     }
   };
+
 
   return (
     <section className='sectFirst glass p-[50px] place-items-center'>

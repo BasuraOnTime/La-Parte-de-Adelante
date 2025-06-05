@@ -99,9 +99,6 @@ const Camiones = () => {
         }, 2000);
     };
 
-
-
-
     const handleSubmitTruck = (e) => {
         e.preventDefault();
 

@@ -6,9 +6,16 @@ import { IoDocumentText } from "react-icons/io5";
 import { RiTruckFill } from "react-icons/ri";
 import { ItemNavBar } from '../../UI/ItemNavBar/ItemNavBar';
 
-import "./PanelAdmin.css";
+import "./PanelAdmin.css"
 
 const PanelAdmin = () => {
+
+    const handleLogout = () => {
+        localStorage.removeItem('token');
+        navigate('/InicioS');
+    };
+
+
     return (
         <section className='sectFirst'>
             <div className='min-h-max flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] position fixed left-0'>
@@ -46,6 +53,21 @@ const PanelAdmin = () => {
                         </button>
                     </ItemNavBar>
                 </div>
+                <button
+                    className='absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600'
+                    onClick={() => {
+                        localStorage.removeItem('token');
+                        localStorage.removeItem('rol');
+                        Swal.fire({
+                            icon: 'info',
+                            title: 'Sesión cerrada',
+                            showConfirmButton: false,
+                            timer: 1500,
+                        }).then(() => navigate('/InicioS'));
+                    }}
+                >
+                    Cerrar sesión
+                </button>
             </div>
         </section>
     );
