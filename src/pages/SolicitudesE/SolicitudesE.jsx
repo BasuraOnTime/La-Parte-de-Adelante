@@ -31,6 +31,8 @@ const SolicitudForm = () => {
           title: "Error",
           text: "No se pudo enviar la solicitud, por favor inicia sesión",
           showConfirmButton: false,
+          timer: 2000,
+          timerProgressBar: true,
         });
         return;
       }

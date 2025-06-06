@@ -7,7 +7,6 @@ import "./Admin.css";
 
 const Admin = () => {
   const navigate = useNavigate();
-
   const [user, setUser] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
@@ -18,7 +17,7 @@ const Admin = () => {
       text: 'Estamos procesando tu solicitud',
       allowEscapeKey: false,
       allowOutsideClick: false,
-      timer: 2000,
+      timer: 1500,
       timerProgressBar: true,
       didOpen: () => {
         Swal.showLoading();
@@ -27,6 +26,10 @@ const Admin = () => {
 
     setTimeout(() => {
       if (user === "admin" && password === "admin") {
+        // Guardar token y rol para permitir el acceso
+        localStorage.setItem("token", "admin-token");
+        localStorage.setItem("rol", "admin");
+
         Swal.fire({
           title: 'Bienvenido',
           text: 'Has iniciado sesión correctamente',
@@ -34,14 +37,12 @@ const Admin = () => {
           showConfirmButton: false,
           allowEscapeKey: false,
           allowOutsideClick: false,
-          timer: 2000,
+          timer: 1500,
           timerProgressBar: true,
-        }).then((result) => {
-          if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-            navigate('/PanelAdmin');
-            setUser('');
-            setPassword('');
-          }
+        }).then(() => {
+          setUser('');
+          setPassword('');
+          navigate('/PanelAdmin');
         });
       } else {
         Swal.fire({
@@ -62,9 +63,10 @@ const Admin = () => {
   return (
     <section className='sectFirst glass p-[50px] place-items-center'>
       <div className='flex flex-col justify-center items-center'>
-        <img className='Img-logo' src={logoBasuraOnTime} alt="" />
+        <img className='Img-logo' src={logoBasuraOnTime} alt="Logo" />
         <p className='FontCursive text-6xl text-center text-white'>BASURA ON TIME</p>
       </div>
+
       <div className='FontGeologica flex flex-col justify-center items-center gap-3.5 bg-[var(--Voscuro2)] w-120 h-100 rounded-4xl'>
         <p className='FontCursive text-5xl p-7 text-white'>Administrador</p>
 
@@ -76,7 +78,6 @@ const Admin = () => {
           className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white'
         />
 
-        {/* Input de contraseña con ícono de ojo */}
         <div className="relative w-100">
           <input
             type={showPassword ? "text" : "password"}

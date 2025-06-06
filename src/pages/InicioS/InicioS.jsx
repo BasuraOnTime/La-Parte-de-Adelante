@@ -1,21 +1,20 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
-import axios from 'axios';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import './inicioS.css';
 
 const XLanding = () => {
-
-   const navigate = useNavigate();
+  const navigate = useNavigate();
   const [email, setCorreo] = useState('');
   const [password, setContraseña] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
-  // const URL = 'http://localhost:10101/auth';
+
+   // const URL = 'http://localhost:10101/auth';
   // const navigate = useNavigate();
   // const [email, setCorreo] = useState('');
   // const [password, setContraseña] = useState('');
@@ -50,31 +49,31 @@ const XLanding = () => {
   const handleLoginSubmit = (e) => {
     e.preventDefault();
 
-    // Simula los datos válidos del admin (puedes cambiarlos)
-    const adminEmail = 'admin@bot.com';
-    const adminPass = 'admin123';
+    // Simulación usuario normal (cambia según tu lógica real)
+    const usuarioEmail = 'usuario@ejemplo.com';
+    const usuarioPass = 'usuario123';
 
-    if (email === adminEmail && password === adminPass) {
-      // Guardamos la sesión en el localStorage
-      localStorage.setItem('token', 'soyadmin');
-      localStorage.setItem('rol', 'admin');
+    if (email === usuarioEmail && password === usuarioPass) {
+      localStorage.setItem('token', 'soyusuario');
+      localStorage.setItem('rol', 'usuario');
 
       Swal.fire({
         icon: 'success',
         title: 'Inicio de sesión exitoso',
         showConfirmButton: false,
         timer: 1500,
-      }).then(() => navigate('/PanelAdmin'));
+      }).then(() => navigate('/Usuario')); // Ruta para usuarios normales
     } else {
       Swal.fire({
         icon: 'error',
         title: 'Credenciales inválidas',
         text: 'Correo o contraseña incorrectos',
+        timer: 2000,
+        timerProgressBar: true,
         showConfirmButton: false,
       });
     }
   };
-
 
   return (
     <section className='sectFirst glass p-[50px] place-items-center'>
@@ -133,7 +132,6 @@ const XLanding = () => {
           Crear cuenta
         </button>
 
-        {/* Link para recuperar contraseña */}
         <button
           className='text-white underline text-sm hover:text-[var(--Vclaro)] transition cursor-pointer'
           onClick={() => navigate('/ContraR')}

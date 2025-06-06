@@ -1,5 +1,6 @@
-// src/pages/PanelAdmin/PanelAdmin.jsx
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { TfiMapAlt } from "react-icons/tfi";
 import { IoDocumentText } from "react-icons/io5";
@@ -9,10 +10,17 @@ import { ItemNavBar } from '../../UI/ItemNavBar/ItemNavBar';
 import "./PanelAdmin.css"
 
 const PanelAdmin = () => {
+    const navigate = useNavigate();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate('/InicioS');
+        localStorage.removeItem('rol');
+        Swal.fire({
+            icon: 'error',
+            title: 'Sesión cerrada',
+            showConfirmButton: false,
+            timer: 1500,
+        }).then(() => navigate('/Admin'));
     };
 
 
@@ -55,16 +63,7 @@ const PanelAdmin = () => {
                 </div>
                 <button
                     className='absolute top-4 right-4 bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600'
-                    onClick={() => {
-                        localStorage.removeItem('token');
-                        localStorage.removeItem('rol');
-                        Swal.fire({
-                            icon: 'info',
-                            title: 'Sesión cerrada',
-                            showConfirmButton: false,
-                            timer: 1500,
-                        }).then(() => navigate('/InicioS'));
-                    }}
+                    onClick={handleLogout}
                 >
                     Cerrar sesión
                 </button>

@@ -10,6 +10,19 @@ const ContraR = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    // Validación manual del campo vacío
+    if (!email.trim()) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campo vacío',
+        text: 'Por favor, escribe tu correo electrónico.',
+        showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true,
+      });
+      return;
+    }
+
     Swal.fire({
       title: 'Enviando...',
       text: 'Procesando la solicitud de recuperación',
@@ -21,12 +34,10 @@ const ContraR = () => {
     });
 
     try {
-      // Aquí deberías hacer tu llamada al backend para enviar el enlace.
-      // Simulando respuesta con un delay de 2 segundos
+      // Simula petición con delay
       await new Promise((resolve) => setTimeout(resolve, 2000));
 
-      // Simula validación de correo (cambia por tu lógica real)
-      const correoExiste = email === "correo@valido.com"; // cambia esto según tu lógica real
+      const correoExiste = email === "correo@valido.com"; // lógica simulada
 
       Swal.close();
 
@@ -77,7 +88,6 @@ const ContraR = () => {
         <form onSubmit={handleSubmit} className='flex flex-col gap-4 w-full items-center'>
           <input
             type="email"
-            required
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             className="rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white"
