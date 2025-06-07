@@ -18,49 +18,39 @@ export function Header() {
       <div className="sticky top-0 bg-[var(--Voscuro2)] h-40 grid grid-cols-2 items-center z-50 FontGeologica text-white shadow-lg">
         {/* Logo con texto y frase inspiradora */}
         <div className="flex items-center gap-4 m-8">
-          <div className="border-2 bg-white h-25 w-25 rounded-full shadow-md flex justify-center items-center">
+          <div className="w-1/8 aspect-square bg-white rounded-full shadow-md flex justify-center items-center border-2">
             <img src={logo} alt="logo" className="w-auto h-14" />
           </div>
-
           <div className="text-white">
             <p className="FontCursive text-3xl">Basura On Time</p>
             <p className="text-sm text-gray-200 italic">Por un futuro más limpio, empezamos hoy.</p>
           </div>
         </div>
 
-        {/* Botones de navegación (solo si no ha iniciado sesión) */}
-        {!isLoggedIn && (
-          <div className="flex justify-end gap-4 pr-4 me-15">
-            <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
-            <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
-            <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
-          </div>
-        )}
+        {/* Botones de navegación dependiendo del estado de sesión */}
+        <div className="flex justify-end gap-4 pr-4 me-15">
+          {!isLoggedIn ? (
+            <>
+              <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
+              <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
+              <ItemNavBar route='/PanelDU' icon={FaRegClock} label="Horario de recolección" />
+            </>
+          ) : (
+            <>
+              <ItemNavBar route='/dashboard' icon={FaHome} label="Inicio" />
+              <ItemNavBar route='/perfil' icon={FaUser} label="Mi cuenta" />
+              <ItemNavBar route='/herramientas' icon={FaTools} label="Herramientas" />
+              <button
+                onClick={handleLogout}
+                className="flex items-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition"
+              >
+                <FaSignOutAlt />
+                <span>Cerrar sesión</span>
+              </button>
+            </>
+          )}
+        </div>
       </div>
-
-      {/* Navegación inferior */}
-      <nav className="flex items-center gap-3 overflow-x-auto scrollbar-hide px-4 py-2 bg-[var(--Voscuro2)] text-white shadow-inner">
-        {isLoggedIn ? (
-          <>
-            <ItemNavBar route='/home' icon={FaHome} label="Inicio" />
-            <ItemNavBar route='/perfil' icon={FaUser} label="Perfil" />
-            <ItemNavBar route='/herramientas' icon={FaTools} label="Herramientas" />
-            <button
-              onClick={handleLogout}
-              className="flex items-center gap-2 px-3 py-2 text-red-600 hover:text-red-800 transition"
-            >
-              <FaSignOutAlt />
-              <span className="hidden sm:inline">Cerrar sesión</span>
-            </button>
-          </>
-        ) : (
-          <>
-            <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
-            <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
-            <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
-          </>
-        )}
-      </nav>
     </header>
   );
 }

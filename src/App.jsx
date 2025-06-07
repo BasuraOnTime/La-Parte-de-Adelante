@@ -12,6 +12,9 @@ import Camiones from './pages/Camiones/Camiones'
 import InicioS from './pages/InicioS/InicioS'
 import SolicitudesE from './pages/SolicitudesE/SolicitudesE'
 import RutasU from './pages/RutasU/RutasU'
+import EstadoCamionesU from './pages/EstadoCamioneU/EstadoCamionesU'
+import ConsultarRU from './pages/ConsultarRU/ConsultarRU'
+import PanelDU from './pages/PanelDusuario/PanelDU'
 
 
 export function App() {
@@ -25,6 +28,7 @@ export function App() {
         <Route path="/" element={<Home />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Usuario" element={<Usuario />} />
+        <Route path="/EstadoCamionesU" element={<EstadoCamionesU />} />
         <Route path="/ContraR" element={<ContraR />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/PanelAdmin" element={<PanelAdmin />} />
@@ -34,6 +38,8 @@ export function App() {
         <Route path="/Solicitudes" element={<Solicitudes />} />
         <Route path="/SolicitudesE" element={<SolicitudesE />} />
         <Route path="/InicioS" element={<InicioS />} />
+        <Route path="/ConsultarRU" element={<ConsultarRU />} />
+        <Route path="/PanelDU" element={<PanelDU />} />
       </Routes>
     </>
   )
