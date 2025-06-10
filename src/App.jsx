@@ -24,7 +24,6 @@ export function App() {
       
 
       <Routes>
-        <Route path="/InicioS" element={<InicioS />} />
         <Route path="/" element={<Home />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Usuario" element={<Usuario />} />

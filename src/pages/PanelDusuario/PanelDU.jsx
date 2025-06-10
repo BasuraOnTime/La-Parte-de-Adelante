@@ -1,14 +1,36 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { UserCircle, LogOut, Home, Truck, MapPin } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import PanelEstadoCamionesU from "../EstadoCamioneU/EstadoCamionesU";
 import ConsultaRutasU from "../ConsultarRU/ConsultarRU";
 import Usuario from "../Usuario/Usuario";
+import axios from "axios";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
-  // más datos para probar de Jorge Salvaje
-  const [user] = useState({ name: "David", email: "david@puto.com" });
+  URL = 'https://express-latest-6gmf.onrender.com/profile';
+  const token = localStorage.getItem("token");
+  const [user, setUser] = useState({ name: "David", email: "david@puto.com" });
   const [vista, setVista] = useState("inicio");
+  const navigate = useNavigate();
+
+  useEffect(() => {
+     const verifyToken = async () => {
+        try {
+            const response = await axios.get(URL, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setUser(response.data);
+        } catch (error) {
+            console.error('Error verifying token:', error);
+            localStorage.removeItem('token');
+            navigate('/InicioS');
+        }
+     }
+     verifyToken();    
+  }, [])
 
   const renderVista = () => {
     switch (vista) {
