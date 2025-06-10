@@ -13,9 +13,11 @@ const Camiones = () => {
     const URLM = 'https://express-latest-6gmf.onrender.com/settingsTruck';
     const URLAdd = 'https://express-latest-6gmf.onrender.com/addTruck';
     const URLDelete = 'https://express-latest-6gmf.onrender.com/deleteTruck';
+    const URLEdit = 'https://express-latest-6gmf.onrender.com/modifyTruck';
 
     const [modoEdicion, setModoEdicion] = useState(false);
     const [camionEditarIndex, setCamionEditarIndex] = useState(null);
+    const [placaOriginal, setPlacaOriginal] = useState('');
     const [busqueda, setBusqueda] = useState('');
     const [showForm, setShowForm] = useState(false);
     const [nuevoCamion, setNuevoCamion] = useState({
@@ -150,71 +152,114 @@ const Camiones = () => {
         }, 2000);
     };
 
-    const handleSubmitTruck = async (e) => {
-        e.preventDefault();
-        const { placa, modelo, capacidad, estado_camion, marca, tipo_c } = nuevoCamion;
-       
+   const handleSubmitTruck = async (e) => {
+    e.preventDefault();
+    const { placa, modelo, capacidad, estado_camion, marca, tipo_c } = nuevoCamion;
 
-        if (!placa || !modelo || !capacidad || !estado_camion || !marca || !tipo_c) {
-            Swal.fire({
-                title: 'Error',
-                text: 'Todos los campos son obligatorios.',
-                icon: 'warning',
-                confirmButtonText: 'Entendido',
-                confirmButtonColor: '#0A372D',
-            });
-            return;
-        }
-
+    if (!placa || !modelo || !capacidad || !estado_camion || !marca || !tipo_c) {
         Swal.fire({
-            title: 'Procesando...',
-            text: 'Estamos procesando tu solicitud',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-            timer: 2000,
-            timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+            title: 'Error',
+            text: 'Todos los campos son obligatorios.',
+            icon: 'warning',
+            confirmButtonText: 'Entendido',
+            confirmButtonColor: '#0A372D',
         });
+        return;
+    }
 
-        try {
-            const response = await axios.post(URLAdd, nuevoCamion, {
-                headers: {
-                    Authorization: `Bearer ${token}`
-                }
+    Swal.fire({
+        title: 'Procesando...',
+        text: modoEdicion ? 'Actualizando camión...' : 'Registrando camión...',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+        didOpen: () => {
+            Swal.showLoading();
+        }
+    });
+
+    try {
+        if (modoEdicion) {
+
+            const res = await axios.put(URLEdit, nuevoCamion, {
+                headers: { Authorization: `Bearer ${token}` }
             });
-            
+
+
             Swal.fire({
-                title: 'Camión Registrado',
-                text: 'El camión ha sido registrado correctamente',
+                title: 'Camión actualizado',
+                text: 'El camión ha sido actualizado correctamente',
                 icon: 'success',
                 showConfirmButton: false,
                 timer: 2000,
                 timerProgressBar: true,
             });
 
-            setNuevoCamion({
-                placa: '',
-                modelo: '',
-                capacidad: 'Alta',
-                estado_camion: 'Activo',
-                marca: '',
-                tipo_c: 'Recolección',
+        } else {
+
+            const res = await axios.post(URLAdd, nuevoCamion, {
+                headers: { Authorization: `Bearer ${token}` }
             });
-            setShowForm(false);
-            mostrarCamiones();
-        } catch (error) {
-            console.error('Error al registrar el camión:', error);
+
             Swal.fire({
-                title: 'Error',
-                text: 'No se pudo registrar el camión. Inténtalo de nuevo más tarde.',
-                icon: 'error',
-                confirmButtonText: 'Entendido',
-                confirmButtonColor: '#0A372D',
+                title: 'Camión registrado',
+                text: 'El camión ha sido registrado correctamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
             });
         }
-    };
+
+        setNuevoCamion({
+            placa: '',
+            modelo: '',
+            capacidad: 'Alta',
+            estado_camion: 'Activo',
+            marca: '',
+            tipo_c: 'Recolección',
+        });
+        setShowForm(false);
+        setModoEdicion(false);
+        setCamionEditarIndex(null);
+        mostrarCamiones();
+
+    } catch (error) {
+        console.error("Error al guardar el camión:", error);
+
+        let mensaje = 'Ocurrió un error inesperado.';
+
+        if (error.response) {
+            const { status, data } = error.response;
+            console.error(`Error ${status}:`, data);
+
+            if (data?.errorInfo) {
+                mensaje = data.errorInfo; 
+            } else if (data?.message) {
+                mensaje = data.message;
+            } else if (status === 404) {
+                mensaje = 'Camión no encontrado para actualizar.';
+            } else if (status === 500) {
+                mensaje = 'Error interno del servidor.';
+            }
+
+        } else if (error.request) {
+            mensaje = 'No se recibió respuesta del servidor.';
+            console.error("Error de red:", error.request);
+        } else {
+            console.error("Error desconocido:", error.message);
+        }
+
+        Swal.fire({
+            title: 'Error',
+            text: modoEdicion ? `No se pudo actualizar el camión: ${mensaje}` : `No se pudo registrar el camión: ${mensaje}`,
+            icon: 'error',
+            confirmButtonText: 'Entendido',
+            confirmButtonColor: '#0A372D',
+        });
+    }
+};
+
+
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
@@ -255,7 +300,7 @@ const Camiones = () => {
                     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
                         <form onSubmit={handleSubmitTruck} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
                             <h2 className="text-2xl mb-2">Agregar Camión | Editar Camión</h2>
-                            <input type="text" name="placa" value={nuevoCamion.placa} onChange={handleInputChange} placeholder="Placa" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
+                            <input type="text" name="placa" value={nuevoCamion.placa} onChange={handleInputChange} placeholder="Placa" disabled ={modoEdicion} required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
                             <input type="text" name="modelo" value={nuevoCamion.modelo} onChange={handleInputChange} placeholder="Modelo" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
                             <select name="capacidad" value={nuevoCamion.capacidad} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
                                 <option value="Alta">Alta</option>
@@ -298,10 +343,10 @@ const Camiones = () => {
                             <p className='truncate'>{camion.marca}</p>
                             <div className='flex gap-2 justify-center'>
                                 <button onClick={() => {
-                                    setShowForm(true);
-                                    setModoEdicion(true);
-                                    setCamionEditarIndex(index);
-                                    setNuevoCamion(camion);
+                                   setShowForm(true);
+                                   setModoEdicion(true);
+                                   setNuevoCamion(camion);
+                                   setPlacaOriginal(camion.placa);
                                 }} className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105'>
                                     <MdEdit />
                                 </button>

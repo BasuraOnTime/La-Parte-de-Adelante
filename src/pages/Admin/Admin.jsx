@@ -75,7 +75,7 @@ const Admin = () => {
 
         <input
           type="text"
-          placeholder='Usuario'
+          placeholder='Correo'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
           className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white'
