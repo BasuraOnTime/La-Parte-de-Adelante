@@ -8,6 +8,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 
 const Camiones = () => {
+    // Verifica si el token existe en localStorage
     const token = localStorage.getItem('token');
     const URLM = 'https://express-latest-6gmf.onrender.com/settingsTruck';
     const URLAdd = 'https://express-latest-6gmf.onrender.com/addTruck';
