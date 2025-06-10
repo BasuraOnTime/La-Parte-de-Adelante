@@ -2,17 +2,19 @@ import React, { useState } from 'react';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import "./Admin.css";
 
 const Admin = () => {
+  const URL = "https://express-latest-6gmf.onrender.com/authAdmin";
   const navigate = useNavigate();
 
-  const [user, setUser] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     Swal.fire({
       title: 'Procesando...',
       text: 'Estamos procesando tu solicitud',
@@ -24,9 +26,11 @@ const Admin = () => {
         Swal.showLoading();
       }
     });
+    const response = await axios.post(URL, { email, password });
+    const token = response.data.token; 
 
     setTimeout(() => {
-      if (user === "admin" && password === "admin") {
+      if (token) {
         Swal.fire({
           title: 'Bienvenido',
           text: 'Has iniciado sesión correctamente',
@@ -38,8 +42,9 @@ const Admin = () => {
           timerProgressBar: true,
         }).then((result) => {
           if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+            localStorage.setItem('token', token);
             navigate('/PanelAdmin');
-            setUser('');
+            setEmail('');
             setPassword('');
           }
         });
@@ -71,8 +76,8 @@ const Admin = () => {
         <input
           type="text"
           placeholder='Usuario'
-          value={user}
-          onChange={(e) => setUser(e.target.value)}
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
           className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white'
         />
 

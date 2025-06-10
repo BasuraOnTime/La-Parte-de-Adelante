@@ -7,13 +7,9 @@ import { BotonBack } from '../../UI/BotonBack/BotonBack';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import "./Register.css";
 
-
-
-
-
 const Register = () => {
   let success = false;
-  const URL = 'http://localhost:10101/register';
+  const URL = 'https://express-latest-6gmf.onrender.com/register';
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');

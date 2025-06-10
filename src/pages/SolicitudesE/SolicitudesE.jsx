@@ -6,7 +6,7 @@ import logoBasuraOnTime from "../../assets/img/icons/logoBasuraOnTime.png";
 
 const SolicitudForm = () => {
   const token = localStorage.getItem("token");
-  const URL = "http://localhost:10101/requests";
+  const URL = "https://express-latest-6gmf.onrender.com/requests";
 
   const [zona, setZona] = useState("");
   const [fecha_solicitud, setFechaSolicitud] = useState("");

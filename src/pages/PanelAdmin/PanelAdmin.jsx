@@ -5,10 +5,34 @@ import { TfiMapAlt } from "react-icons/tfi";
 import { IoDocumentText } from "react-icons/io5";
 import { RiTruckFill } from "react-icons/ri";
 import { ItemNavBar } from '../../UI/ItemNavBar/ItemNavBar';
-
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import { useEffect } from 'react';
 import "./PanelAdmin.css";
 
 const PanelAdmin = () => {
+    const token = localStorage.getItem('token');
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        const verifyToken = async () => {
+            try {
+                const response = await axios.get('https://express-latest-6gmf.onrender.com/startAdmin', {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    }
+                });
+                console.log(token);
+            } catch (error) {
+                console.error('Error verifying token:', error);
+                localStorage.removeItem('token');
+                navigate('/Admin');
+            }
+        };
+
+        verifyToken();
+    })
+
     return (
         <section className='sectFirst'>
             <div className='min-h-max flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] position fixed left-0'>

@@ -1,57 +1,112 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import './Camiones.css';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { MdEdit } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
 import { BotonBack } from '../../UI/BotonBack/BotonBack';
 import Swal from 'sweetalert2';
-
+import axios from 'axios';
 
 const Camiones = () => {
+    const token = localStorage.getItem('token');
+    const URLM = 'https://express-latest-6gmf.onrender.com/settingsTruck';
+    const URLAdd = 'https://express-latest-6gmf.onrender.com/addTruck';
+    const URLDelete = 'https://express-latest-6gmf.onrender.com/deleteTruck';
+
+    const [modoEdicion, setModoEdicion] = useState(false);
+    const [camionEditarIndex, setCamionEditarIndex] = useState(null);
+    const [busqueda, setBusqueda] = useState('');
+    const [showForm, setShowForm] = useState(false);
+    const [nuevoCamion, setNuevoCamion] = useState({
+        placa: '',
+        modelo: '',
+        capacidad: 'Alta',
+        estado_camion: 'Activo',
+        marca: '',
+        tipo_c: 'Recolección',
+    });
+
+    const [camiones, setCamiones] = useState([]);
+
+    const mostrarCamiones = async () => {
+        try {
+            const response = await axios.get(URLM, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setCamiones(response.data.data);
+        } catch (error) {
+            console.error('Error al obtener los camiones:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'No se pudieron cargar los camiones.',
+                icon: 'error',
+                confirmButtonText: 'Entendido',
+                confirmButtonColor: '#0A372D',
+            });
+        }
+    };
+
+    useEffect(() => {
+        mostrarCamiones();
+    }, []);
 
     const handleEliminar = (index) => {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta acción eliminará el camión permanentemente.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar',
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: 'Eliminando...',
-                    text: 'Estamos eliminando el camión',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
+    const camion = camiones[index];
+    Swal.fire({
+        title: '¿Estás seguro?',
+        text: 'Esta acción eliminará el camión permanentemente.',
+        icon: 'warning',
+        showCancelButton: true,
+        confirmButtonText: 'Sí, eliminar',
+        cancelButtonText: 'Cancelar',
+        confirmButtonColor: '#d33',
+        cancelButtonColor: '#3085d6',
+        allowEscapeKey: false,
+        allowOutsideClick: false,
+    }).then(async (result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+                title: 'Eliminando...',
+                text: 'Estamos eliminando el camión',
+                allowEscapeKey: false,
+                allowOutsideClick: false,
+                didOpen: () => Swal.showLoading()
+            });
+
+            try {
+                console.log('Eliminando camión:', camion.placa);
+                const response = await axios.delete(URLDelete, {
+                    headers: {
+                        Authorization: `Bearer ${token}`
+                    },
+                    data: { placa: camion.placa }
                 });
 
-                setTimeout(() => {
-                    const nuevosCamiones = [...camiones];
-                    nuevosCamiones.splice(index, 1);
-                    setCamiones(nuevosCamiones);
+                Swal.fire({
+                    title: 'Camión eliminado',
+                    text: 'El camión ha sido eliminado correctamente',
+                    icon: 'success',
+                    showConfirmButton: false,
+                    timer: 2000,
+                    timerProgressBar: true,
+                });
 
-                    Swal.fire({
-                        title: 'Camión eliminado',
-                        text: 'El camión ha sido eliminado correctamente',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                    });
-                }, 2000);
+                mostrarCamiones();
+            } catch (error) {
+                console.error('Error al eliminar el camión:', error);
+                Swal.fire({
+                    title: 'Error',
+                    text: 'No se pudo eliminar el camión. Intenta más tarde.',
+                    icon: 'error',
+                    confirmButtonText: 'Entendido',
+                    confirmButtonColor: '#0A372D',
+                });
             }
-        });
-    };
+        }
+    });
+};
 
 
     const driveCancelTruck = () => {
@@ -70,7 +125,7 @@ const Camiones = () => {
         setTimeout(() => {
             Swal.fire({
                 title: 'Cancelación',
-                text: "Se ha cancelado el ingreso del camión / Edicion del camion",
+                text: "Se ha cancelado el ingreso del camión / Edición del camión",
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 icon: 'info',
@@ -78,35 +133,28 @@ const Camiones = () => {
                 confirmButtonColor: '#0A372D',
                 timer: 2000,
                 timerProgressBar: true,
-            }).then((result) => {
-                if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-                    setShowForm(false);
-
-
-                    setNuevoCamion({
-                        placa: '',
-                        modelo: '',
-                        capacidad: 'Alta',
-                        estado_Camion: 'Activo',
-                        Tipo_camion: 'Especial'
-                    });
-
-
-                    setModoEdicion(false);
-                    setCamionEditarIndex(null);
-                }
+            }).then(() => {
+                setShowForm(false);
+                setNuevoCamion({
+                    placa: '',
+                    modelo: '',
+                    capacidad: 'Alta',
+                    estado_camion: 'Activo',
+                    marca: '',
+                    tipo_c: 'Recolección',
+                });
+                setModoEdicion(false);
+                setCamionEditarIndex(null);
             });
         }, 2000);
     };
 
-
-
-
-    const handleSubmitTruck = (e) => {
+    const handleSubmitTruck = async (e) => {
         e.preventDefault();
+        const { placa, modelo, capacidad, estado_camion, marca, tipo_c } = nuevoCamion;
+       
 
-        const { placa, modelo, capacidad, estado_Camion, Tipo_camion } = nuevoCamion;
-        if (!placa || !modelo || !capacidad || !estado_Camion || !Tipo_camion) {
+        if (!placa || !modelo || !capacidad || !estado_camion || !marca || !tipo_c) {
             Swal.fire({
                 title: 'Error',
                 text: 'Todos los campos son obligatorios.',
@@ -127,112 +175,60 @@ const Camiones = () => {
             didOpen: () => {
                 Swal.showLoading();
             }
-        })
-        setTimeout(() => {
+        });
 
-
-
-            if (modoEdicion) {
-                const camionesActualizados = [...camiones];
-                camionesActualizados[camionEditarIndex] = nuevoCamion;
-                setCamiones(camionesActualizados);
-                setModoEdicion(false);
-                setCamionEditarIndex(null);
-            } else {
-                setCamiones([...camiones, nuevoCamion]);
-
-
-                Swal.fire({
-                    title: 'Camión registrado',
-                    text: 'El camión se ha agregado correctamente',
-                    icon: 'success',
-                    showConfirmButton: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                });
-            }
-
+        try {
+            const response = await axios.post(URLAdd, nuevoCamion, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            
+            Swal.fire({
+                title: 'Camión Registrado',
+                text: 'El camión ha sido registrado correctamente',
+                icon: 'success',
+                showConfirmButton: false,
+                timer: 2000,
+                timerProgressBar: true,
+            });
 
             setNuevoCamion({
                 placa: '',
                 modelo: '',
                 capacidad: 'Alta',
-                estado_Camion: 'Activo',
-                Tipo_camion: 'Especial',
+                estado_camion: 'Activo',
+                marca: '',
+                tipo_c: 'Recolección',
             });
             setShowForm(false);
-        }, 2000);
-    };
-
-    const [modoEdicion, setModoEdicion] = useState(false);
-    const [camionEditarIndex, setCamionEditarIndex] = useState(null);
-    const [busqueda, setBusqueda] = useState('');
-    const [showForm, setShowForm] = useState(false);
-    const [nuevoCamion, setNuevoCamion] = useState({
-        placa: '',
-        modelo: '',
-        capacidad: 'Alta',
-        estado_Camion: 'Activo',
-        Tipo_camion: 'Especial',
-        marca: '',
-    });
-
-    const [camiones, setCamiones] = useState([
-        {
-            placa: 'ABC-123',
-            modelo: 'Modelo X',
-            capacidad: 'Alta',
-            estado_Camion: 'Activo',
-            Tipo_camion: 'Especial',
-            marca: 'Marca A',
-        },
-        {
-            placa: 'DEF-456',
-            modelo: 'Modelo Y',
-            capacidad: 'Media',
-            estado_Camion: 'Inactivo',
-            Tipo_camion: 'normal',
-            marca: 'Marca B',
+            mostrarCamiones();
+        } catch (error) {
+            console.error('Error al registrar el camión:', error);
+            Swal.fire({
+                title: 'Error',
+                text: 'No se pudo registrar el camión. Inténtalo de nuevo más tarde.',
+                icon: 'error',
+                confirmButtonText: 'Entendido',
+                confirmButtonColor: '#0A372D',
+            });
         }
-    ]);
+    };
 
     const handleInputChange = (e) => {
         const { name, value } = e.target;
         setNuevoCamion({ ...nuevoCamion, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (modoEdicion) {
-            const camionesActualizados = [...camiones];
-            camionesActualizados[camionEditarIndex] = nuevoCamion;
-            setCamiones(camionesActualizados);
-            setModoEdicion(false);
-            setCamionEditarIndex(null);
-        } else {
-            setCamiones([...camiones, nuevoCamion]);
-        }
-
-        setNuevoCamion({
-            placa: '',
-            modelo: '',
-            capacidad: 'Alta',
-            estado_Camion: 'Activo',
-            Tipo_camion: 'Especial'
-        });
-        setShowForm(false);
-    };
-
     const camionesFiltrados = camiones.filter((camion) =>
         Object.values(camion).some(valor =>
-            valor.toLowerCase().includes(busqueda.toLowerCase())
+            valor.toString().toLowerCase().includes(busqueda.toLowerCase())
         )
     );
 
     return (
         <section className='sectFirst'>
-            {/* Sidebar */}
-            <div className='min-h-max flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] position fixed left-0'>
+            <div className='min-h-max flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] fixed left-0'>
                 <div className="absolute top-4 left-4 z-50">
                     <BotonBack route="/PanelAdmin" content=" " />
                 </div>
@@ -240,13 +236,11 @@ const Camiones = () => {
                 <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
             </div>
 
-            {/* Contenedor principal con scroll interno */}
             <div className='DivCamion FontGeologica bg-[var(--Voscuro2)] ml-[250px] h-[calc(100vh-40px)] mt-5 overflow-y-auto p-5 relative'>
                 <h1 className='text-5xl text-white mb-6'>Gestión de camiones</h1>
 
                 <div className='flex flex-initial gap-30'>
-                    <button onClick={() => setShowForm(true)} className='group cursor-pointer rounded-md w-40 h-12 bg-[var(--Vclaro3)] text-white text-xl transition-all duration-300 ease-in-out
-                        hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>Agregar</button>
+                    <button onClick={() => setShowForm(true)} className='group cursor-pointer rounded-md w-40 h-12 bg-[var(--Vclaro3)] text-white text-xl transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>Agregar</button>
                     <input
                         type="text"
                         className='text-white rounded-md border border-[var(--Vclaro3)] text-center w-120 text-xl'
@@ -256,70 +250,30 @@ const Camiones = () => {
                     />
                 </div>
 
-                {/* Modal flotante sin fondo oscuro */}
                 {showForm && (
                     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-                        <form onSubmit={handleSubmit} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
-                            <h2 className="text-2xl mb-2">Agregar Camión | Editar camion</h2>
-                            <input
-                                type="text"
-                                name="placa"
-                                value={nuevoCamion.placa}
-                                onChange={handleInputChange}
-                                placeholder="Placa"
-                                required
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
-                            />
-                            <input
-                                type="text"
-                                name="modelo"
-                                value={nuevoCamion.modelo}
-                                onChange={handleInputChange}
-                                placeholder="Modelo"
-                                required
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
-                            />
-                            <select
-                                name="capacidad"
-                                value={nuevoCamion.capacidad}
-                                onChange={handleInputChange}
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white border"
-                            >
+                        <form onSubmit={handleSubmitTruck} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
+                            <h2 className="text-2xl mb-2">Agregar Camión | Editar Camión</h2>
+                            <input type="text" name="placa" value={nuevoCamion.placa} onChange={handleInputChange} placeholder="Placa" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
+                            <input type="text" name="modelo" value={nuevoCamion.modelo} onChange={handleInputChange} placeholder="Modelo" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
+                            <select name="capacidad" value={nuevoCamion.capacidad} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
                                 <option value="Alta">Alta</option>
                                 <option value="Media">Media</option>
                                 <option value="Baja">Baja</option>
                             </select>
-                            <select
-                                name="estado_Camion"
-                                value={nuevoCamion.estado_Camion}
-                                onChange={handleInputChange}
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white border"
-                            >
+                            <select name="estado_camion" value={nuevoCamion.estado_camion} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
                                 <option value="Activo">Activo</option>
                                 <option value="Inactivo">Inactivo</option>
                                 <option value="Mantenimiento">Mantenimiento</option>
                             </select>
-                            <select
-                                name="Tipo_camion"
-                                value={nuevoCamion.Tipo_camion}
-                                onChange={handleInputChange}
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white border"
-                            >
-                                <option value="Especial">Especial</option>
+                            <input type="text" name="marca" value={nuevoCamion.marca} onChange={handleInputChange} placeholder="Marca" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
+                            <select name="tipo_c" value={nuevoCamion.tipo_c} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
                                 <option value="Recolección">Recolección</option>
+                                <option value="Traslado">Traslado</option>
                             </select>
-                            <input
-                                type="text"
-                                name="marca"
-                                value={nuevoCamion.marca}
-                                onChange={handleInputChange}
-                                placeholder="marca"
-                                required
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
-                            />
                             <div className="flex justify-end gap-4">
                                 <button type="button" onClick={driveCancelTruck} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
-                                <button onClick={handleSubmitTruck} type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
+                                <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
                             </div>
                         </form>
                     </div>
@@ -331,7 +285,6 @@ const Camiones = () => {
                         <p>Modelo</p>
                         <p>Capacidad</p>
                         <p>Estado</p>
-                        <p>Tipo</p>
                         <p>Marca</p>
                         <p>Acción</p>
                     </div>
@@ -340,8 +293,7 @@ const Camiones = () => {
                             <p className='truncate'>{camion.placa}</p>
                             <p className='truncate'>{camion.modelo}</p>
                             <p className='truncate'>{camion.capacidad}</p>
-                            <p className='truncate'>{camion.estado_Camion}</p>
-                            <p className='truncate'>{camion.Tipo_camion}</p>
+                            <p className='truncate'>{camion.estado_camion}</p>
                             <p className='truncate'>{camion.marca}</p>
                             <div className='flex gap-2 justify-center'>
                                 <button onClick={() => {
@@ -358,12 +310,10 @@ const Camiones = () => {
                             </div>
                         </div>
                     ))}
-
                 </div>
             </div>
         </section>
     );
 };
-
 
 export default Camiones;
