@@ -6,55 +6,24 @@ import { AiOutlineDelete } from "react-icons/ai";
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import Swal from 'sweetalert2';
 
-
 const Camiones = () => {
 
-    const handleEliminar = (index) => {
-        Swal.fire({
-            title: '¿Estás seguro?',
-            text: 'Esta acción eliminará el camión permanentemente.',
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonText: 'Sí, eliminar',
-            cancelButtonText: 'Cancelar',
-            confirmButtonColor: '#d33',
-            cancelButtonColor: '#3085d6',
-            allowEscapeKey: false,
-            allowOutsideClick: false,
-        }).then((result) => {
-            if (result.isConfirmed) {
-                Swal.fire({
-                    title: 'Eliminando...',
-                    text: 'Estamos eliminando el camión',
-                    allowEscapeKey: false,
-                    allowOutsideClick: false,
-                    timer: 2000,
-                    timerProgressBar: true,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
-
-                setTimeout(() => {
-                    const nuevosCamiones = [...camiones];
-                    nuevosCamiones.splice(index, 1);
-                    setCamiones(nuevosCamiones);
-
-                    Swal.fire({
-                        title: 'Camión eliminado',
-                        text: 'El camión ha sido eliminado correctamente',
-                        icon: 'success',
-                        showConfirmButton: false,
-                        timer: 2000,
-                        timerProgressBar: true,
-                    });
-                }, 2000);
-            }
-        });
-    };
-
-
     const driveCancelTruck = () => {
+        if (!modoEdicion) {
+            // Si no está en modo edición, solo cerrar el formulario sin mostrar alertas
+            setShowForm(false);
+            setNuevoCamion({
+                placa: '',
+                modelo: '',
+                capacidad: 'Alta',
+                estado_Camion: 'Activo',
+                Tipo_camion: 'Especial',
+                marca: '',
+            });
+            return;
+        }
+
+        // Si está en modo edición, mostrar alertas
         Swal.fire({
             title: 'Procesando...',
             text: 'Estamos procesando tu solicitud',
@@ -70,7 +39,7 @@ const Camiones = () => {
         setTimeout(() => {
             Swal.fire({
                 title: 'Cancelación',
-                text: "Se ha cancelado el ingreso del camión / Edicion del camion",
+                text: "Se ha cancelado el ingreso del camión / Edición del camión",
                 allowEscapeKey: false,
                 allowOutsideClick: false,
                 icon: 'info',
@@ -81,17 +50,14 @@ const Camiones = () => {
             }).then((result) => {
                 if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
                     setShowForm(false);
-
-
                     setNuevoCamion({
                         placa: '',
                         modelo: '',
                         capacidad: 'Alta',
                         estado_Camion: 'Activo',
-                        Tipo_camion: 'Especial'
+                        Tipo_camion: 'Especial',
+                        marca: '',
                     });
-
-
                     setModoEdicion(false);
                     setCamionEditarIndex(null);
                 }
@@ -124,11 +90,9 @@ const Camiones = () => {
             didOpen: () => {
                 Swal.showLoading();
             }
-        })
+        });
+
         setTimeout(() => {
-
-
-
             if (modoEdicion) {
                 const camionesActualizados = [...camiones];
                 camionesActualizados[camionEditarIndex] = nuevoCamion;
@@ -137,7 +101,6 @@ const Camiones = () => {
                 setCamionEditarIndex(null);
             } else {
                 setCamiones([...camiones, nuevoCamion]);
-
 
                 Swal.fire({
                     title: 'Camión registrado',
@@ -149,13 +112,13 @@ const Camiones = () => {
                 });
             }
 
-
             setNuevoCamion({
                 placa: '',
                 modelo: '',
                 capacidad: 'Alta',
                 estado_Camion: 'Activo',
                 Tipo_camion: 'Especial',
+                marca: '',
             });
             setShowForm(false);
         }, 2000);
@@ -198,37 +161,39 @@ const Camiones = () => {
         setNuevoCamion({ ...nuevoCamion, [name]: value });
     };
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        if (modoEdicion) {
-            const camionesActualizados = [...camiones];
-            camionesActualizados[camionEditarIndex] = nuevoCamion;
-            setCamiones(camionesActualizados);
-            setModoEdicion(false);
-            setCamionEditarIndex(null);
-        } else {
-            setCamiones([...camiones, nuevoCamion]);
-        }
-
-        setNuevoCamion({
-            placa: '',
-            modelo: '',
-            capacidad: 'Alta',
-            estado_Camion: 'Activo',
-            Tipo_camion: 'Especial'
-        });
-        setShowForm(false);
-    };
-
     const camionesFiltrados = camiones.filter((camion) =>
         Object.values(camion).some(valor =>
             valor.toLowerCase().includes(busqueda.toLowerCase())
         )
     );
 
+    const handleEliminar = (index) => {
+        Swal.fire({
+            title: '¿Estás seguro?',
+            text: "Esta acción eliminará el camión.",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#0A372D',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sí, eliminar',
+            cancelButtonText: 'Cancelar'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                const camionesActualizados = [...camiones];
+                camionesActualizados.splice(index, 1);
+                setCamiones(camionesActualizados);
+
+                Swal.fire(
+                    'Eliminado',
+                    'El camión ha sido eliminado.',
+                    'success'
+                );
+            }
+        });
+    };
+
     return (
         <section className='sectFirst'>
-            {/* Sidebar */}
             <div className='min-h-max flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] position fixed left-0'>
                 <div className="absolute top-4 left-4 z-50">
                     <ItemNavBar route="/PanelAdmin" content=" " />
@@ -237,7 +202,6 @@ const Camiones = () => {
                 <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
             </div>
 
-            {/* Contenedor principal con scroll interno */}
             <div className='DivCamion FontGeologica bg-[var(--Voscuro2)] ml-[250px] h-[calc(100vh-40px)] mt-5 overflow-y-auto p-5 relative'>
                 <h1 className='text-5xl text-white mb-6'>Gestión de camiones</h1>
 
@@ -253,11 +217,10 @@ const Camiones = () => {
                     />
                 </div>
 
-                {/* Modal flotante sin fondo oscuro */}
                 {showForm && (
                     <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-                        <form onSubmit={handleSubmit} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
-                            <h2 className="text-2xl mb-2">Agregar Camión | Editar camion</h2>
+                        <form onSubmit={handleSubmitTruck} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
+                            <h2 className="text-2xl mb-2">{modoEdicion ? 'Editar Camión' : 'Agregar Camión'}</h2>
                             <input
                                 type="text"
                                 name="placa"
@@ -310,13 +273,13 @@ const Camiones = () => {
                                 name="marca"
                                 value={nuevoCamion.marca}
                                 onChange={handleInputChange}
-                                placeholder="marca"
+                                placeholder="Marca"
                                 required
                                 className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
                             />
                             <div className="flex justify-end gap-4">
                                 <button type="button" onClick={driveCancelTruck} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
-                                <button onClick={handleSubmitTruck} type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
+                                <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
                             </div>
                         </form>
                     </div>
@@ -355,12 +318,10 @@ const Camiones = () => {
                             </div>
                         </div>
                     ))}
-
                 </div>
             </div>
         </section>
     );
 };
-
 
 export default Camiones;
