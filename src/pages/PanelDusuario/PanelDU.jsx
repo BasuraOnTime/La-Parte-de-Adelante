@@ -8,9 +8,9 @@ import axios from "axios";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
-  URL = 'https://express-latest-6gmf.onrender.com/profile';
+  const URL = 'https://express-latest-6gmf.onrender.com/profile';
   const token = localStorage.getItem("token");
-  const [user, setUser] = useState({ name: "David", email: "david@puto.com" });
+  const [user, setUser] = useState({ nombres: "", email: "" });
   const [vista, setVista] = useState("inicio");
   const navigate = useNavigate();
 
@@ -22,7 +22,7 @@ export default function UserDashboard() {
                     Authorization: `Bearer ${token}`
                 }
             });
-            setUser(response.data);
+            setUser(response.data.data);
         } catch (error) {
             console.error('Error verifying token:', error);
             localStorage.removeItem('token');
@@ -112,7 +112,7 @@ export default function UserDashboard() {
       <main className="flex-1 p-6 md:p-10 space-y-6">
         <header className="flex items-center justify-between mb-4">
           <div>
-            <h1 className="text-3xl font-bold">¡Hola, {user.name}!</h1>
+            <h1 className="text-3xl font-bold">¡Hola, {user.nombres}!</h1>
           </div>
           <UserCircle className="text-white" size={45} />
         </header>

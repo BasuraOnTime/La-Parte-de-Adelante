@@ -8,7 +8,7 @@ import Perfil from '../../assets/img/icons/perfil.jpg';
 import './Usuario.css';
 
 const UserProfileApp = () => {
-  const URL = 'http://localhost:10101/profile';
+  const URL = 'https://express-latest-6gmf.onrender.com/profile';
   const token = localStorage.getItem('token');
   const [direccion, setDireccion] = useState('Calle Falsa 123, Ciudad');
   const [showModal, setShowModal] = useState(false);
@@ -28,10 +28,10 @@ const UserProfileApp = () => {
         },
       })
         .then(response => {
-          const { email, nombre, apellido, telefono, direccion } = response.data;
+          const { email, nombres, apellidos, telefono, direccion } = response.data.data;
           setEmail(email);
-          setNombre(nombre);
-          setApellido(apellido);
+          setNombre(nombres);
+          setApellido(apellidos);
           setTelefono(telefono);
           setDireccion(direccion);
         })
