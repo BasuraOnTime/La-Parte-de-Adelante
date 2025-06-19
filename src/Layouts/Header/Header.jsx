@@ -33,13 +33,15 @@ export function Header() {
             <>
               <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
               <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
+              <ItemNavBar route='/Recuperar' icon={FaTools} label="Recuperar" />
               
             </>
           ) : (
             <>
               <ItemNavBar route='/dashboard' icon={FaHome} label="Inicio" />
               <ItemNavBar route='/perfil' icon={FaUser} label="Mi cuenta" />
-              <ItemNavBar route='/herramientas' icon={FaTools} label="Herramientas" />
+              
+              
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition"

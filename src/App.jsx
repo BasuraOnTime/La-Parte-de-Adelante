@@ -15,6 +15,7 @@ import RutasU from './pages/RutasU/RutasU'
 import EstadoCamionesU from './pages/EstadoCamioneU/EstadoCamionesU'
 import ConsultarRU from './pages/ConsultarRU/ConsultarRU'
 import PanelDU from './pages/PanelDusuario/PanelDU'
+import Recuperar from './pages/RecuperarC/Recuperar'
 
 
 export function App() {
@@ -40,6 +41,7 @@ export function App() {
         <Route path="/InicioS" element={<InicioS />} />
         <Route path="/ConsultarRU" element={<ConsultarRU />} />
         <Route path="/PanelDU" element={<PanelDU />} />
+        <Route path="/Recuperar" element={<Recuperar />} />
       </Routes>
     </>
   )
