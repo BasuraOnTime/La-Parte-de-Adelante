@@ -1,10 +1,14 @@
 import React, { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export default function ResetPasswordForm() {
+  const URL = "https://express-latest-6gmf.onrender.com/reset-password"; 
+  const token = localStorage.getItem("token");
   const [formData, setFormData] = useState({
     email: "",
-    password: "",
-    confirmPassword: "",
+    Newpassword: "",
+    validatePassword: "",
   });
   const [message, setMessage] = useState("");
 
@@ -14,30 +18,25 @@ export default function ResetPasswordForm() {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (formData.password !== formData.confirmPassword) {
+    if (formData.Newpassword !== formData.validatePassword) {
       setMessage("Las contraseñas no coinciden.");
       return;
     }
 
     try {
-      const response = await fetch("http://localhost:3001/api/auth/reset-password", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: formData.email,
-          password: formData.password,
-        }),
-      });
-
-      const data = await response.json();
-      if (response.ok) {
-        setMessage("Contraseña actualizada correctamente.");
+        const res = await axios.put(URL, formData, {
+            headers: { Authorization: `Bearer ${token}` }
+        });
+      if (res.status === 200) {
+       localStorage.removeItem("token");
+        setMessage("Contraseña actualizada exitosamente.");
+        setFormData({ email: "", Newpassword: "", validatePassword: "" });
       } else {
-        setMessage(data.message || "Error al actualizar la contraseña.");
+        setMessage("Error al actualizar la contraseña. Inténtalo de nuevo.");
       }
     } catch (error) {
-      console.error(error);
-      setMessage("Error del servidor.");
+      console.error("Error al actualizar la contraseña:", error);
+      setMessage("Ocurrió un error al actualizar la contraseña. Por favor, inténtalo de nuevo más tarde.");
     }
   };
 
