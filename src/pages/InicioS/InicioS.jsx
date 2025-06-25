@@ -5,7 +5,7 @@ import axios from 'axios';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { BotonBack } from '../../UI/BotonBack/BotonBack';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import './inicioS.css';
+import './InicioS.css';
 
 const XLanding = () => {
   const URL = 'https://express-latest-6gmf.onrender.com/auth';
@@ -47,10 +47,10 @@ const XLanding = () => {
           <BotonBack route="/" content=" " />
         </div>
         <img className='img_logo' src={logoBasuraOnTime} alt="Logo" />
-        <p id='FontCursive' className='text-6xl text-center text-white'>BASURA ON TIME</p>
+        <p id='FontCursive' className='text-6xl text-center text-white'>Basura On Time</p>
       </div>
 
-      <div className='FontGeologica flex flex-col justify-center items-center gap-1 bg-[var(--Voscuro2)] w-120 h-110 rounded-4xl py-10 px-6'>
+      <div className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-140 h-150 rounded-4xl py-10 px-6'>
         <p id='FontCursive' className='text-5xl text-white mb-6'>Iniciar sesión</p>
 
         <input
@@ -63,7 +63,7 @@ const XLanding = () => {
 
         <div className="relative w-100 mb-3">
           <input
-            className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-white placeholder:text-center text-center'
+            className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-white placeholder:text-center text-center'
             type={showPassword ? "text" : "password"}
             placeholder='Contraseña'
             value={password}

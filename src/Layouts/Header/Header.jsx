@@ -15,14 +15,14 @@ export function Header() {
 
   return (
     <header>
-      <div className="sticky top-0 bg-[var(--Voscuro2)] h-40 grid grid-cols-2 items-center z-50 FontGeologica text-white shadow-lg">
+      <div className="sticky top-0 bg-[var(--Voscuro2)] h-40 grid grid-cols-2 items-center z-50 FontGeologica text-white shadow-xl">
         {/* Logo con texto y frase inspiradora */}
         <div className="flex items-center gap-4 m-8">
-          <div className="w-1/8 aspect-square bg-white rounded-full shadow-md flex justify-center items-center border-2">
-            <img src={logo} alt="logo" className="w-auto h-14" />
+          <div className="w-27 aspect-square bg-white rounded-full shadow-md flex justify-center items-center border-2">
+            <img src={logo} alt="logo" className="w-auto h-22" />
           </div>
           <div className="text-white">
-            <p className="FontCursive text-3xl">Basura On Time</p>
+            <p className="FontCursive text-6xl">Basura On Time</p>
             <p className="text-sm text-gray-200 italic">Por un futuro más limpio, empezamos hoy.</p>
           </div>
         </div>
@@ -33,13 +33,15 @@ export function Header() {
             <>
               <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
               <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
-              <ItemNavBar route='/PanelDU' icon={FaRegClock} label="Horario de recolección" />
+              <ItemNavBar route='/Recuperar' icon={FaTools} label="Recuperar" />
+              
             </>
           ) : (
             <>
               <ItemNavBar route='/dashboard' icon={FaHome} label="Inicio" />
               <ItemNavBar route='/perfil' icon={FaUser} label="Mi cuenta" />
-              <ItemNavBar route='/herramientas' icon={FaTools} label="Herramientas" />
+              
+              
               <button
                 onClick={handleLogout}
                 className="flex items-center gap-2 px-3 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition"
