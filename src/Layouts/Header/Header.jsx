@@ -1,35 +1,50 @@
 import { FaUserPlus, FaSignInAlt, FaRegClock } from "react-icons/fa";
 import logo from '../../assets/img/icons/logo.png';
-import camion from '../../assets/img/icons/ezgif-367675f0653ab4.gif';
 import { ItemNavBar } from '../../UI/ItemNavBar/ItemNavBar';
+import React, { useState } from 'react';
+import { FaBars, FaTimes } from 'react-icons/fa';
 import './Header.css';
 
 export function Header() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
   return (
     <>
-      <div className="sticky top-0 bg-[var(--Voscuro2)] h-40 grid grid-cols-2 items-center z-50 FontGeologica text-white shadow-lg">
-
-        {/* Logo con texto y frase inspiradora */}
-        <div className="flex items-center gap-4 m-8">
-          {/* Logo */}
-          <div className="border-2 bg-white h-25 w-25 rounded-full shadow-md flex justify-center items-center">
-            <img src={logo} alt="logo" className="w-auto h-14" />
+      <div className="sticky top-0 bg-[var(--Voscuro2)] h-50 grid grid-cols-2 items-center z-50 FontGeologica text-white shadow-lg">
+        <div className="flex items-center gap-4 m-4">
+          <div className="border-2 bg-white rounded-full shadow-md flex justify-center items-center flex-shrink-0
+                          h-12 w-16 md:h-20 md:w-20">
+            <img src={logo} alt="logo" className="h-12 w-auto object-contain md:h-20" />
           </div>
-
-          {/* Título y frase */}
-          <div className="text-white">
-            <p className="FontCursive text-3xl">Basura On Time</p>
+          <div className="text-white max-w-[calc(100vw-80px)]">
+            <p className="FontCursive text-2xl md:text-[60px] leading-tight">Basura On Time</p>
             <p className="text-sm text-gray-200 italic">Por un futuro más limpio, empezamos hoy.</p>
           </div>
         </div>
 
-        {/* Botones de navegación */}
-        <div className="flex justify-end gap-4 pr-4 me-15">
+        {/* Menú para pantallas grandes */}
+        <div className="hidden md:flex justify-end gap-4 pr-4 me-15">
           <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
           <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
           <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
         </div>
+
+        {/* Icono hamburguesa en móviles */}
+        <div className="flex md:hidden justify-end pr-8">
+          <button onClick={() => setMenuOpen(!menuOpen)}>
+            {menuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
+          </button>
+        </div>
       </div>
+
+      {/* Menú colapsable para móviles */}
+      {menuOpen && (
+        <div className="md:hidden bg-[var(--Voscuro2)] text-white px-6 py-4 shadow-md z-40 FontGeologica">
+          <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
+          <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
+          <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
+        </div>
+      )}
     </>
   );
 }

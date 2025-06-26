@@ -1,6 +1,7 @@
 import { NavLink } from "react-router-dom";
 import { MdArrowBackIosNew } from "react-icons/md"; // Ícono de volver moderno
 
+
 export const ItemNavBar = ({ route }) => {
   return (
     <NavLink to={route}>

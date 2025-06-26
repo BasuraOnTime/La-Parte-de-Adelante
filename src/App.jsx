@@ -13,6 +13,7 @@ import InicioS from './pages/InicioS/InicioS'; // <-- login usuario
 import SolicitudesE from './pages/SolicitudesE/SolicitudesE';
 import RutasU from './pages/RutasU/RutasU';
 import ProtectedRoute from './UI/ProtectedRoute/ProtectedRoute';
+import Conductores from './pages/Conductores/Conductores';
 
 export function App() {
   return (
@@ -25,6 +26,7 @@ export function App() {
       <Route path="/ContraR" element={<ContraR />} />
       <Route path="/RutasU" element={<RutasU />} />
       <Route path="/SolicitudesE" element={<SolicitudesE />} />
+      <Route path="Conductores" element={< Conductores/>} />
 
       {/* Rutas accesibles por usuarios con login normal */}
       <Route path="/Usuario" element={

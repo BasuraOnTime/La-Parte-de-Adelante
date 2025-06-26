@@ -45,10 +45,8 @@ const Register = () => {
         allowOutsideClick: false,
         timer: 2000,
         timerProgressBar: true
-      }).then((result) => {
-        if (result.dismiss === Swal.DismissReason.timer) {
-          navigate('/');
-        }
+      }).then(() => {
+        navigate('/');
       });
 
       return response.data;
@@ -63,8 +61,6 @@ const Register = () => {
         timer: 2000,
         timerProgressBar: true
       });
-      console.error('Error registrando el usuario:', error);
-      throw error;
     }
   };
 
@@ -93,34 +89,50 @@ const Register = () => {
     }
   };
 
-  const handleRegisterClick = async () => {
-    try {
-      await registerData();
-    } catch (_) {
-      // Error ya manejado dentro de registerData
-    }
-  };
-
   return (
     <>
-      <section className='sectFirst glass p-[50px] place-items-center'>
-        <div className='flex flex-col justify-center items-center'>
+      <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
+
+        {/* Logo y texto */}
+        <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>
           <div className="absolute top-4 left-4 z-50">
-            <ItemNavBar route="/" content=" " />
+            <ItemNavBar route="/" content="Volver" />
           </div>
-          <img className='img_logo' src={logoBasuraOnTime} alt="Logo Basura on Time" />
-          <p id='FontCursive' className='text-6xl text-center text-white'>BASURA ON TIME</p>
+          <img className='w-24 h-24 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo Basura on Time" />
+          <p className='FontCursive text-4xl text-center text-white md:text-6xl'>BASURA ON TIME</p>
         </div>
 
-        <div className='FontGeologica flex flex-col justify-center items-center gap-3.5 bg-[var(--Voscuro2)] w-120 h-150 rounded-4xl'>
-          <p id='FontCursive' className='text-5xl p-10 text-white'>Registro</p>
+        {/* Formulario */}
+        <div className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full p-6 rounded-3xl md:w-[480px] md:gap-4 md:rounded-4xl md:p-8'>
 
-          <input onChange={handleNameChange} className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white' type="text" placeholder='Nombres' />
-          <input onChange={handleLastNameChange} className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white' type="text" placeholder='Apellidos' />
-          <input onChange={handleEmailChange} className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white' type="text" placeholder='Correo electrónico' />
-          <input onChange={handlePhoneChange} className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white' type="text" placeholder='Número de teléfono' />
+          <p className='FontCursive text-3xl p-4 text-white text-center md:text-5xl md:p-7'>Registro</p>
 
-          <div className="relative w-100">
+          <input
+            onChange={handleNameChange}
+            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-10 text-center placeholder:text-center text-white'
+            type="text"
+            placeholder='Nombres'
+          />
+          <input
+            onChange={handleLastNameChange}
+            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-10 text-center placeholder:text-center text-white'
+            type="text"
+            placeholder='Apellidos'
+          />
+          <input
+            onChange={handleEmailChange}
+            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-10 text-center placeholder:text-center text-white'
+            type="text"
+            placeholder='Correo electrónico'
+          />
+          <input
+            onChange={handlePhoneChange}
+            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-10 text-center placeholder:text-center text-white'
+            type="text"
+            placeholder='Número de teléfono'
+          />
+
+          <div className="relative w-full max-w-[750px]">
             <input
               onChange={handlePasswordChange}
               className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-white placeholder:text-center text-center'
@@ -143,14 +155,14 @@ const Register = () => {
           </div>
 
           <button
-            className='rounded-md w-100 h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
-            onClick={handleRegisterClick}
+            className='rounded-md w-full max-w-[750px] h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
+            onClick={registerData}
           >
             Registrarse
           </button>
 
           <button
-            className='rounded-md w-100 h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
+            className='rounded-md w-full max-w-[750px] h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
             onClick={handleGuardarDireccion}
           >
             Guardar Dirección

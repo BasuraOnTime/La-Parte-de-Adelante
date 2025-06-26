@@ -6,6 +6,7 @@ import { TfiMapAlt } from "react-icons/tfi";
 import { IoDocumentText } from "react-icons/io5";
 import { RiTruckFill } from "react-icons/ri";
 import { ItemNavBar } from '../../UI/ItemNavBar/ItemNavBar';
+import { FaUserTie } from "react-icons/fa";
 
 import "./PanelAdmin.css"
 
@@ -32,7 +33,7 @@ const PanelAdmin = () => {
             </div >
             <div className='DivPanelAdmin FontGeologica'>
                 <p className='text-6xl text-white mb-20'>Panel de Administracion</p>
-                <div className='flex flex-initial gap-8'>
+                <div className='grid grid-cols-1 md:grid-cols-2 gap-8'>
                     <ItemNavBar route='/Camiones'>
                         <button className='group cursor-pointer flex flex-col justify-center items-center text-white bg-[var(--Voscuro2)] 
                             rounded-2xl w-60 h-60 text-3xl gap-3
@@ -58,6 +59,15 @@ const PanelAdmin = () => {
                             hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>
                             <IoDocumentText className='w-35 h-35 transition-transform duration-300 group-hover:rotate-2 group-hover:scale-105' />
                             Solicitudes
+                        </button>
+                    </ItemNavBar>
+                    <ItemNavBar route='/Conductores'>
+                        <button className='group cursor-pointer flex flex-col justify-center items-center text-white bg-[var(--Voscuro2)] 
+                        rounded-2xl w-60 h-60 text-3xl gap-3
+                        transition-all duration-300 ease-in-out
+                        hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>
+                            <FaUserTie className='w-35 h-35 transition-transform duration-300 group-hover:rotate-2 group-hover:scale-105' />
+                            Conductores
                         </button>
                     </ItemNavBar>
                 </div>
