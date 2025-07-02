@@ -10,10 +10,9 @@ export function Header() {
 
   return (
     <>
-      <div className="sticky top-0 bg-[var(--Voscuro2)] h-50 grid grid-cols-2 items-center z-50 FontGeologica text-white shadow-lg">
+      <div className="sticky top-0 bg-[var(--Voscuro2)] h-50 grid grid-cols-[1fr_auto] items-center z-50 FontGeologica text-white shadow-lg">
         <div className="flex items-center gap-4 m-4">
-          <div className="border-2 bg-white rounded-full shadow-md flex justify-center items-center flex-shrink-0
-                          h-12 w-16 md:h-20 md:w-20">
+          <div className="border-2 bg-white rounded-full shadow-md flex justify-center items-center flex-shrink-0 h-12 w-16 md:h-20 md:w-20">
             <img src={logo} alt="logo" className="h-12 w-auto object-contain md:h-20" />
           </div>
           <div className="text-white max-w-[calc(100vw-80px)]">
@@ -39,12 +38,17 @@ export function Header() {
 
       {/* Menú colapsable para móviles */}
       {menuOpen && (
-        <div className="md:hidden bg-[var(--Voscuro2)] text-white px-6 py-4 shadow-md z-40 FontGeologica">
+        <div
+          className="md:hidden fixed top-[200px] left-0 right-0 bg-[var(--Voscuro2)] text-white px-6 py-4 shadow-md z-50 FontGeologica"
+          onMouseLeave={() => setMenuOpen(false)}
+        >
           <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
           <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
           <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
         </div>
       )}
+
+
     </>
   );
 }

@@ -14,7 +14,8 @@ const Conductores = () => {
       telefono: '987654321',
       tipo_licencia: 'A2',
       fecha_vencimiento_licencia: '2025-12-31',
-      estado: 'Inactivo'
+      estado: 'Inactivo',
+      camion: 'AQH11F'
     },
     {
       nombre: 'Ana',
@@ -22,7 +23,8 @@ const Conductores = () => {
       telefono: '912345678',
       tipo_licencia: 'B1',
       fecha_vencimiento_licencia: '2026-08-15',
-      estado: 'Inactivo'
+      estado: 'Inactivo',
+      camion: 'AQH11F'
     }
   ]);
 
@@ -32,7 +34,8 @@ const Conductores = () => {
     telefono: '',
     tipo_licencia: '',
     fecha_vencimiento_licencia: '',
-    estado: 'Inactivo'
+    estado: 'Inactivo',
+    camion: 'AQH11F'
   });
 
   const [modoEdicion, setModoEdicion] = useState(false);
@@ -110,9 +113,9 @@ const Conductores = () => {
 
   const handleSubmitDriver = (e) => {
     e.preventDefault();
-    const { nombre, apellidos, telefono, tipo_licencia, fecha_vencimiento_licencia } = nuevoConductor;
+    const { nombre, apellidos, telefono, tipo_licencia, fecha_vencimiento_licencia, camion } = nuevoConductor;
 
-    if (!nombre || !apellidos || !telefono || !tipo_licencia || !fecha_vencimiento_licencia) {
+    if (!nombre || !apellidos || !telefono || !tipo_licencia || !fecha_vencimiento_licencia || !camion) {
       Swal.fire({
         title: 'Error',
         text: 'Todos los campos son obligatorios.',
@@ -167,7 +170,8 @@ const Conductores = () => {
       telefono: '',
       tipo_licencia: '',
       fecha_vencimiento_licencia: '',
-      estado: 'Inactivo'
+      estado: 'Inactivo',
+      camion: 'AQH11F' 
     });
   };
 
@@ -204,6 +208,7 @@ const Conductores = () => {
               <input type="text" name="telefono" value={nuevoConductor.telefono} onChange={handleInputChange} placeholder="Teléfono" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
               <input type="text" name="tipo_licencia" value={nuevoConductor.tipo_licencia} onChange={handleInputChange} placeholder="Tipo de Licencia" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
               <input type="date" name="fecha_vencimiento_licencia" value={nuevoConductor.fecha_vencimiento_licencia} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border" />
+              <input type="date" name="fecha_vencimiento_licencia" value={nuevoConductor.camion} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border" />
               <div className="flex justify-end gap-4">
                                 <button type="button" onClick={driveCancelDriver} className="bg-[var(--Rojo)] px-4 py-2 rounded">
                   Cancelar
@@ -217,24 +222,26 @@ const Conductores = () => {
         )}
 
         <div className='text-white w-full mt-6'>
-          <div className='grid grid-cols-7 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]'>
+          <div className='grid grid-cols-8 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]'>
             <p>Nombre</p>
             <p>Apellidos</p>
             <p>Teléfono</p>
             <p>Licencia</p>
             <p>Vencimiento</p>
             <p>Estado</p>
+            <p>Camion</p>            
             <p>Acción</p>
           </div>
 
           {conductoresFiltrados.map((conductor, index) => (
-            <div key={index} className='grid grid-cols-7 gap-3 items-center text-center text-lg p-4 border border-[var(--Vclaro3)]'>
+            <div key={index} className='grid grid-cols-8 gap-3 items-center text-center text-lg p-4 border border-[var(--Vclaro3)]'>
               <p className='truncate'>{conductor.nombre}</p>
               <p className='truncate'>{conductor.apellidos}</p>
               <p className='truncate'>{conductor.telefono}</p>
               <p className='truncate'>{conductor.tipo_licencia}</p>
               <p className='truncate'>{conductor.fecha_vencimiento_licencia}</p>
               <p className='truncate'>{conductor.estado}</p>
+              <p className='truncate'>{conductor.camion}</p>
               <div className='flex gap-2 justify-center'>
                 <button
                   onClick={() => {

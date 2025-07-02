@@ -10,20 +10,11 @@ const Camiones = () => {
 
     const driveCancelTruck = () => {
         if (!modoEdicion) {
-            // Si no está en modo edición, solo cerrar el formulario sin mostrar alertas
             setShowForm(false);
-            setNuevoCamion({
-                placa: '',
-                modelo: '',
-                capacidad: 'Alta',
-                estado_Camion: 'Activo',
-                Tipo_camion: 'Especial',
-                marca: '',
-            });
+            resetForm();
             return;
         }
 
-        // Si está en modo edición, mostrar alertas
         Swal.fire({
             title: 'Procesando...',
             text: 'Estamos procesando tu solicitud',
@@ -31,36 +22,22 @@ const Camiones = () => {
             allowOutsideClick: false,
             timer: 2000,
             timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+            didOpen: () => { Swal.showLoading(); }
         });
 
         setTimeout(() => {
             Swal.fire({
                 title: 'Cancelación',
-                text: "Se ha cancelado el ingreso del camión / Edición del camión",
-                allowEscapeKey: false,
-                allowOutsideClick: false,
+                text: "Se ha cancelado el ingreso o edición del camión",
                 icon: 'info',
-                showConfirmButton: false,
-                confirmButtonColor: '#0A372D',
                 timer: 2000,
                 timerProgressBar: true,
-            }).then((result) => {
-                if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-                    setShowForm(false);
-                    setNuevoCamion({
-                        placa: '',
-                        modelo: '',
-                        capacidad: 'Alta',
-                        estado_Camion: 'Activo',
-                        Tipo_camion: 'Especial',
-                        marca: '',
-                    });
-                    setModoEdicion(false);
-                    setCamionEditarIndex(null);
-                }
+                showConfirmButton: false
+            }).then(() => {
+                setShowForm(false);
+                resetForm();
+                setModoEdicion(false);
+                setCamionEditarIndex(null);
             });
         }, 2000);
     };
@@ -74,7 +51,6 @@ const Camiones = () => {
                 title: 'Error',
                 text: 'Todos los campos son obligatorios.',
                 icon: 'warning',
-                confirmButtonText: 'Entendido',
                 confirmButtonColor: '#0A372D',
             });
             return;
@@ -87,9 +63,7 @@ const Camiones = () => {
             allowOutsideClick: false,
             timer: 2000,
             timerProgressBar: true,
-            didOpen: () => {
-                Swal.showLoading();
-            }
+            didOpen: () => { Swal.showLoading(); }
         });
 
         setTimeout(() => {
@@ -101,27 +75,29 @@ const Camiones = () => {
                 setCamionEditarIndex(null);
             } else {
                 setCamiones([...camiones, nuevoCamion]);
-
                 Swal.fire({
                     title: 'Camión registrado',
                     text: 'El camión se ha agregado correctamente',
                     icon: 'success',
-                    showConfirmButton: false,
                     timer: 2000,
-                    timerProgressBar: true,
+                    showConfirmButton: false,
+                    timerProgressBar: true
                 });
             }
-
-            setNuevoCamion({
-                placa: '',
-                modelo: '',
-                capacidad: 'Alta',
-                estado_Camion: 'Activo',
-                Tipo_camion: 'Especial',
-                marca: '',
-            });
             setShowForm(false);
+            resetForm();
         }, 2000);
+    };
+
+    const resetForm = () => {
+        setNuevoCamion({
+            placa: '',
+            modelo: '',
+            capacidad: 'Alta',
+            estado_Camion: 'Activo',
+            Tipo_camion: 'Especial',
+            marca: ''
+        });
     };
 
     const [modoEdicion, setModoEdicion] = useState(false);
@@ -161,7 +137,7 @@ const Camiones = () => {
         setNuevoCamion({ ...nuevoCamion, [name]: value });
     };
 
-    const camionesFiltrados = camiones.filter((camion) =>
+    const camionesFiltrados = camiones.filter(camion =>
         Object.values(camion).some(valor =>
             valor.toLowerCase().includes(busqueda.toLowerCase())
         )
@@ -182,144 +158,140 @@ const Camiones = () => {
                 const camionesActualizados = [...camiones];
                 camionesActualizados.splice(index, 1);
                 setCamiones(camionesActualizados);
-
-                Swal.fire(
-                    'Eliminado',
-                    'El camión ha sido eliminado.',
-                    'success'
-                );
+                Swal.fire('Eliminado', 'El camión ha sido eliminado.', 'success');
             }
         });
     };
 
     return (
-        <section className='sectFirst'>
-            <div className='min-h-max flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] position fixed left-0'>
+        <section className="sectFirst min-h-screen flex flex-col md:flex-row bg-[var(--Voscuro2)]">
+
+            {/* Sidebar PC */}
+            <div className="hidden md:flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
                 <div className="absolute top-4 left-4 z-50">
                     <ItemNavBar route="/PanelAdmin" content=" " />
                 </div>
-                <img className='ImgLogo' src={logoBasuraOnTime} alt="" />
-                <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
+                <img className="ImgLogo" src={logoBasuraOnTime} alt="Logo Basura On Time" />
+                <p className="FontCursive text-5xl text-center text-white">BASURA ON TIME</p>
             </div>
 
-            <div className='DivCamion FontGeologica bg-[var(--Voscuro2)] ml-[250px] h-[calc(100vh-40px)] mt-5 overflow-y-auto p-5 relative'>
-                <h1 className='text-5xl text-white mb-6'>Gestión de camiones</h1>
-
-                <div className='flex flex-initial gap-30'>
-                    <button onClick={() => setShowForm(true)} className='group cursor-pointer rounded-md w-40 h-12 bg-[var(--Vclaro3)] text-white text-xl transition-all duration-300 ease-in-out
-                        hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>Agregar</button>
-                    <input
-                        type="text"
-                        className='text-white rounded-md border border-[var(--Vclaro3)] text-center w-120 text-xl'
-                        placeholder='Buscar camión...'
-                        value={busqueda}
-                        onChange={(e) => setBusqueda(e.target.value)}
-                    />
+            {/* Header móvil */}
+            <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-8 pb-5 fixed top-0 left-0 z-50">
+                <div className="absolute top-2 left-2 z-50 scale-75">
+                    <ItemNavBar route="/PanelAdmin" content=" " />
                 </div>
+                <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-28 h-auto mt-2" />
+                <p className="FontCursive text-3xl text-white mt-2">BASURA ON TIME</p>
+            </div>
 
-                {showForm && (
-                    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-                        <form onSubmit={handleSubmitTruck} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
-                            <h2 className="text-2xl mb-2">{modoEdicion ? 'Editar Camión' : 'Agregar Camión'}</h2>
-                            <input
-                                type="text"
-                                name="placa"
-                                value={nuevoCamion.placa}
-                                onChange={handleInputChange}
-                                placeholder="Placa"
-                                required
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
-                            />
-                            <input
-                                type="text"
-                                name="modelo"
-                                value={nuevoCamion.modelo}
-                                onChange={handleInputChange}
-                                placeholder="Modelo"
-                                required
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
-                            />
-                            <select
-                                name="capacidad"
-                                value={nuevoCamion.capacidad}
-                                onChange={handleInputChange}
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white border"
-                            >
-                                <option value="Alta">Alta</option>
-                                <option value="Media">Media</option>
-                                <option value="Baja">Baja</option>
-                            </select>
-                            <select
-                                name="estado_Camion"
-                                value={nuevoCamion.estado_Camion}
-                                onChange={handleInputChange}
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white border"
-                            >
-                                <option value="Activo">Activo</option>
-                                <option value="Inactivo">Inactivo</option>
-                                <option value="Mantenimiento">Mantenimiento</option>
-                            </select>
-                            <select
-                                name="Tipo_camion"
-                                value={nuevoCamion.Tipo_camion}
-                                onChange={handleInputChange}
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white border"
-                            >
-                                <option value="Especial">Especial</option>
-                                <option value="Recolección">Recolección</option>
-                            </select>
-                            <input
-                                type="text"
-                                name="marca"
-                                value={nuevoCamion.marca}
-                                onChange={handleInputChange}
-                                placeholder="Marca"
-                                required
-                                className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
-                            />
-                            <div className="flex justify-end gap-4">
-                                <button type="button" onClick={driveCancelTruck} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
-                                <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
-                            </div>
-                        </form>
-                    </div>
-                )}
+            {/* Contenido */}
+            <div className="flex-1 flex flex-col items-center justify-start md:ml-[250px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
 
-                <div className='text-white w-full'>
-                    <div className='grid grid-cols-7 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]'>
-                        <p>Placa</p>
-                        <p>Modelo</p>
-                        <p>Capacidad</p>
-                        <p>Estado</p>
-                        <p>Tipo</p>
-                        <p>Marca</p>
-                        <p>Acción</p>
+                <div className="mt-35 sm:ml-100 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[800px] max-h-[70vh] overflow-y-auto overflow-x-hidden">
+                    <h1 className="text-3xl md:text-5xl text-white mb-6 text-center">Gestión de camiones</h1>
+
+                    <div className="flex flex-col md:flex-row gap-8 mb-6">
+                        <button onClick={() => setShowForm(true)} className="group cursor-pointer rounded-md w-full md:w-40 h-12 bg-[var(--Vclaro3)] text-white text-xl transition-all hover:scale-105 hover:shadow-2xl active:scale-95">
+                            Agregar
+                        </button>
+                        <input
+                            type="text"
+                            className="text-white rounded-md border border-[var(--Vclaro3)] text-center w-full h-12 md:w-120 text-xl"
+                            placeholder="Buscar camión..."
+                            value={busqueda}
+                            onChange={(e) => setBusqueda(e.target.value)}
+                        />
                     </div>
-                    {camionesFiltrados.map((camion, index) => (
-                        <div key={index} className='grid grid-cols-7 gap-3 items-center text-center text-lg p-4 border border-[var(--Vclaro3)]'>
-                            <p className='truncate'>{camion.placa}</p>
-                            <p className='truncate'>{camion.modelo}</p>
-                            <p className='truncate'>{camion.capacidad}</p>
-                            <p className='truncate'>{camion.estado_Camion}</p>
-                            <p className='truncate'>{camion.Tipo_camion}</p>
-                            <p className='truncate'>{camion.marca}</p>
-                            <div className='flex gap-2 justify-center'>
-                                <button onClick={() => {
-                                    setShowForm(true);
-                                    setModoEdicion(true);
-                                    setCamionEditarIndex(index);
-                                    setNuevoCamion(camion);
-                                }} className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105'>
-                                    <MdEdit />
-                                </button>
-                                <button onClick={() => handleEliminar(index)} className='flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Rojo)] text-white hover:scale-105'>
-                                    <AiOutlineDelete />
-                                </button>
-                            </div>
+
+                    <div className="w-full overflow-x-auto text-white">
+
+                        {/* Títulos solo en escritorio */}
+                        <div className="hidden md:grid grid-cols-7 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)] min-w-[600px]">
+                            <p>Placa</p>
+                            <p>Modelo</p>
+                            <p>Capacidad</p>
+                            <p>Estado</p>
+                            <p>Tipo</p>
+                            <p>Marca</p>
+                            <p>Acción</p>
                         </div>
-                    ))}
+
+                        {camionesFiltrados.map((camion, index) => (
+                            <div key={index} className="grid grid-cols-1 md:grid-cols-7 gap-3 md:gap-2 text-left md:text-center text-lg p-4 border border-[var(--Vclaro3)] min-w-[600px] md:min-w-0">
+
+                                <div>
+                                    <span className="font-bold md:hidden">Placa: </span>{camion.placa}
+                                </div>
+                                <div>
+                                    <span className="font-bold md:hidden">Modelo: </span>{camion.modelo}
+                                </div>
+                                <div>
+                                    <span className="font-bold md:hidden">Capacidad: </span>{camion.capacidad}
+                                </div>
+                                <div>
+                                    <span className="font-bold md:hidden">Estado: </span>{camion.estado_Camion}
+                                </div>
+                                <div>
+                                    <span className="font-bold md:hidden">Tipo: </span>{camion.Tipo_camion}
+                                </div>
+                                <div>
+                                    <span className="font-bold md:hidden">Marca: </span>{camion.marca}
+                                </div>
+
+                                {/* Botones alineados con Marca en móvil, y normal en PC */}
+                                <div className="flex gap-2 md:justify-center justify-start mt-2 md:mt-0">
+                                    <button
+                                        onClick={() => { setShowForm(true); setModoEdicion(true); setCamionEditarIndex(index); setNuevoCamion(camion); }}
+                                        className="flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105"
+                                    >
+                                        <MdEdit />
+                                    </button>
+                                    <button
+                                        onClick={() => handleEliminar(index)}
+                                        className="flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Rojo)] text-white hover:scale-105"
+                                    >
+                                        <AiOutlineDelete />
+                                    </button>
+                                </div>
+
+                            </div>
+                        ))}
+                    </div>
+
+
+
+
                 </div>
             </div>
+
+            {showForm && (
+                <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
+                    <form onSubmit={handleSubmitTruck} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
+                        <h2 className="text-2xl mb-2">{modoEdicion ? 'Editar Camión' : 'Agregar Camión'}</h2>
+                        <input type="text" name="placa" value={nuevoCamion.placa} onChange={handleInputChange} placeholder="Placa" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
+                        <input type="text" name="modelo" value={nuevoCamion.modelo} onChange={handleInputChange} placeholder="Modelo" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
+                        <select name="capacidad" value={nuevoCamion.capacidad} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
+                            <option value="Alta">Alta</option>
+                            <option value="Media">Media</option>
+                            <option value="Baja">Baja</option>
+                        </select>
+                        <select name="estado_Camion" value={nuevoCamion.estado_Camion} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
+                            <option value="Activo">Activo</option>
+                            <option value="Inactivo">Inactivo</option>
+                            <option value="Mantenimiento">Mantenimiento</option>
+                        </select>
+                        <select name="Tipo_camion" value={nuevoCamion.Tipo_camion} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
+                            <option value="Especial">Especial</option>
+                            <option value="Recolección">Recolección</option>
+                        </select>
+                        <input type="text" name="marca" value={nuevoCamion.marca} onChange={handleInputChange} placeholder="Marca" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
+                        <div className="flex justify-end gap-4">
+                            <button type="button" onClick={driveCancelTruck} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
+                            <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            )}
         </section>
     );
 };
