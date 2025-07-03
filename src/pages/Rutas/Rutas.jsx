@@ -9,111 +9,98 @@ const Rutas = () => {
 
   useEffect(() => {
     const savedPdf = localStorage.getItem('pdfHorarioBOT');
-    if (savedPdf) {
-      setPdfUrl(savedPdf);
-    }
+    if (savedPdf) setPdfUrl(savedPdf);
   }, []);
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-
     if (file && file.type === 'application/pdf') {
       const reader = new FileReader();
       reader.onload = () => {
         const base64Pdf = reader.result;
         setPdfUrl(base64Pdf);
         localStorage.setItem('pdfHorarioBOT', base64Pdf);
-
-        Swal.fire({
-          icon: 'success',
-          title: '¡PDF importado!',
-          text: 'El documento se cargó correctamente.',
-          showConfirmButton: false,
-          timer: 2000
-        });
+        Swal.fire({ icon: 'success', title: '¡PDF importado!', text: 'El documento se cargó correctamente.', showConfirmButton: false, timer: 2000 });
       };
       reader.readAsDataURL(file);
     } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'Archivo no válido',
-        text: 'Por favor selecciona un PDF válido.',
-        showConfirmButton: false,
-        timer: 2000
-      });
+      Swal.fire({ icon: 'error', title: 'Archivo no válido', text: 'Por favor selecciona un PDF válido.', showConfirmButton: false, timer: 2000 });
     }
   };
 
   const handleDeletePdf = () => {
     Swal.fire({
-      title: '¿Eliminar PDF?',
-      text: 'Esta acción no se puede deshacer.',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonColor: '#d33',
-      cancelButtonColor: '#3085d6',
+      title: '¿Eliminar PDF?', text: 'Esta acción no se puede deshacer.', icon: 'warning',
+      showCancelButton: true, confirmButtonColor: '#d33', cancelButtonColor: '#3085d6',
       confirmButtonText: 'Sí, eliminarlo'
     }).then((result) => {
       if (result.isConfirmed) {
         localStorage.removeItem('pdfHorarioBOT');
         setPdfUrl(null);
-        Swal.fire({
-          icon: 'success',
-          title: 'PDF eliminado',
-          text: 'El documento fue eliminado correctamente.',
-          showConfirmButton: false,
-          timer: 2000
-        });
+        Swal.fire({ icon: 'success', title: 'PDF eliminado', text: 'El documento fue eliminado correctamente.', showConfirmButton: false, timer: 2000 });
       }
     });
   };
 
   return (
-    <>
-      <section className='sectFirst'>
-        <div className='min-h-max flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] fixed left-0'>
-          <div className="absolute top-4 left-4 z-50">
-            <ItemNavBar route="/PanelAdmin" content=" " />
-          </div>
-          <img className='ImgLogo' src={logoBasuraOnTime} alt="Logo" />
-          <p className='FontCursive text-5xl text-center text-white'>BASURA ON TIME</p>
+    <section className="sectFirst min-h-screen flex flex-col md:flex-row bg-[var(--Voscuro2)]">
+
+      {/* Header móvil */}
+      <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-8 pb-5 fixed top-0 left-0 z-50">
+        <div className="absolute top-2 left-2 z-50 scale-80">
+          <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
+        <img src={logoBasuraOnTime} alt="Logo" className="w-28 h-auto mt-2" />
+        <p className="FontCursive text-3xl text-white mt-2">BASURA ON TIME</p>
+      </div>
 
-        <div className='DivPanelAdmin FontGeologica'>
-          <button
-            onClick={() => document.getElementById("pdfInput").click()}
-            className='group cursor-pointer flex flex-col justify-center items-center text-white bg-[var(--Voscuro2)] 
-                       rounded-2xl w-80 h-30 text-3xl gap-3
-                       transition-all duration-300 ease-in-out
-                       hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'>
-            Importar
-          </button>
+      {/* Sidebar PC */}
+      <div className="hidden md:flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
+        <div className="absolute top-4 left-4 z-50">
+          <ItemNavBar route="/PanelAdmin" content=" " />
+        </div>
+        <img className="ImgLogo" src={logoBasuraOnTime} alt="Logo" />
+        <p className="FontCursive text-5xl text-center text-white">BASURA ON TIME</p>
+      </div>
 
-          <input
-            type="file"
-            id="pdfInput"
-            accept="application/pdf"
-            style={{ display: "none" }}
-            onChange={handleFileChange}
-          />
+      {/* Contenido */}
+      <div className="flex-1 flex flex-col items-center justify-start mt-35 sm:mt-5 md:ml-[700px] px-4 pt-28 md:pt-10 pb-6 FontGeologica w-full overflow-y-auto">
 
-          <p className='text-5xl text-white m-7'>Documentos recolección BOT</p>
+        <h1 className="text-3xl md:text-5xl text-white mb-6 text-center">Documentos de recolección BOT</h1>
 
-          {pdfUrl && (
-            <div className="flex flex-col items-center">
-              <embed src={pdfUrl} type="application/pdf" width="700" height="500" className="rounded-xl shadow-lg" />
-              <p className='text-white m-5'>Horario de recolección en las áreas públicas</p>
-              <button
-                onClick={handleDeletePdf}
-                className="mt-4 text-white bg-red-600 px-6 py-2 rounded-xl text-lg hover:bg-red-700 transition-all"
-              >
-                Eliminar PDF
-              </button>
+        <button
+          onClick={() => document.getElementById("pdfInput").click()}
+          className="group cursor-pointer flex justify-center items-center text-white bg-[var(--Voscuro2)] rounded-2xl px-6 py-2 text-xl transition-all hover:scale-105 hover:shadow-2xl active:scale-95 mb-8"
+        >
+          Importar PDF
+        </button>
+
+        <input
+          type="file"
+          id="pdfInput"
+          accept="application/pdf"
+          style={{ display: "none" }}
+          onChange={handleFileChange}
+        />
+
+        {pdfUrl ? (
+          <div className="flex flex-col items-center w-full max-w-[800px]">
+            <div className="w-full h-auto rounded-xl shadow-lg overflow-hidden">
+              <embed src={pdfUrl} type="application/pdf" width="100%" height="500px" className="rounded-xl" />
             </div>
-          )}
-        </div>
-      </section>
-    </>
+            <p className="text-white mt-5 text-center">Horario de recolección en las áreas públicas</p>
+            <button
+              onClick={handleDeletePdf}
+              className="group cursor-pointer mt-4 text-white bg-red-600 px-6 py-2 rounded-xl text-lg hover:bg-red-700 transition-all hover:scale-105 hover:shadow-2xl active:scale-95"
+            >
+              Eliminar PDF
+            </button>
+          </div>
+        ) : (
+          <p className="text-white text-lg mt-6 text-center">No hay documentos cargados.</p>
+        )}
+      </div>
+    </section>
   );
 };
 

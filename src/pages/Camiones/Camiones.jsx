@@ -177,7 +177,7 @@ const Camiones = () => {
 
             {/* Header móvil */}
             <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-8 pb-5 fixed top-0 left-0 z-50">
-                <div className="absolute top-2 left-2 z-50 scale-75">
+                <div className="absolute top-2 left-2 z-50 scale-80">
                     <ItemNavBar route="/PanelAdmin" content=" " />
                 </div>
                 <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-28 h-auto mt-2" />
@@ -187,7 +187,7 @@ const Camiones = () => {
             {/* Contenido */}
             <div className="flex-1 flex flex-col items-center justify-start md:ml-[250px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
 
-                <div className="mt-35 sm:ml-100 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[800px] max-h-[70vh] overflow-y-auto overflow-x-hidden">
+                <div className="mt-30 sm:mt-15 sm:ml-100 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[800px] max-h-[70vh] overflow-y-auto overflow-x-hidden">
                     <h1 className="text-3xl md:text-5xl text-white mb-6 text-center">Gestión de camiones</h1>
 
                     <div className="flex flex-col md:flex-row gap-8 mb-6">
@@ -217,7 +217,7 @@ const Camiones = () => {
                         </div>
 
                         {camionesFiltrados.map((camion, index) => (
-                            <div key={index} className="grid grid-cols-1 md:grid-cols-7 gap-3 md:gap-2 text-left md:text-center text-lg p-4 border border-[var(--Vclaro3)] min-w-[600px] md:min-w-0">
+                            <div key={index} className="grid grid-cols-1 md:grid-cols-7 gap-3 md:gap-2 text-left md:text-center text-lg p-4 border border-[var(--Vclaro3)] min-w-[220px] md:min-w-0">
 
                                 <div>
                                     <span className="font-bold md:hidden">Placa: </span>{camion.placa}

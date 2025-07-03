@@ -44,7 +44,7 @@ const PanelAdmin = () => {
 
                 <p className="text-3xl md:text-5xl text-white mb-6 text-center">Panel de Administración</p>
 
-                <div className="grid grid-cols-2 sm:grid-cols-2 mt-10 ml-5 gap-4 md:gap-8 w-full max-w-[600px]">
+                <div className="grid grid-cols-2 sm:grid-cols-2 mt-10 ml-4 gap-4 md:gap-8 w-full max-w-[600px]">
 
                     <ItemNavBar route="/Camiones">
                         <button className="group cursor-pointer flex flex-col justify-center items-center text-white bg-[var(--Voscuro2)]
@@ -88,7 +88,7 @@ const PanelAdmin = () => {
 
                 {/* Botón Cerrar Sesión */}
                 <button
-                    className="m-10 bg-red-500 text-white px-9 py-6 sm:px-6 sm:py-4 text-lg md:text-xl rounded-lg  hover:bg-red-600 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95"
+                    className="group cursor-pointer m-10 bg-red-500 text-white px-9 py-6 sm:px-6 sm:py-4 text-lg md:text-xl rounded-lg  hover:bg-red-600 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95"
                     onClick={handleLogout}
                 >
                     Cerrar sesión
