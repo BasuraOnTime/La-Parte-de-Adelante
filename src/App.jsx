@@ -15,8 +15,8 @@ import RutasU from './pages/RutasU/RutasU'
 import EstadoCamionesU from './pages/EstadoCamioneU/EstadoCamionesU'
 import ConsultarRU from './pages/ConsultarRU/ConsultarRU'
 import PanelDU from './pages/PanelDusuario/PanelDU'
-import Recuperar from './pages/RecuperarC/Recuperar'
-import Mapa from './pages/Api mapa/MapWithSearch'
+import RegistroC from './pages/RegistroC/RegistroConductor'
+import LoginC from './pages/LoginC/LoginConductor'
 
 
 export function App() {
@@ -41,9 +41,9 @@ export function App() {
         <Route path="/SolicitudesE" element={<SolicitudesE />} />
         <Route path="/InicioS" element={<InicioS />} />
         <Route path="/ConsultarRU" element={<ConsultarRU />} />
-        <Route path="/PanelDU" element={<PanelDU />} />
-        <Route path="/Recuperar" element={<Recuperar />} />
-        <Route path="/Mapa" element={<Mapa />} />
+        <Route path="/PanelDU" element={<PanelDU />} /> 
+        <Route path="/RegistroC" element={<RegistroC />} /> 
+        <Route path="/LoginC" element={<LoginC />} /> 
       </Routes>
     </>
   )
