@@ -16,6 +16,8 @@ const Register = () => {
   const [nombres, setNombres] = useState('');
   const [apellidos, setApellidos] = useState('');
   const [telefono, setTelefono] = useState('');
+  const [latitud, setLatitud] = useState('');
+  const [longitud, setLongitud] = useState('');
   const [showPassword, setShowPassword] = useState(false);
 
   const navigate = useNavigate();
@@ -34,7 +36,9 @@ const Register = () => {
         password,
         nombres,
         apellidos,
-        telefono
+        telefono,
+        latitud,
+        longitud
       });
       success = true;
       handleRegister();
@@ -43,6 +47,33 @@ const Register = () => {
       handleRegister();
       console.error('Error registrando el usuario:', error);
       throw error;
+    }
+  }
+  const handleGuardarDireccion = () => {
+    try {
+        navigator.geolocation.getCurrentPosition((position) => {
+          const { latitude, longitude } = position.coords;
+          console.log(`Latitud: ${latitude}, Longitud: ${longitude}`);
+          setLatitud(latitude);
+          setLongitud(longitude);
+          Swal.fire({
+            icon: 'success',
+            title: 'Ubicación guardada',
+            text: `Latitud: ${latitude}, Longitud: ${longitude}`,
+            showConfirmButton: false,
+            timer: 2000,
+            timerProgressBar: true,
+          });
+        }, (error) => {
+          console.error('Error obteniendo la ubicación:', error);
+          Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'No se pudo obtener la ubicación.',
+          });
+        });
+    } catch (error) {
+      console.error('Error en la obtención de la ubicación:', error);
     }
   }
 
@@ -69,32 +100,6 @@ const Register = () => {
         icon: 'error',
         confirmButtonText: 'Intentar de nuevo',
         confirmButtonColor: '#0A372D',
-      });
-    }
-  };
-
-  const handleGuardarDireccion = async () => {
-    try {
-      // Simula el guardado (puedes reemplazarlo con una API real)
-      await new Promise((resolve) => setTimeout(resolve, 1500));
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Dirección guardada',
-        text: 'La dirección se guardó correctamente.',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
-      });
-
-    } catch (error) {
-      Swal.fire({
-        icon: 'error',
-        title: 'Error',
-        text: 'No se pudo guardar la dirección.',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true,
       });
     }
   };

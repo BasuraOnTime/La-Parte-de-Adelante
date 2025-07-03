@@ -8,7 +8,7 @@ import axios from "axios";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
-  const URL = 'https://express-latest-6gmf.onrender.com/profile';
+  const URL = 'http://localhost:10101/profile';
   const token = localStorage.getItem("token");
   const [user, setUser] = useState({ nombres: "", email: "" });
   const [vista, setVista] = useState("inicio");

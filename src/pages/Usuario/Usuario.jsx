@@ -6,36 +6,45 @@ import Swal from 'sweetalert2';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import Perfil from '../../assets/img/icons/perfil.jpg';
 import './Usuario.css';
+import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
+
+const containerStyle = {
+  width: '100%',
+  height: '500px'
+};
 
 const UserProfileApp = () => {
   const URL = 'https://express-latest-6gmf.onrender.com/profile';
   const token = localStorage.getItem('token');
-  const [direccion, setDireccion] = useState('Calle Falsa 123, Ciudad');
   const [showModal, setShowModal] = useState(false);
   const [showEditModal, setShowEditModal] = useState(false);
-
+  
   const [email, setEmail] = useState('');
   const [nombre, setNombre] = useState('');
   const [apellido, setApellido] = useState('');
   const [Telefono, setTelefono] = useState('');
+  const [latitud, setLatitud] = useState('');
+  const [longitud, setLongitud] = useState('');
+  const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  useEffect(() => {
+  useEffect(() => async () => {
     if (token) {
-      axios.get(URL, {
+      await axios.get(URL, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          const { email, nombres, apellidos, telefono, direccion } = response.data.data;
-          setEmail(email);
-          setNombre(nombres);
-          setApellido(apellidos);
-          setTelefono(telefono);
-          setDireccion(direccion);
-        })
-        .catch(error => console.error('Error al obtener los datos del usuario:', error));
+      .then(response => {
+        const { email, nombres, apellidos, telefono, latitud, longitud } = response.data.data[0];
+        setEmail(email);
+        setNombre(nombres);
+        setApellido(apellidos);
+        setTelefono(telefono);
+        setLatitud(latitud);
+        setLongitud(longitud);
+      })
+      .catch(error => console.error('Error al obtener los datos del usuario:', error));
     } else {
       Swal.fire({
         icon: 'error',
@@ -45,6 +54,9 @@ const UserProfileApp = () => {
         showConfirmButton: false,
       });
     }
+    console.log(response.data.data[0]);
+    // Cargar ubicación del usuario
+    setPosition({ lat: parseFloat(latitud), lng: parseFloat(longitud) });
   }, [token]);
 
   const handleEliminarCuenta = () => {
@@ -117,30 +129,15 @@ const UserProfileApp = () => {
           <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><User size={16} /> Apellidos</label><p className="mt-1 text-lg">{apellido}</p></div>
           <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><Phone size={16} /> Teléfono</label><p className="mt-1 text-lg">{Telefono}</p></div>
 
-          <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2 flex items-center gap-1">
-              <MapPin size={16} /> Dirección
-            </label>
-            <input
-              type="text"
-              value={direccion}
-              onChange={(e) => setDireccion(e.target.value)}
-              className="w-full px-4 py-2 mb-3 border rounded-lg text-[var(--Voscuro)]"
-              placeholder="Escribe tu dirección"
-            />
-            <div className="w-full h-48">
-              <iframe
-                title="Mapa de ubicación"
-                width="100%"
-                height="100%"
-                className="rounded-lg"
-                style={{ border: 0 }}
-                loading="lazy"
-                allowFullScreen
-                src={`https://www.google.com/maps?q=${encodeURIComponent(direccion)}&output=embed`}
-              />
-            </div>
-          </div>
+      <LoadScript googleMapsApiKey={'AIzaSyAbTX5wP7twg96yad7yEg99u9yT60ZPwp4'}>
+      <GoogleMap
+        mapContainerStyle={containerStyle}
+        center={position}
+        zoom={15}
+      >
+        <Marker position={position} />
+      </GoogleMap>
+    </LoadScript>
 
           <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><Lock size={16} /> Contraseña</label><p className="mt-1 text-lg">••••••••</p></div>
 
