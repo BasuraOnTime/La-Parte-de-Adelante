@@ -17,6 +17,7 @@ import ConsultarRU from './pages/ConsultarRU/ConsultarRU'
 import PanelDU from './pages/PanelDusuario/PanelDU'
 import RegistroC from './pages/RegistroC/RegistroConductor'
 import LoginC from './pages/LoginC/LoginConductor'
+import PanelC from './pages/PanelC/PanelC'
 
 
 export function App() {
@@ -43,7 +44,8 @@ export function App() {
         <Route path="/ConsultarRU" element={<ConsultarRU />} />
         <Route path="/PanelDU" element={<PanelDU />} /> 
         <Route path="/RegistroC" element={<RegistroC />} /> 
-        <Route path="/LoginC" element={<LoginC />} /> 
+        <Route path="/LoginC" element={<LoginC />} />
+        <Route path="/PanelC" element={<PanelC />} />
       </Routes>
     </>
   )
