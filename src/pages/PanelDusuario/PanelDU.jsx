@@ -1,17 +1,29 @@
+import {
+  UserCircle,
+  Home,
+  Truck,
+  MapPin,
+  Menu,
+  LogOut,
+  X as CloseIcon
+} from "lucide-react";
 import { useState, useEffect } from "react";
-import { UserCircle, LogOut, Home, Truck, MapPin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import PanelEstadoCamionesU from "../EstadoCamioneU/EstadoCamionesU";
 import ConsultaRutasU from "../ConsultarRU/ConsultarRU";
 import Usuario from "../Usuario/Usuario";
 import axios from "axios";
+import {io} from "socket.io-client"
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
   const URL = 'https://express-latest-6gmf.onrender.com/profile';
+  const socket = io('http://localhost:10101');
   const token = localStorage.getItem("token");
   const [user, setUser] = useState({ nombres: "", email: "" });
+  const [id_usuario, setId_usuario] = useState('')
   const [vista, setVista] = useState("inicio");
+  const [menuAbierto, setMenuAbierto] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,6 +34,7 @@ export default function UserDashboard() {
                     Authorization: `Bearer ${token}`
                 }
             });
+            setId_usuario(response.data.data[0].id_usuario)
             setUser(response.data.data[0]);
         } catch (error) {
             console.error('Error verifying token:', error);
@@ -29,7 +42,16 @@ export default function UserDashboard() {
             navigate('/InicioS');
         }
      }
-     verifyToken();    
+     verifyToken();
+     socket.emit('register_user', id_usuario )
+     
+     socket.on('truck_nearby', (data) =>{
+        alert(`🚛 El camión está cerca: ${data.message}`);
+     })
+
+     return() =>{
+      socket.off('truck_nearby')
+     }
   }, [])
 
   const renderVista = () => {
@@ -61,65 +83,121 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="min-h-screen flex bg-[#0d1c18] text-white">
-      {/* Sidebar */}
+    <div className="min-h-screen flex flex-col md:flex-row bg-[#0d1c18] text-white relative">
+      {/* Menú hamburguesa para móvil */}
+      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-[#001f18] shadow-md z-50">
+        <h2 className="text-xl font-bold">Panel</h2>
+        <button onClick={() => setMenuAbierto(true)}>
+          <Menu size={28} />
+        </button>
+      </div>
+
+      {/* Sidebar grande (escritorio) */}
       <aside className="w-64 bg-[#001f18] shadow-lg hidden md:flex flex-col">
-        <div className="p-6 border-b border-[#003830]">
-          <h2 className="text-2xl font-bold text-white">Mi Panel</h2>
-        </div>
-        <nav className="flex flex-col gap-1 p-4 flex-1">
-          <NavItem
-            active={vista === "inicio"}
-            icon={<Home size={22} />}
-            label="Inicio"
-            onClick={() => setVista("inicio")}
-          />
-          <NavItem
-            active={vista === "camiones"}
-            icon={<Truck size={22} />}
-            label="Camiones"
-            onClick={() => setVista("camiones")}
-          />
-          <NavItem
-            active={vista === "rutas"}
-            icon={<MapPin size={22} />}
-            label="Rutas"
-            onClick={() => setVista("rutas")}
-          />
-          <NavItem
-            active={vista === "usuario"}
-            icon={<UserCircle size={22} />}
-            label="Usuario"
-            onClick={() => setVista("usuario")}
-          />
-          <NavItem
-            active={vista === "solicitud"}
-            icon={<MapPin size={22} />}
-            label="Solicitudes"
-            onClick={() => setVista("solicitud")}
-          />
-        </nav>
-        <div className="p-4 border-t border-[#003830]">
-          <NavItem
-            icon={<LogOut size={22} />}
-            label="Cerrar sesión"
-            onClick={() => alert("Sesión cerrada")}
-          />
-        </div>
+        <SidebarNav vista={vista} setVista={setVista} closeMenu={() => {}} />
       </aside>
 
-      {/* Main Content */}
-      <main className="flex-1 p-6 md:p-10 space-y-6">
-        <header className="flex items-center justify-between mb-4">
-          <div>
-            <h1 className="text-3xl font-bold">¡Hola, {user.nombres}!</h1>
+      {/* Sidebar móvil animado */}
+      {menuAbierto && (
+        <>
+          <div
+            className="fixed inset-0 bg-black bg-opacity-50 z-40"
+            onClick={() => setMenuAbierto(false)}
+          ></div>
+          <div
+            className="fixed top-0 left-0 w-64 h-full bg-[#001f18] shadow-md p-4 z-50 animate-slide-in"
+          >
+            <div className="flex justify-between items-center mb-4">
+              <h2 className="text-xl font-bold">Menú</h2>
+              <button onClick={() => setMenuAbierto(false)}>
+                <CloseIcon size={24} />
+              </button>
+            </div>
+            <SidebarNav
+              vista={vista}
+              setVista={(v) => {
+                setVista(v);
+                setMenuAbierto(false);
+              }}
+              closeMenu={() => setMenuAbierto(false)}
+            />
           </div>
+        </>
+      )}
+
+      {/* Contenido principal */}
+      <main className="flex-1 p-6 md:p-10 space-y-6 pt-20 md:pt-0">
+        <header className="flex items-center justify-between mb-4">
+          <h1 className="text-3xl font-bold">¡Hola, {user.nombres}!</h1>
           <UserCircle className="text-white" size={45} />
         </header>
 
         {renderVista()}
       </main>
+
+      {/* Animación Tailwind */}
+      <style>
+        {`
+        @keyframes slide-in {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(0); }
+        }
+
+        .animate-slide-in {
+          animation: slide-in 0.3s ease-out forwards;
+        }
+        `}
+      </style>
     </div>
+  );
+}
+
+function SidebarNav({ vista, setVista }) {
+  return (
+    <>
+      <div className="p-6 border-b border-[#003830]">
+        <h2 className="text-2xl font-bold text-white">Mi Panel</h2>
+      </div>
+      <nav className="flex flex-col gap-1 p-4 flex-1">
+        <NavItem
+          active={vista === "inicio"}
+          icon={<Home size={22} />}
+          label="Inicio"
+          onClick={() => setVista("inicio")}
+        />
+        <NavItem
+          active={vista === "camiones"}
+          icon={<Truck size={22} />}
+          label="Camiones"
+          onClick={() => setVista("camiones")}
+        />
+        <NavItem
+          active={vista === "rutas"}
+          icon={<MapPin size={22} />}
+          label="Rutas"
+          onClick={() => setVista("rutas")}
+        />
+        <NavItem
+          active={vista === "usuario"}
+          icon={<UserCircle size={22} />}
+          label="Usuario"
+          onClick={() => setVista("usuario")}
+        />
+        <NavItem
+          active={vista === "solicitud"}
+          icon={<MapPin size={22} />}
+          label="Solicitudes"
+          onClick={() => setVista("solicitud")}
+        />
+      </nav>
+      <div className="p-4 border-t border-[#003830]">
+        <NavItem
+          icon={<LogOut size={22} />}
+          label="Cerrar sesión"
+          onClick={() => alert("Sesión cerrada")}
+        />
+      </div>
+    </>
   );
 }
 
@@ -127,8 +205,8 @@ function NavItem({ icon, label, onClick, active }) {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-3 px-4 py-3 rounded-lg text-left font-medium transition-all
-        ${active ? "bg-[#004030] text-white" : "text-gray-300 hover:bg-[#002d24] hover:text-white"}`}
+      className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left font-medium transition
+        ${active ? "bg-[#004030] text-white" : "text-gray-300 hover:bg-[#002d24]"}`}
     >
       {icon}
       <span>{label}</span>

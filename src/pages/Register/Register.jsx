@@ -11,6 +11,7 @@ const Register = () => {
   let success = false;
   const URL = 'https://express-latest-6gmf.onrender.com/register';
 
+  const [id_rol, setId_rol] = useState(2);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [nombres, setNombres] = useState('');
@@ -31,7 +32,9 @@ const Register = () => {
 
   const registerData = async () => {
     try {
+      console
       const response = await axios.post(URL, {
+        id_rol,
         email,
         password,
         nombres,
@@ -44,6 +47,7 @@ const Register = () => {
       handleRegister();
       return response.data;
     } catch (error) {
+  
       handleRegister();
       console.error('Error registrando el usuario:', error);
       throw error;
