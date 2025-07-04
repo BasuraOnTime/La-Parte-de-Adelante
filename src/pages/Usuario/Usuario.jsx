@@ -5,13 +5,9 @@ import { Pencil, Trash2, MapPin, Mail, User, Phone, Lock } from 'lucide-react';
 import Swal from 'sweetalert2';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import Perfil from '../../assets/img/icons/perfil.jpg';
+import {MapaGoogle} from '../../Layouts/MapGoogle/MapGoogle';
 import './Usuario.css';
-import { GoogleMap, LoadScript, Marker } from '@react-google-maps/api';
 
-const containerStyle = {
-  width: '100%',
-  height: '500px'
-};
 
 const UserProfileApp = () => {
   const URL = 'https://express-latest-6gmf.onrender.com/profile';
@@ -28,14 +24,16 @@ const UserProfileApp = () => {
   const [position, setPosition] = useState({ lat: 0, lng: 0 });
   const [passwordConfirm, setPasswordConfirm] = useState('');
 
-  useEffect(() => async () => {
-    if (token) {
-      await axios.get(URL, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then(response => {
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const response = await axios.get(URL, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          }
+        });
+      
+        console.log('Datos del usuario:', response.data.data[0]);
         const { email, nombres, apellidos, telefono, latitud, longitud } = response.data.data[0];
         setEmail(email);
         setNombre(nombres);
@@ -43,20 +41,11 @@ const UserProfileApp = () => {
         setTelefono(telefono);
         setLatitud(latitud);
         setLongitud(longitud);
-      })
-      .catch(error => console.error('Error al obtener los datos del usuario:', error));
-    } else {
-      Swal.fire({
-        icon: 'error',
-        title: 'No estás autenticado',
-        text: 'Por favor, inicia sesión.',
-        timer: 2000,
-        showConfirmButton: false,
-      });
-    }
-    console.log(response.data.data[0]);
-    // Cargar ubicación del usuario
-    setPosition({ lat: parseFloat(latitud), lng: parseFloat(longitud) });
+      } catch (error) {
+        console.error('Error al obtener los datos del usuario:', error);
+      }
+    };
+    fetchUserData();
   }, [token]);
 
   const handleEliminarCuenta = () => {
@@ -129,16 +118,10 @@ const UserProfileApp = () => {
           <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><User size={16} /> Apellidos</label><p className="mt-1 text-lg">{apellido}</p></div>
           <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><Phone size={16} /> Teléfono</label><p className="mt-1 text-lg">{Telefono}</p></div>
 
-      <LoadScript googleMapsApiKey={'AIzaSyAbTX5wP7twg96yad7yEg99u9yT60ZPwp4'}>
-      <GoogleMap
-        mapContainerStyle={containerStyle}
-        center={position}
-        zoom={15}
-      >
-        <Marker position={position} />
-      </GoogleMap>
-    </LoadScript>
-
+          <MapaGoogle
+            latitud={latitud}
+            longitud={longitud} 
+          />
           <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><Lock size={16} /> Contraseña</label><p className="mt-1 text-lg">••••••••</p></div>
 
           <button

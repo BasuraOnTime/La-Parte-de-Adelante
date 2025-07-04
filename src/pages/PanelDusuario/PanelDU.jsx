@@ -8,7 +8,7 @@ import axios from "axios";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
-  const URL = 'http://localhost:10101/profile';
+  const URL = 'https://express-latest-6gmf.onrender.com/profile';
   const token = localStorage.getItem("token");
   const [user, setUser] = useState({ nombres: "", email: "" });
   const [vista, setVista] = useState("inicio");
@@ -22,7 +22,7 @@ export default function UserDashboard() {
                     Authorization: `Bearer ${token}`
                 }
             });
-            setUser(response.data.data);
+            setUser(response.data.data[0]);
         } catch (error) {
             console.error('Error verifying token:', error);
             localStorage.removeItem('token');
