@@ -22,9 +22,16 @@ import PanelC from './pages/PanelC/PanelC'
 
 export function App() {
   return (
-    <>
-      {/* Puedes dejar Header aquí si quieres que esté siempre visible */}
-      
+    <Routes>
+      {/* Rutas públicas */}
+      <Route path="/" element={<Home />} />
+      <Route path="/InicioS" element={<InicioS />} />
+      <Route path="/Register" element={<Register />} />
+      <Route path="/Admin" element={<Admin />} /> {/* ← CAMBIO: ya no está protegida */}
+      <Route path="/ContraR" element={<ContraR />} />
+      <Route path="/RutasU" element={<RutasU />} />
+      <Route path="/SolicitudesE" element={<SolicitudesE />} />
+      <Route path="Conductores" element={< Conductores/>} />
 
       <Routes>
         <Route path="/InicioS" element={<InicioS />} />
@@ -47,8 +54,8 @@ export function App() {
         <Route path="/LoginC" element={<LoginC />} />
         <Route path="/PanelC" element={<PanelC />} />
       </Routes>
-    </>
+    </Routes>
   )
 }
 
-export default App
+export default App;
