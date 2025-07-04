@@ -86,7 +86,11 @@ const Rutas = () => {
         {pdfUrl ? (
           <div className="flex flex-col items-center w-full max-w-[800px]">
             <div className="w-full h-auto rounded-xl shadow-lg overflow-hidden">
-              <embed src={pdfUrl} type="application/pdf" width="100%" height="450px" className="rounded-xl" />
+              <embed
+                src={pdfUrl}
+                type="application/pdf"
+                className="rounded-xl w-full h-[40vh] sm:w-[450px] sm:h-[450px] md:w-[600px] md:h-[500px] xl:w-full xl:h-[450px] 2xl:h-[450px]"
+              />
             </div>
             <p className="text-white mt-5 text-center text-sm md:text-lg">Horario de recolección en las áreas públicas</p>
             <button

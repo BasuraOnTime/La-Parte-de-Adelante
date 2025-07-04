@@ -257,13 +257,13 @@ const Camiones = () => {
                                 <div className="flex gap-2 md:justify-center justify-start mt-2 md:mt-0">
                                     <button
                                         onClick={() => { setShowForm(true); setModoEdicion(true); setCamionEditarIndex(index); setNuevoCamion(camion); }}
-                                        className="flex justify-center items-center rounded-md w-8 h-8 md:w-10 md:h-10 bg-[var(--Vclaro3)] text-white hover:scale-105"
+                                        className="group cursor-pointer flex justify-center items-center rounded-md w-8 h-8 md:w-10 md:h-10 bg-[var(--Vclaro3)] text-white hover:scale-105"
                                     >
                                         <MdEdit />
                                     </button>
                                     <button
                                         onClick={() => handleEliminar(index)}
-                                        className="flex justify-center items-center rounded-md w-8 h-8 md:w-10 md:h-10 bg-[var(--Rojo)] text-white hover:scale-105"
+                                        className="group cursor-pointer flex justify-center items-center rounded-md w-8 h-8 md:w-10 md:h-10 bg-[var(--Rojo)] text-white hover:scale-105"
                                     >
                                         <AiOutlineDelete />
                                     </button>
@@ -298,8 +298,8 @@ const Camiones = () => {
                         </select>
                         <input type="text" name="marca" value={nuevoCamion.marca} onChange={handleInputChange} placeholder="Marca" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
                         <div className="flex justify-end gap-4">
-                            <button type="button" onClick={driveCancelTruck} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
-                            <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
+                            <button type="button" onClick={driveCancelTruck} className="group cursor-pointer bg-[var(--Rojo)] px-4 py-2 rounded hover:scale-105">Cancelar</button>
+                            <button type="submit" className="group cursor-pointer bg-[var(--Vclaro3)] px-4 py-2 rounded hover:scale-105">Guardar</button>
                         </div>
                     </form>
                 </div>

@@ -164,10 +164,10 @@ const Conductores = () => {
                   <span className="font-bold md:hidden">Email: </span>{conductor.email}
                 </div>
                 <div className="flex gap-2 md:justify-center justify-start mt-2 md:mt-0">
-                  <button onClick={() => { setShowForm(true); setModoEdicion(true); setConductorEditarIndex(index); setNuevoConductor(conductor); }} className="flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105">
+                  <button onClick={() => { setShowForm(true); setModoEdicion(true); setConductorEditarIndex(index); setNuevoConductor(conductor); }} className="group cursor-pointer flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105">
                     <MdEdit />
                   </button>
-                  <button onClick={() => handleEliminar(index)} className="flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Rojo)] text-white hover:scale-105">
+                  <button onClick={() => handleEliminar(index)} className="group cursor-pointer flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Rojo)] text-white hover:scale-105">
                     <AiOutlineDelete />
                   </button>
                 </div>
@@ -190,8 +190,8 @@ const Conductores = () => {
             <input type="text" name="camion" value={nuevoConductor.camion} onChange={handleInputChange} placeholder="Camión asignado" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
             <input type="text" name="email" value={nuevoConductor.email} onChange={handleInputChange} placeholder="Email" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
             <div className="flex justify-end gap-4">
-              <button type="button" onClick={driveCancelDriver} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
-              <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
+              <button type="button" onClick={driveCancelDriver} className="group cursor-pointer bg-[var(--Rojo)] px-4 py-2 rounded hover:scale-105">Cancelar</button>
+              <button type="submit" className="group cursor-pointer bg-[var(--Vclaro3)] px-4 py-2 rounded hover:scale-105">Guardar</button>
             </div>
           </form>
         </div>

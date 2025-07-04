@@ -87,7 +87,8 @@ const SolicitudForm = () => {
 
         <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
           <InputField label="Zona" value={zona} onChange={(e) => setZona(e.target.value)} />
-          <InputField label="Fecha de Solicitud" type="date" value={fecha_solicitud} onChange={(e) => setFechaSolicitud(e.target.value)} />
+          <input className="flex justify-center rounded-md w-full h-8 text-center md:h-10 bg-[var(--Vclaro2)] text-[var(--Vgris)] text-sm md:text-lg items-center"
+            label="Fecha de Solicitud" type="date" value={fecha_solicitud} onChange={(e) => setFechaSolicitud(e.target.value)} />
           <InputField label="Cantidad" type="number" value={cantidad} onChange={(e) => setCantidad(e.target.value)} />
           <InputField label="Tipo de Residuo" value={tipo_residuo} onChange={(e) => setTipoResiduo(e.target.value)} />
           <InputField label="Tamaño" value={tamano} onChange={(e) => setTamano(e.target.value)} />
