@@ -51,26 +51,26 @@ const Rutas = () => {
           <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
         <img src={logoBasuraOnTime} alt="Logo" className="w-28 h-auto mt-2" />
-        <p className="FontCursive text-3xl text-white mt-2">BASURA ON TIME</p>
+        <p className="FontCursive text-base text-white mt-2 md:text-3xl">BASURA ON TIME</p>
       </div>
 
-      {/* Sidebar PC */}
-      <div className="hidden md:flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
+      {/* Logo lateral PC */}
+      <div className="hidden md:flex flex-col justify-center items-center h-screen bg-[var(--Voscuro2)] fixed left-0 z-10 xl:w-100 2xl:w-160 lg:w-[660px]">
         <div className="absolute top-4 left-4 z-50">
           <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
-        <img className="ImgLogo" src={logoBasuraOnTime} alt="Logo" />
-        <p className="FontCursive text-5xl text-center text-white">BASURA ON TIME</p>
+        <img className="xl:w-50 2xl:w-90 " src={logoBasuraOnTime} alt="Logo Basura On Time" />
+        <p className="FontCursive xl:text-4xl 2xl:text-5xl text-center text-white">BASURA ON TIME</p>
       </div>
 
       {/* Contenido */}
-      <div className="flex-1 flex flex-col items-center justify-start mt-35 sm:mt-5 md:ml-[700px] px-4 pt-28 md:pt-10 pb-6 FontGeologica w-full overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-start mt-35 sm:mt-5 xl:mt-0 xl:ml-105 2xl:ml-160 px-4 pt-28 md:pt-10 pb-6 FontGeologica w-full overflow-y-auto">
 
-        <h1 className="text-3xl md:text-5xl text-white mb-6 text-center">Documentos de recolección BOT</h1>
+        <h1 className="text-xl md:text-5xl xl:text-2xl text-white mb-6 text-center">Documentos de recolección BOT</h1>
 
         <button
           onClick={() => document.getElementById("pdfInput").click()}
-          className="group cursor-pointer flex justify-center items-center text-white bg-[var(--Voscuro2)] rounded-2xl px-6 py-2 text-xl transition-all hover:scale-105 hover:shadow-2xl active:scale-95 mb-8"
+          className="group cursor-pointer flex justify-center items-center text-white bg-[var(--Voscuro2)] rounded-2xl px-6 py-2 text-sm md:text-xl transition-all hover:scale-105 hover:shadow-2xl active:scale-95 mb-8"
         >
           Importar PDF
         </button>
@@ -86,21 +86,22 @@ const Rutas = () => {
         {pdfUrl ? (
           <div className="flex flex-col items-center w-full max-w-[800px]">
             <div className="w-full h-auto rounded-xl shadow-lg overflow-hidden">
-              <embed src={pdfUrl} type="application/pdf" width="100%" height="500px" className="rounded-xl" />
+              <embed src={pdfUrl} type="application/pdf" width="100%" height="450px" className="rounded-xl" />
             </div>
-            <p className="text-white mt-5 text-center">Horario de recolección en las áreas públicas</p>
+            <p className="text-white mt-5 text-center text-sm md:text-lg">Horario de recolección en las áreas públicas</p>
             <button
               onClick={handleDeletePdf}
-              className="group cursor-pointer mt-4 text-white bg-red-600 px-6 py-2 rounded-xl text-lg hover:bg-red-700 transition-all hover:scale-105 hover:shadow-2xl active:scale-95"
+              className="group cursor-pointer mt-4 text-white bg-red-600 px-6 py-2 rounded-xl text-sm md:text-lg hover:bg-red-700 transition-all hover:scale-105 hover:shadow-2xl active:scale-95"
             >
               Eliminar PDF
             </button>
           </div>
         ) : (
-          <p className="text-white text-lg mt-6 text-center">No hay documentos cargados.</p>
+          <p className="text-white text-sm md:text-lg mt-6 text-center">No hay documentos cargados.</p>
         )}
       </div>
     </section>
+
   );
 };
 

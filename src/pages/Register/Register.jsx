@@ -93,41 +93,43 @@ const Register = () => {
     <>
       <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
 
-        {/* Logo y texto */}
+        {/* Botón de Volver, fijo y fuera del contenedor */}
+        <div className="absolute top-4 left-4 md:top-6 md:left-6 z-50 scale-80 md:scale-100">
+          <ItemNavBar route="/" content="Volver" />
+        </div>
+
+        {/* Logo y Título */}
         <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>
-          <div className="absolute top-4 left-4 z-50">
-            <ItemNavBar route="/" content="Volver" />
-          </div>
           <img className='w-24 h-24 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo Basura on Time" />
-          <p className='FontCursive text-4xl text-center text-white md:text-6xl'>BASURA ON TIME</p>
+          <p className='FontCursive text-3xl md:text-6xl text-center text-white'>BASURA ON TIME</p>
         </div>
 
         {/* Formulario */}
         <div className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full p-6 rounded-3xl md:w-[480px] md:gap-4 md:rounded-4xl md:p-8'>
 
-          <p className='FontCursive text-3xl p-4 text-white text-center md:text-5xl md:p-7'>Registro</p>
+          <p className='FontCursive text-2xl md:text-5xl p-4 text-white text-center'>Registro</p>
 
           <input
             onChange={handleNameChange}
-            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-10 text-center placeholder:text-center text-white'
+            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-8 md:h-10 text-center placeholder:text-center text-white text-sm md:text-lg'
             type="text"
             placeholder='Nombres'
           />
           <input
             onChange={handleLastNameChange}
-            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-10 text-center placeholder:text-center text-white'
+            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-8 md:h-10 text-center placeholder:text-center text-white text-sm md:text-lg'
             type="text"
             placeholder='Apellidos'
           />
           <input
             onChange={handleEmailChange}
-            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-10 text-center placeholder:text-center text-white'
+            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-8 md:h-10 text-center placeholder:text-center text-white text-sm md:text-lg'
             type="text"
             placeholder='Correo electrónico'
           />
           <input
             onChange={handlePhoneChange}
-            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-10 text-center placeholder:text-center text-white'
+            className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[750px] h-8 md:h-10 text-center placeholder:text-center text-white text-sm md:text-lg'
             type="text"
             placeholder='Número de teléfono'
           />
@@ -135,7 +137,7 @@ const Register = () => {
           <div className="relative w-full max-w-[750px]">
             <input
               onChange={handlePasswordChange}
-              className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-white placeholder:text-center text-center'
+              className='rounded-md bg-[var(--Vclaro2)] w-full h-8 md:h-10 text-white placeholder:text-center text-center text-sm md:text-lg'
               type={showPassword ? "text" : "password"}
               placeholder='Contraseña'
               value={password}
@@ -146,29 +148,27 @@ const Register = () => {
               className="absolute inset-y-0 right-2 flex items-center text-gray-400 hover:text-white"
               aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
             >
-              {showPassword ? (
-                <EyeSlashIcon className="h-5 w-5" />
-              ) : (
-                <EyeIcon className="h-5 w-5" />
-              )}
+              {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
             </button>
           </div>
 
           <button
-            className='rounded-md w-full max-w-[750px] h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
+            className='rounded-md w-full max-w-[750px] h-8 md:h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95 text-sm md:text-lg'
             onClick={registerData}
           >
             Registrarse
           </button>
 
           <button
-            className='rounded-md w-full max-w-[750px] h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
+            className='rounded-md w-full max-w-[750px] h-8 md:h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95 text-sm md:text-lg'
             onClick={handleGuardarDireccion}
           >
             Guardar Dirección
           </button>
+
         </div>
       </section>
+
     </>
   );
 };

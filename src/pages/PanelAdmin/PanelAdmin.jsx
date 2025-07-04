@@ -28,9 +28,9 @@ const PanelAdmin = () => {
         <section className="sectFirst min-h-screen flex flex-col md:flex-row bg-[var(--Voscuro2)]">
 
             {/* Sidebar PC */}
-            <div className="hidden md:flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
-                <img className="ImgLogo" src={logoBasuraOnTime} alt="Logo Basura On Time" />
-                <p className="FontCursive text-5xl text-center text-white">BASURA ON TIME</p>
+            <div className="hidden md:flex flex-col justify-center items-center xl:w-120 2xl:w-160 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
+                <img className="xl:w-50 2xl:w-90" src={logoBasuraOnTime} alt="Logo Basura On Time" />
+                <p className="FontCursive xl:text-5xl 2xl:text-5xl text-center text-white">BASURA ON TIME</p>
             </div>
 
             {/* Header Móvil Fijo */}
@@ -40,11 +40,14 @@ const PanelAdmin = () => {
             </div>
 
             {/* Contenido Principal */}
-            <div className="flex-1 flex flex-col items-center justify-start md:ml-180 px-4 pt-28 md:pt-6 pb-6 FontGeologica relative">
+            <div className="flex-1 flex flex-col items-center justify-start xl:ml-120 2xl:ml-180 px-4 pt-28 md:pt-6 pb-6 FontGeologica relative">
 
-                <p className="text-3xl md:text-5xl text-white mb-6 text-center">Panel de Administración</p>
+                <p className="text-lg md:text-5xl text-white mt-25 sm:mt-2 text-center">
+                    Panel de Administración
+                </p>
 
-                <div className="grid grid-cols-2 sm:grid-cols-2 mt-10 ml-4 gap-4 md:gap-8 w-full max-w-[600px]">
+
+                <div className="grid grid-cols-2 sm:grid-cols-2 mt-7 sm:mt-10 items-center gap-4 md:gap-8 w-full max-w-[600px]">
 
                     <ItemNavBar route="/Camiones">
                         <button className="group cursor-pointer flex flex-col justify-center items-center text-white bg-[var(--Voscuro2)]
@@ -88,7 +91,7 @@ const PanelAdmin = () => {
 
                 {/* Botón Cerrar Sesión */}
                 <button
-                    className="group cursor-pointer m-10 bg-red-500 text-white px-9 py-6 sm:px-6 sm:py-4 text-lg md:text-xl rounded-lg  hover:bg-red-600 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95"
+                    className="group cursor-pointer mt-5 mr-5 ml-5 mb-2  bg-red-500 text-white px-9 py-6 sm:px-6 sm:py-4 text-lg md:text-xl rounded-lg  hover:bg-red-600 transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95"
                     onClick={handleLogout}
                 >
                     Cerrar sesión

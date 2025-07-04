@@ -23,49 +23,47 @@ const RutasU = () => {
   }, []);
 
   return (
-    <>
-      <section className="sectFirst min-h-screen flex flex-col md:flex-row">
+    <section className="sectFirst min-h-screen flex flex-col md:flex-row">
 
-        {/* LATERAL PC */}
-        <div className="hidden md:flex flex-col justify-center items-center w-180 h-screen bg-[var(--Voscuro2)] fixed left-0 ">
-          <div className="absolute top-4 left-4 z-50">
-            <ItemNavBar route="/" content=" " />
+      {/* LATERAL PC */}
+      <div className="hidden md:flex flex-col justify-center items-center xl:w-100 2xl:w-150 h-screen bg-[var(--Voscuro2)] fixed left-0">
+        <div className="absolute top-4 left-4 z-50">
+          <ItemNavBar route="/" content="Volver" />
+        </div>
+        <img className="xl:w-50 2xl:w-90" src={logoBasuraOnTime} alt="Logo Basura On Time" />
+        <p className="FontCursive xl:text-4xl 2xl:text-5xl text-center text-white mt-4">BASURA ON TIME</p>
+      </div>
+
+      {/* HEADER MOVIL */}
+      <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-12 pb-4 relative">
+        <div className="absolute top-2 left-2 scale-75">
+          <ItemNavBar route="/" content="Volver" />
+        </div>
+        <img src={logoBasuraOnTime} alt="Logo" className="w-24 h-auto mt-2" />
+        <p className="FontCursive text-3xl text-white mt-2">BASURA ON TIME</p>
+      </div>
+
+      {/* CONTENIDO DERECHO */}
+      <div className="flex-1 flex flex-col items-center justify-start xl:ml-100 2xl:ml-140 px-4 py-6 FontGeologica">
+        <p className="text-2xl md:text-4xl text-white mb-6 text-center">Horario recolección BOT</p>
+
+        {isValidPdf ? (
+          <div className="flex flex-col items-center w-full">
+            <embed
+              src={pdfUrl}
+              type="application/pdf"
+              className="w-full h-[300px] md:h-[500px] md:w-[700px] rounded-xl shadow-lg"
+            />
+            <p className="text-white mt-4 text-base md:text-lg">Horario de recolección en las áreas públicas</p>
           </div>
-          <img className="ImgLogo" src={logoBasuraOnTime} alt="Logo Basura On Time" />
-          <p className="FontCursive text-5xl text-center text-white">BASURA ON TIME</p>
-        </div>
+        ) : (
+          <p className="text-white text-lg md:text-2xl mt-10 text-center">
+            Aún no se ha cargado ningún documento válido.
+          </p>
+        )}
+      </div>
 
-        {/* HEADER MOVIL */}
-        <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-12 pb-4 relative">
-          <div className="absolute top-2 left-2 scale-75">
-            <ItemNavBar route="/" content=" " />
-          </div>
-          <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-28 h-auto mt-2" />
-          <p className="FontCursive text-3xl text-white mt-2">BASURA ON TIME</p>
-        </div>
-
-        {/* CONTENIDO DERECHO */}
-        <div className="flex-1 flex flex-col items-center justify-start md:ml-180 px-4 py-6 FontGeologica">
-          <p className="text-3xl md:text-5xl text-white mb-6 text-center">Horario recolección BOT</p>
-
-          {isValidPdf ? (
-            <div className="flex flex-col items-center w-full">
-              <embed
-                src={pdfUrl}
-                type="application/pdf"
-                className="w-full h-[350px] md:h-[500px] md:w-[700px] rounded-xl shadow-lg"
-              />
-              <p className="text-white mt-4">Horario de recolección en las áreas públicas</p>
-            </div>
-          ) : (
-            <p className="text-white text-lg md:text-2xl mt-10 text-center">
-              Aún no se ha cargado ningún documento válido.
-            </p>
-          )}
-        </div>
-
-      </section>
-    </>
+    </section>
   );
 };
 

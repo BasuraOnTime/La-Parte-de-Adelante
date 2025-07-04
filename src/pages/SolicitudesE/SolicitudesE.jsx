@@ -24,7 +24,6 @@ const SolicitudForm = () => {
         text: "Por favor inicia sesión para enviar la solicitud.",
         showConfirmButton: false,
         timer: 2000,
-        timerProgressBar: true,
       });
       return;
     }
@@ -33,9 +32,7 @@ const SolicitudForm = () => {
       title: "Enviando solicitud...",
       allowEscapeKey: false,
       allowOutsideClick: false,
-      didOpen: () => {
-        Swal.showLoading();
-      },
+      didOpen: () => Swal.showLoading(),
     });
 
     try {
@@ -50,11 +47,8 @@ const SolicitudForm = () => {
         title: "Solicitud enviada",
         text: "Tu solicitud fue enviada correctamente",
         timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false,
       });
 
-      // Limpiar campos
       setZona("");
       setFechaSolicitud("");
       setCantidad("");
@@ -68,25 +62,28 @@ const SolicitudForm = () => {
         title: "Error",
         text: "Ocurrió un problema al enviar la solicitud.",
       });
-      console.error("Error al enviar la solicitud:", error);
+      console.error(error);
     }
   };
 
   return (
     <section className="sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20">
 
+      {/* Botón de volver */}
+      <div className="absolute top-4 left-4 z-50 scale-80 md:scale-100">
+        <ItemNavBar route="/" content="Volver" />
+      </div>
+
       {/* Logo y texto */}
       <div className="flex flex-col justify-center items-center mb-6 md:mb-0">
-        <div className="absolute top-4 left-4 z-50">
-          <ItemNavBar route="/" content=" " />
-        </div>
         <img className="w-24 h-24 mb-4 md:w-[200px] md:h-[200px]" src={logoBasuraOnTime} alt="Logo" />
-        <p className="FontCursive text-4xl text-center text-white md:text-6xl">BASURA ON TIME</p>
+        <p className="FontCursive text-3xl md:text-6xl text-center text-white">BASURA ON TIME</p>
       </div>
 
       {/* Formulario */}
       <div className="FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full max-w-[450px] p-6 rounded-3xl md:w-[600px] md:gap-4 md:rounded-4xl md:p-8">
-        <p className="FontCursive text-3xl p-4 text-white text-center md:text-5xl md:p-7">Solicitud Especial</p>
+
+        <p className="FontCursive text-2xl md:text-5xl p-4 text-white text-center">Solicitud Especial</p>
 
         <form className="flex flex-col gap-4 w-full" onSubmit={handleSubmit}>
           <InputField label="Zona" value={zona} onChange={(e) => setZona(e.target.value)} />
@@ -97,7 +94,7 @@ const SolicitudForm = () => {
 
           <button
             type="submit"
-            className="rounded-md w-full h-10 bg-[var(--Vclaro)] text-white cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95"
+            className="rounded-md w-full h-8 md:h-10 bg-[var(--Vclaro)] text-white cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95 text-sm md:text-lg"
           >
             Enviar
           </button>
@@ -113,7 +110,7 @@ const InputField = ({ label, type = "text", value, onChange }) => (
     value={value}
     onChange={onChange}
     placeholder={label}
-    className="rounded-md bg-[var(--Vclaro2)] w-full h-10 text-center placeholder:text-center text-white"
+    className="rounded-md bg-[var(--Vclaro2)] w-full h-8 md:h-10 text-center placeholder:text-center text-white text-sm md:text-lg"
   />
 );
 

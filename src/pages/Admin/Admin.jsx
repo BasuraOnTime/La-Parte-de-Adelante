@@ -26,7 +26,6 @@ const Admin = () => {
 
     setTimeout(() => {
       if (user === "admin" && password === "admin") {
-        // Guardar token y rol para permitir el acceso
         localStorage.setItem("token", "admin-token");
         localStorage.setItem("rol", "admin");
 
@@ -56,39 +55,37 @@ const Admin = () => {
     }, 1500);
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const toggleShowPassword = () => setShowPassword(!showPassword);
 
   return (
     <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
 
       {/* Logo y texto */}
       <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>
-        <img className='w-24 h-24 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo" />
-        <p className='FontCursive text-4xl text-center text-white md:text-6xl'>BASURA ON TIME</p>
+        <img className='w-20 h-20 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo" />
+        <p className='FontCursive text-3xl text-center text-white md:text-6xl'>BASURA ON TIME</p>
       </div>
 
-      {/* Formulario con ancho controlado en PC */}
-      <div className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full sm:max-w-[400px] p-6 rounded-3xl md:w-[480px] md:min-h-[450px] md:gap-4 md:rounded-4xl md:p-8 md:max-w-none'>
+      {/* Formulario */}
+      <div className='FontGeologica flex flex-col justify-center items-center gap-3 bg-[var(--Voscuro2)] w-full max-w-[400px] p-5 rounded-3xl md:w-[480px] md:p-8 md:gap-4'>
 
-        <p className='FontCursive text-3xl p-4 text-white text-center md:text-5xl md:p-7'>Administrador</p>
+        <p className='FontCursive text-2xl p-3 text-white text-center md:text-5xl md:p-7'>Administrador</p>
 
         <input
           type="text"
           placeholder='Usuario'
           value={user}
           onChange={(e) => setUser(e.target.value)}
-          className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[500px] h-10 text-center placeholder:text-center text-white'
+          className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-center placeholder:text-center text-white text-base md:text-lg'
         />
 
-        <div className="relative w-full max-w-[500px]">
+        <div className="relative w-full">
           <input
             type={showPassword ? "text" : "password"}
             placeholder='Contraseña'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-white placeholder:text-center text-center'
+            className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-white placeholder:text-center text-center text-base md:text-lg'
           />
           <button
             onClick={toggleShowPassword}
@@ -104,14 +101,13 @@ const Admin = () => {
         </div>
 
         <button
-          className='rounded-md w-full max-w-[500px] h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95'
+          className='rounded-md w-full h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95 text-base md:text-lg'
           onClick={handleLogin}
         >
           Iniciar sesión
         </button>
       </div>
     </section>
-
   );
 };
 

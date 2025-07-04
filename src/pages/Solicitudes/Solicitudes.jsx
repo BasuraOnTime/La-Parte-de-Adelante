@@ -78,12 +78,12 @@ const Solicitudes = () => {
     <section className="sectFirst min-h-screen flex flex-col md:flex-row bg-[var(--Voscuro2)]">
 
       {/* Sidebar PC */}
-      <div className="hidden md:flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
+      <div className="hidden md:flex flex-col justify-center items-center xl:w-100 2xl:w-160 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
         <div className="absolute top-4 left-4 z-50">
           <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
-        <img className="ImgLogo" src={logoBasuraOnTime} alt="Logo Basura On Time" />
-        <p className="FontCursive text-5xl text-center text-white">BASURA ON TIME</p>
+        <img className="xl:w-50 2xl:w-90" src={logoBasuraOnTime} alt="Logo Basura On Time" />
+        <p className="FontCursive xl:text-4xl 2xl:text-5xl text-center text-white">BASURA ON TIME</p>
       </div>
 
       {/* Header móvil */}
@@ -92,21 +92,21 @@ const Solicitudes = () => {
           <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
         <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-28 h-auto mt-2" />
-        <p className="FontCursive text-3xl text-white mt-2">BASURA ON TIME</p>
+        <p className="FontCursive text-base md:text-3xl text-white mt-2">BASURA ON TIME</p>
       </div>
 
       {/* Contenido */}
-      <div className="flex-1 flex flex-col items-center justify-start md:ml-[250px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-start xl:ml-30 2xl:ml-65 px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
 
-        <div className="mt-30 sm:mt-15 sm:ml-100 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[800px] max-h-[70vh] overflow-y-auto overflow-x-hidden">
-          <h1 className="text-3xl md:text-5xl text-white mb-6 text-center">Gestión de Solicitudes</h1>
+        <div className="mt-30 sm:mt-15 xl:ml-70 2xl:ml-100 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[800px] max-h-[70vh] overflow-y-auto overflow-x-hidden">
+          <h1 className="text-xl md:text-5xl text-white mb-6 text-center">Gestión de Solicitudes</h1>
 
           <div className="flex flex-col md:flex-row gap-8 mb-6">
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="text-white rounded-md border border-[var(--Vclaro3)] text-center w-full h-12 md:w-120 text-xl"
+              className="text-white rounded-md border border-[var(--Vclaro3)] text-center w-full h-12 md:w-120 text-sm md:text-xl"
               placeholder="Buscar solicitud..."
             />
           </div>
@@ -123,7 +123,7 @@ const Solicitudes = () => {
             </div>
 
             {filteredSolicitudes.map(({ id, tipo, solicitante, fecha, aceptada }) => (
-              <div key={id} className={`grid grid-cols-1 md:grid-cols-5 gap-3 md:gap-2 text-left md:text-center text-lg p-4 border border-[var(--Vclaro3)] min-w-[220px] md:min-w-0 ${aceptada ? 'bg-[var(--Vclaro)] bg-opacity-40' : ''}`}>
+              <div key={id} className={`grid grid-cols-1 md:grid-cols-5 gap-3 md:gap-2 text-left md:text-center text-sm md:text-lg p-4 border border-[var(--Vclaro3)] min-w-[220px] md:min-w-0 ${aceptada ? 'bg-[var(--Vclaro)] bg-opacity-40' : ''}`}>
 
                 <div>
                   <span className="font-bold md:hidden">Id: </span>{id.toString().padStart(2, '0')}

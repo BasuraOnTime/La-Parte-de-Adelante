@@ -8,12 +8,12 @@ import Swal from 'sweetalert2';
 
 const Conductores = () => {
   const [conductores, setConductores] = useState([
-    { nombre: 'Carlos', apellidos: 'Pérez López', telefono: '987654321', tipo_licencia: 'A2', fecha_vencimiento_licencia: '2025-12-31', estado: 'Inactivo', camion: 'AQH11F', email: 'brayitaxx123@gmail.com', password: 'aaaa' },
-    { nombre: 'Ana', apellidos: 'Gómez Ruiz', telefono: '912345678', tipo_licencia: 'B1', fecha_vencimiento_licencia: '2026-08-15', estado: 'Inactivo', camion: 'AQH11F', email: 'brayitaxx123@gmail.com', password: 'aaaa' }
+    { nombre: 'Carlos', apellidos: 'Pérez López', telefono: '987654321', tipo_licencia: 'A2', fecha_vencimiento_licencia: '2025-12-31', estado: 'Inactivo', camion: 'AQH11F', email: 'brayitaxx123@gmail.com' },
+    { nombre: 'Ana', apellidos: 'Gómez Ruiz', telefono: '912345678', tipo_licencia: 'B1', fecha_vencimiento_licencia: '2026-08-15', estado: 'Inactivo', camion: 'AQH11F', email: 'brayitaxx123@gmail.com' }
   ]);
 
   const [nuevoConductor, setNuevoConductor] = useState({
-    nombre: '', apellidos: '', telefono: '', tipo_licencia: '', fecha_vencimiento_licencia: '', estado: 'Inactivo', camion: '', email: '', password: ''
+    nombre: '', apellidos: '', telefono: '', tipo_licencia: '', fecha_vencimiento_licencia: '', estado: 'Inactivo', camion: '', email: ''
   });
 
   const [modoEdicion, setModoEdicion] = useState(false);
@@ -71,8 +71,8 @@ const Conductores = () => {
 
   const handleSubmitDriver = (e) => {
     e.preventDefault();
-    const { nombre, apellidos, telefono, tipo_licencia, fecha_vencimiento_licencia, camion, email, password } = nuevoConductor;
-    if (!nombre || !apellidos || !telefono || !tipo_licencia || !fecha_vencimiento_licencia || !camion || !email || !password) {
+    const { nombre, apellidos, telefono, tipo_licencia, fecha_vencimiento_licencia, camion, email, } = nuevoConductor;
+    if (!nombre || !apellidos || !telefono || !tipo_licencia || !fecha_vencimiento_licencia || !camion || !email) {
       Swal.fire({ title: 'Error', text: 'Todos los campos son obligatorios.', icon: 'warning', confirmButtonColor: '#0A372D' });
       return;
     }
@@ -94,7 +94,7 @@ const Conductores = () => {
   };
 
   const resetForm = () => {
-    setNuevoConductor({ nombre: '', apellidos: '', telefono: '', tipo_licencia: '', fecha_vencimiento_licencia: '', estado: 'Inactivo', camion: '', email: '', password: '' });
+    setNuevoConductor({ nombre: '', apellidos: '', telefono: '', tipo_licencia: '', fecha_vencimiento_licencia: '', estado: 'Inactivo', camion: '', email: '' });
   };
 
   return (
@@ -106,31 +106,31 @@ const Conductores = () => {
           <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
         <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-28 h-auto mt-2" />
-        <p className="FontCursive text-3xl text-white mt-2">BASURA ON TIME</p>
+        <p className="FontCursive text-base md:text-3xl text-white mt-2">BASURA ON TIME</p>
       </div>
 
       {/* Logo lateral PC */}
-      <div className="hidden md:flex flex-col justify-center items-center w-170 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
+      <div className="hidden md:flex flex-col justify-center items-center h-screen bg-[var(--Voscuro2)] fixed left-0 z-10 xl:w-75 2xl:w-140">
         <div className="absolute top-4 left-4 z-50">
           <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
-        <img className="ImgLogo" src={logoBasuraOnTime} alt="Logo Basura On Time" />
-        <p className="FontCursive text-5xl text-center text-white">BASURA ON TIME</p>
+        <img className="xl:w-50 2xl:w-90" src={logoBasuraOnTime} alt="Logo Basura On Time" />
+        <p className="FontCursive xl:text-4xl 2xl:text-5xl text-center text-white">BASURA ON TIME</p>
       </div>
 
       {/* Contenido */}
-      <div className="flex-1 flex flex-col items-center justify-start md:ml-[250px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-start xl:ml-25 2xl:ml-[250px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
 
-        <div className="mt-35 sm:mt-10 sm:ml-100 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[1000px]">
-          <h1 className="text-3xl md:text-5xl text-white mb-6 text-center">Gestión de Conductores</h1>
+        <div className="mt-35 sm:mt-10 2xl:ml-80 xl:ml-50 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[900px]">
+          <h1 className="text-xl md:text-5xl text-white mb-6 text-center">Gestión de Conductores</h1>
 
           <div className="flex flex-col md:flex-row gap-5 sm:gap-77 mb-6">
-            <button onClick={() => setShowForm(true)} className="group cursor-pointer rounded-md w-full md:w-40 h-12 bg-[var(--Vclaro3)] text-white text-xl transition-all hover:scale-105 hover:shadow-2xl active:scale-95">
+            <button onClick={() => setShowForm(true)} className="group cursor-pointer rounded-md w-full md:w-40 h-12 bg-[var(--Vclaro3)] text-white text-sm md:text-xl transition-all hover:scale-105 hover:shadow-2xl active:scale-95">
               Agregar
             </button>
             <input
               type="text"
-              className="text-white rounded-md border border-[var(--Vclaro3)] text-center w-full h-12 md:w-120 text-xl"
+              className="text-white rounded-md border border-[var(--Vclaro3)] text-center w-full h-12 md:w-120 text-sm md:text-xl"
               placeholder="Buscar conductor..."
               value={busqueda}
               onChange={(e) => setBusqueda(e.target.value)}
@@ -139,8 +139,7 @@ const Conductores = () => {
 
           <div className="w-full text-white">
 
-            {/* Cabecera */}
-            <div className="hidden md:grid grid-cols-10 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]">
+            <div className="hidden md:grid grid-cols-9 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]">
               <p>Nombre</p>
               <p>Apellidos</p>
               <p>Teléfono</p>
@@ -148,13 +147,12 @@ const Conductores = () => {
               <p>Vence</p>
               <p>Estado</p>
               <p>Camión</p>
-              <p>email</p>
-              <p>password</p>
+              <p>Email</p>
               <p>Acción</p>
             </div>
 
             {conductoresFiltrados.map((conductor, index) => (
-              <div key={index} className="grid grid-cols-1 md:grid-cols-10 gap-2 text-left md:text-center text-lg p-4 border border-[var(--Vclaro3)]">
+              <div key={index} className="grid grid-cols-1 md:grid-cols-9 gap-2 text-left md:text-center text-sm md:text-lg p-4 border border-[var(--Vclaro3)]">
                 <div><span className="font-bold md:hidden">Nombre: </span>{conductor.nombre}</div>
                 <div><span className="font-bold md:hidden">Apellidos: </span>{conductor.apellidos}</div>
                 <div><span className="font-bold md:hidden">Teléfono: </span>{conductor.telefono}</div>
@@ -165,10 +163,6 @@ const Conductores = () => {
                 <div className="flex item-center md:truncate md:max-w-[150px]" title={conductor.email}>
                   <span className="font-bold md:hidden">Email: </span>{conductor.email}
                 </div>
-                <div><span className="font-bold md:hidden">Password: </span>{conductor.password}</div>
-
-
-
                 <div className="flex gap-2 md:justify-center justify-start mt-2 md:mt-0">
                   <button onClick={() => { setShowForm(true); setModoEdicion(true); setConductorEditarIndex(index); setNuevoConductor(conductor); }} className="flex justify-center items-center rounded-md w-10 h-10 bg-[var(--Vclaro3)] text-white hover:scale-105">
                     <MdEdit />
@@ -180,7 +174,6 @@ const Conductores = () => {
               </div>
             ))}
           </div>
-
 
         </div>
       </div>
@@ -195,8 +188,7 @@ const Conductores = () => {
             <input type="text" name="tipo_licencia" value={nuevoConductor.tipo_licencia} onChange={handleInputChange} placeholder="Tipo de Licencia" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
             <input type="date" name="fecha_vencimiento_licencia" value={nuevoConductor.fecha_vencimiento_licencia} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border" />
             <input type="text" name="camion" value={nuevoConductor.camion} onChange={handleInputChange} placeholder="Camión asignado" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
-            <input type="text" name="email" value={nuevoConductor.email} onChange={handleInputChange} placeholder="email" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
-            <input type="text" name="password" value={nuevoConductor.password} onChange={handleInputChange} placeholder="password" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
+            <input type="text" name="email" value={nuevoConductor.email} onChange={handleInputChange} placeholder="Email" className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
             <div className="flex justify-end gap-4">
               <button type="button" onClick={driveCancelDriver} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
               <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
