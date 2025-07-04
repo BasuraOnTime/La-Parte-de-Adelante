@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { BotonBack } from '../../UI/BotonBack/BotonBack';
+import ItemNavBar from '../../UI/ItemNavBar/ItemNavBar';
+
 
 const RutasU = () => {
   const [pdfUrl, setPdfUrl] = useState(null);

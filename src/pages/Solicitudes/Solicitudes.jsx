@@ -3,6 +3,7 @@ import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { FcOk } from "react-icons/fc";
 import { MdOutlineCancel } from "react-icons/md";
 import Swal from 'sweetalert2';
+import ItemNavBar from '../../UI/ItemNavBar/ItemNavBar';
 import { BotonBack } from '../../UI/BotonBack/BotonBack';
 import './Solicitudes.css'; // Asegúrate de tener el CSS correspondiente
 

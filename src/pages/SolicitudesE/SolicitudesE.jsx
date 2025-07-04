@@ -2,6 +2,7 @@ import axios from "axios";
 import React, { useState } from "react";
 import Swal from "sweetalert2";
 import { BotonBack } from "../../UI/BotonBack/BotonBack";
+import ItemNavBar from '../../UI/ItemNavBar/ItemNavBar';
 import logoBasuraOnTime from "../../assets/img/icons/logoBasuraOnTime.png";
 
 const SolicitudForm = () => {

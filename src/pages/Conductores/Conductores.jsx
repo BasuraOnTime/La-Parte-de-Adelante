@@ -3,7 +3,7 @@ import './Conductores.css';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { MdEdit } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
-import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
+import { BotonBack } from '../../UI/BotonBack/BotonBack';
 import Swal from 'sweetalert2';
 
 const Conductores = () => {
