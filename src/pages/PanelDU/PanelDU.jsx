@@ -7,8 +7,8 @@ import {
   Menu,
   X as CloseIcon
 } from "lucide-react";
-import EstadoCamiones  from '../EstadoCamionesU/EstadoCamionesU'
-import ConsultaRutasU from "../ConsultasRU/ConsultasRU"
+import EstadoCamiones from "../EstadoCamionesU/EstadoCamionesU";
+import RutasU from "../RutasU/RutasU";
 import Usuario from "../Usuario/Usuario";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
@@ -20,9 +20,9 @@ export default function UserDashboard() {
   const renderVista = () => {
     switch (vista) {
       case "camiones":
-        return < EstadoCamiones/>;
+        return <EstadoCamiones />;
       case "rutas":
-        return <ConsultaRutasU />;
+        return <RutasU />;
       case "usuario":
         return <Usuario />;
       case "solicitud":
@@ -46,30 +46,29 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="min-h-screen flex flex-col md:flex-row bg-[#0d1c18] text-white relative">
-      {/* Menú hamburguesa para móvil */}
-      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-[#001f18] shadow-md z-50">
+    <div className="h-screen flex flex-col md:flex-row bg-[var(--Voscuro)] text-white overflow-hidden">
+      
+      {/* Menú hamburguesa móvil */}
+      <div className="md:hidden flex items-center justify-between px-4 py-3 bg-[var(--Voscuro2)] shadow-md z-50">
         <h2 className="text-xl font-bold">Panel</h2>
         <button onClick={() => setMenuAbierto(true)}>
           <Menu size={28} />
         </button>
       </div>
 
-      {/* Sidebar grande (escritorio) */}
-      <aside className="w-64 bg-[#001f18] shadow-lg hidden md:flex flex-col">
-        <SidebarNav vista={vista} setVista={setVista} closeMenu={() => {}} />
+      {/* Sidebar escritorio */}
+      <aside className="w-64 bg-[var(--Voscuro2)] shadow-lg hidden md:flex flex-col pt-2">
+        <SidebarNav vista={vista} setVista={setVista} />
       </aside>
 
-      {/* Sidebar móvil animado */}
+      {/* Sidebar móvil */}
       {menuAbierto && (
         <>
           <div
             className="fixed inset-0 bg-black bg-opacity-50 z-40"
             onClick={() => setMenuAbierto(false)}
           ></div>
-          <div
-            className="fixed top-0 left-0 w-64 h-full bg-[#001f18] shadow-md p-4 z-50 animate-slide-in"
-          >
+          <div className="fixed top-0 left-0 w-64 h-full bg-[var(--Voscuro2)] shadow-md p-4 z-50 animate-slide-in pt-5">
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl font-bold">Menú</h2>
               <button onClick={() => setMenuAbierto(false)}>
@@ -82,15 +81,14 @@ export default function UserDashboard() {
                 setVista(v);
                 setMenuAbierto(false);
               }}
-              closeMenu={() => setMenuAbierto(false)}
             />
           </div>
         </>
       )}
 
       {/* Contenido principal */}
-      <main className="flex-1 p-6 md:p-10 space-y-6 pt-20 md:pt-0">
-        <header className="flex items-center justify-between mb-4">
+      <main className="flex-1 p-4 md:p-6 ">
+        <header className="flex items-start justify-between">
           <h1 className="text-3xl font-bold">¡Hola, {user.name}!</h1>
           <UserCircle className="text-white" size={45} />
         </header>
@@ -101,14 +99,13 @@ export default function UserDashboard() {
       {/* Animación Tailwind */}
       <style>
         {`
-        @keyframes slide-in {
-          0% { transform: translateX(-100%); }
-          100% { transform: translateX(0); }
-        }
-
-        .animate-slide-in {
-          animation: slide-in 0.3s ease-out forwards;
-        }
+          @keyframes slide-in {
+            0% { transform: translateX(-100%); }
+            100% { transform: translateX(0); }
+          }
+          .animate-slide-in {
+            animation: slide-in 0.3s ease-out forwards;
+          }
         `}
       </style>
     </div>
@@ -156,8 +153,9 @@ function NavItem({ icon, label, onClick, active }) {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left font-medium transition
-        ${active ? "bg-[#004030] text-white" : "text-gray-300 hover:bg-[#002d24]"}`}
+      className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left font-medium transition ${
+        active ? "bg-[var(--Voscuro)] text-white" : "text-gray-300 hover:bg-[var(--Voscuro)]"
+      }`}
     >
       {icon}
       <span>{label}</span>
@@ -167,7 +165,7 @@ function NavItem({ icon, label, onClick, active }) {
 
 function Card({ title, children }) {
   return (
-    <div className="bg-[#002918] p-6 rounded-xl shadow-md">
+    <div className="bg-[var(--Voscuro)] p-6 rounded-xl shadow-md">
       <h3 className="text-lg font-semibold mb-2">{title}</h3>
       {children}
     </div>

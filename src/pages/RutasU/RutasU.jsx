@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
-import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 
 const RutasU = () => {
   const [pdfUrl, setPdfUrl] = useState(null);
@@ -23,28 +22,22 @@ const RutasU = () => {
   }, []);
 
   return (
-    <section className="sectFirst min-h-screen flex flex-col md:flex-row">
+    <section className="h-fit flex flex-col md:flex-row items-center justify-center p-4 py-20 gap-10 bg-[var(--Voscuro)]">
 
-      {/* LATERAL PC */}
-      <div className="hidden md:flex flex-col justify-center items-center xl:w-100 2xl:w-150 h-screen bg-[var(--Voscuro2)] fixed left-0">
-        <div className="absolute top-4 left-4 z-50">
-          <ItemNavBar route="/" content="Volver" />
-        </div>
-        <img className="xl:w-50 2xl:w-90" src={logoBasuraOnTime} alt="Logo Basura On Time" />
-        <p className="FontCursive xl:text-4xl 2xl:text-5xl text-center text-white mt-4">BASURA ON TIME</p>
+      {/* Logo en móvil */}
+      <div className="flex md:hidden flex-col justify-center items-center mb-6">
+        <img className="w-[120px] mb-2" src={logoBasuraOnTime} alt="Logo Basura On Time" />
+        <p className="FontCursive text-3xl text-center text-white">BASURA ON TIME</p>
       </div>
 
-      {/* HEADER MOVIL */}
-      <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-12 pb-4 relative">
-        <div className="absolute top-2 left-2 scale-75">
-          <ItemNavBar route="/" content="Volver" />
-        </div>
-        <img src={logoBasuraOnTime} alt="Logo" className="w-24 h-auto mt-2" />
-        <p className="FontCursive text-3xl text-white mt-2">BASURA ON TIME</p>
+      {/* Lateral solo para tablet/PC */}
+      <div className="hidden md:flex flex-col justify-center items-center w-[200px] 2xl:w-[500px]">
+        <img className="w-[160px] 2xl:w-[240px]" src={logoBasuraOnTime} alt="Logo Basura On Time" />
+        <p className="FontCursive text-2xl 2xl:text-6xl text-center text-white mt-4">BASURA ON TIME</p>
       </div>
 
-      {/* CONTENIDO DERECHO */}
-      <div className="flex-1 flex flex-col items-center justify-start xl:ml-100 2xl:ml-140 px-4 py-6 FontGeologica">
+      {/* Contenido */}
+      <div className="flex-1 flex flex-col items-center justify-start FontGeologica w-full">
         <p className="text-2xl md:text-4xl text-white mb-6 text-center">Horario recolección BOT</p>
 
         {isValidPdf ? (

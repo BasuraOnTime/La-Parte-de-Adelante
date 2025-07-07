@@ -1,4 +1,4 @@
-import { FaUserPlus, FaSignInAlt, FaRegClock } from "react-icons/fa";
+import { FaUserPlus, FaSignInAlt, FaRegClock, FaTruckMoving } from "react-icons/fa";
 import logo from '../../assets/img/icons/logo.png';
 import { ItemNavBar } from '../../UI/ItemNavBar/ItemNavBar';
 import React, { useState } from 'react';
@@ -11,6 +11,8 @@ export function Header() {
   return (
     <>
       <div className="sticky top-0 bg-[var(--Voscuro2)] h-50 grid grid-cols-[1fr_auto] items-center z-50 FontGeologica text-white shadow-lg">
+        
+        {/* Logo y título */}
         <div className="flex items-center gap-4 m-4">
           <div className="border-2 bg-white rounded-full shadow-md flex justify-center items-center flex-shrink-0 h-12 w-16 md:h-20 md:w-20">
             <img src={logo} alt="logo" className="h-12 w-auto object-contain md:h-20" />
@@ -21,14 +23,14 @@ export function Header() {
           </div>
         </div>
 
-        {/* Menú para pantallas grandes */}
-        <div className="hidden md:flex justify-end gap-4 pr-4 me-15">
+        {/* Menú escritorio */}
+        <div className="hidden md:flex justify-end items-center gap-6 pr-6">
           <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
           <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
-          <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
+          <ItemNavBar route='/LoginConductor' icon={FaTruckMoving} label="Conductor" />
         </div>
 
-        {/* Icono hamburguesa en móviles */}
+        {/* Botón hamburguesa móvil */}
         <div className="flex md:hidden justify-end pr-8">
           <button onClick={() => setMenuOpen(!menuOpen)}>
             {menuOpen ? <FaTimes size={28} /> : <FaBars size={28} />}
@@ -36,7 +38,7 @@ export function Header() {
         </div>
       </div>
 
-      {/* Menú colapsable para móviles */}
+      {/* Menú móvil desplegable */}
       {menuOpen && (
         <div
           className="md:hidden fixed top-[200px] left-0 right-0 bg-[var(--Voscuro2)] text-white px-6 py-4 shadow-md z-50 FontGeologica"
@@ -44,11 +46,10 @@ export function Header() {
         >
           <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
           <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
+          <ItemNavBar route='/LoginConductor' icon={FaTruckMoving} label="Conductor" />
           <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
         </div>
       )}
-
-
     </>
   );
 }

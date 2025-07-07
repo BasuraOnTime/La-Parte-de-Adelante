@@ -1,7 +1,6 @@
 import axios from "axios";
-import React, { useState } from "react";
+import { useState } from "react";
 import Swal from "sweetalert2";
-import { ItemNavBar } from "../../UI/BotonBack/BotonBack";
 import logoBasuraOnTime from "../../assets/img/icons/logoBasuraOnTime.png";
 
 const SolicitudForm = () => {
@@ -67,12 +66,7 @@ const SolicitudForm = () => {
   };
 
   return (
-    <section className="sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20">
-
-      {/* Botón de volver */}
-      <div className="absolute top-4 left-4 z-50 scale-80 md:scale-100">
-        <ItemNavBar route="/" content="Volver" />
-      </div>
+    <section className="h-fit glass flex flex-col md:flex-row justify-center items-center p-4 py-20 xl:py-30 2xl:py-40 md:gap-20">
 
       {/* Logo y texto */}
       <div className="flex flex-col justify-center items-center mb-6 md:mb-0">

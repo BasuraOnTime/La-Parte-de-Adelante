@@ -1,10 +1,8 @@
 import axios from 'axios';
 import React, { useState, useEffect } from 'react';
-import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import { Pencil, Trash2, MapPin, Mail, User, Phone, Lock } from 'lucide-react';
 import Swal from 'sweetalert2';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
-import Perfil from '../../assets/img/icons/perfil.jpg';
 import { useNavigate } from 'react-router-dom';
 import './Usuario.css';
 
@@ -110,11 +108,8 @@ const UserProfileApp = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--Voscuro)] p-8 flex justify-center">
-      <div className="absolute top-4 left-4 z-50">
-        <ItemNavBar route="/" content="<--" />
-      </div>
-
+    <div className="h-fit bg-[var(--Voscuro)] flex justify-center">
+      
       <div className="bg-[var(--Voscuro2)] rounded-4xl shadow-lg w-full max-w-7xl flex flex-col md:flex-row overflow-hidden">
         <div className="bg-[var(--Vclaro2)] flex flex-col items-center justify-center h-full md:w-1/3 text-center rounded-l-4xl border-r-2 border-[var(--Voscuro)] px-10">
           <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-40 mb-6" />
@@ -123,7 +118,6 @@ const UserProfileApp = () => {
 
         <div className="bg-white p-8 md:w-2/3 rounded-r-4xl flex flex-col gap-6 text-[var(--Voscuro)]">
           <div className="flex items-center gap-6 mb-6">
-            <img src={Perfil} alt="Foto de perfil" className="w-28 h-28 rounded-full object-cover" />
             <h2 className="text-4xl font-bold">{nombre} {apellido}</h2>
           </div>
 
@@ -133,19 +127,19 @@ const UserProfileApp = () => {
             </h3>
             <button
               onClick={() => setShowEditModal(true)}
-              className="rounded-md w-full max-w-[140px] h-10 bg-[var(--Vclaro)] text-white hover:scale-105 hover:shadow-2xl active:scale-95 flex items-center justify-center gap-2 font-semibold"
+              className="group cursor-pointer rounded-md w-full max-w-[140px] h-10 bg-[var(--Vclaro)] text-white hover:scale-105 hover:shadow-2xl active:scale-95 flex items-center justify-center gap-2 font-semibold"
             >
               <Pencil size={18} /> Editar
             </button>
           </div>
 
-          <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><Mail size={16} /> Correo</label><p className="mt-1 text-lg">{email}</p></div>
-          <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><User size={16} /> Nombres</label><p className="mt-1 text-lg">{nombre}</p></div>
-          <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><User size={16} /> Apellidos</label><p className="mt-1 text-lg">{apellido}</p></div>
-          <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><Phone size={16} /> Teléfono</label><p className="mt-1 text-lg">{Telefono}</p></div>
+          <div><label className="text-sm font-medium text-gray-600 flex items-center gap-1"><Mail size={16} /> Correo</label><p className="mt-1 text-lg">{email}</p></div>
+          <div><label className="text-sm font-medium text-gray-600 flex items-center gap-1"><User size={16} /> Nombres</label><p className="mt-1 text-lg">{nombre}</p></div>
+          <div><label className="text-sm font-medium text-gray-600 flex items-center gap-1"><User size={16} /> Apellidos</label><p className="mt-1 text-lg">{apellido}</p></div>
+          <div><label className="text-sm font-medium text-gray-600 flex items-center gap-1"><Phone size={16} /> Teléfono</label><p className="mt-1 text-lg">{Telefono}</p></div>
 
           <div>
-            <label className="block text-sm font-medium text-gray-600 mb-2 flex items-center gap-1">
+            <label className="text-sm font-medium text-gray-600 mb-2 flex items-center gap-1">
               <MapPin size={16} /> Dirección
             </label>
             <input
@@ -169,11 +163,11 @@ const UserProfileApp = () => {
             </div>
           </div>
 
-          <div><label className="block text-sm font-medium text-gray-600 flex items-center gap-1"><Lock size={16} /> Contraseña</label><p className="mt-1 text-lg">••••••••</p></div>
+          <div><label className="text-sm font-medium text-gray-600 flex items-center gap-1"><Lock size={16} /> Contraseña</label><p className="mt-1 text-lg">••••••••</p></div>
 
           <button
             onClick={() => setShowModal(true)}
-            className="rounded-md w-full h-10 bg-[var(--Rojo)] text-white hover:scale-105 hover:shadow-2xl active:scale-95 flex items-center justify-center gap-2 font-semibold mt-8"
+            className="group cursor-pointer rounded-md w-full h-10 bg-[var(--Rojo)] text-white hover:scale-105 hover:shadow-2xl active:scale-95 flex items-center justify-center gap-2 font-semibold mt-8"
           >
             <Trash2 size={22} /> Eliminar cuenta
           </button>
@@ -207,14 +201,14 @@ const UserProfileApp = () => {
                     showConfirmButton: false,
                   });
                 }}
-                className="rounded-md w-full max-w-[120px] h-10 bg-[var(--Vclaro3)] text-white hover:scale-105 hover:shadow-lg transition-all font-semibold"
+                className="group cursor-pointer rounded-md w-full max-w-[120px] h-10 bg-[var(--Vclaro3)] text-white hover:scale-105 hover:shadow-lg transition-all font-semibold"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleEliminarCuenta}
                 disabled={!passwordConfirm.trim()}
-                className={`rounded-md w-full max-w-[120px] h-10 text-white font-semibold transition-all duration-300 ${passwordConfirm.trim()
+                className={`group cursor-pointer rounded-md w-full max-w-[120px] h-10 text-white font-semibold transition-all duration-300 ${passwordConfirm.trim()
                   ? 'bg-[var(--Rojo)] hover:scale-105 hover:shadow-lg'
                   : 'bg-[var(--Rojo)] opacity-60 cursor-not-allowed'
                   }`}
@@ -283,13 +277,13 @@ const UserProfileApp = () => {
                     showConfirmButton: false,
                   });
                 }}
-                className="bg-[var(--Rojo)] text-white px-4 py-2 rounded hover:scale-105 font-semibold"
+                className="group cursor-pointer bg-[var(--Rojo)] text-white px-4 py-2 rounded hover:scale-105 font-semibold"
               >
                 Cancelar
               </button>
               <button
                 onClick={handleGuardarCambios}
-                className="bg-[var(--Vclaro3)] text-white px-4 py-2 rounded hover:scale-105 font-semibold"
+                className="group cursor-pointer bg-[var(--Vclaro3)] text-white px-4 py-2 rounded hover:scale-105 font-semibold"
               >
                 Guardar
               </button>

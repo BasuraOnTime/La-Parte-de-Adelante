@@ -1,74 +1,109 @@
 import React, { useState } from 'react';
-import ItemNavBar from '../../UI/BotonBack/BotonBack';
+import { useNavigate } from 'react-router-dom';
+import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
+import Swal from 'sweetalert2';
+import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 export default function LoginConductor() {
+  const navigate = useNavigate();
   const [loginData, setLoginData] = useState({
     correo: '',
     contraseña: ''
   });
+  const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
     setLoginData({ ...loginData, [e.target.name]: e.target.value });
   };
 
+  const toggleShowPassword = () => setShowPassword(!showPassword);
+
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Intentando iniciar sesión con:', loginData);
+
+    const emailPrueba = 'conductor@ejemplo.com';
+    const passPrueba = 'conductor123';
+
+    if (loginData.correo === emailPrueba && loginData.contraseña === passPrueba) {
+      localStorage.setItem('token', 'soyconductor');
+      localStorage.setItem('rol', 'conductor');
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Inicio de sesión exitoso',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => navigate('/PanelConductor'));
+    } else {
+      Swal.fire({
+        icon: 'error',
+        title: 'Credenciales inválidas',
+        text: 'Correo o contraseña incorrectos',
+        timer: 2000,
+        timerProgressBar: true,
+        showConfirmButton: false,
+      });
+    }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#002015] relative">
-       <div className="absolute top-4 left-4 z-50">
-          <ItemNavBar route="/" content=" " />
-        </div>
+    <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
 
-      <div className="flex flex-col md:flex-row items-center justify-center gap-16 px-4">
-        {/* Logo y título */}
-        <div className="text-center">
-          <img className='img_logo' src={logoBasuraOnTime} alt="Logo" />
-                 <p id='FontCursive' className='text-6xl text-center text-white'>Basura On Time</p>
-        </div>
+      {/* Botón de volver fijo */}
+      <div className="absolute top-4 left-4 md:top-6 md:left-6 z-50 scale-80 md:scale-100">
+        <ItemNavBar route="/" content="Volver" />
+      </div>
 
-        {/* Formulario */}
-        <form
-          onSubmit={handleSubmit}
-          className="bg-[#012b1d] p-8 rounded-2xl shadow-md w-full max-w-md"
-        >
-          <h2 className="text-3xl text-white font-bold italic text-center mb-6">
-            Iniciar sesión
-          </h2>
+      {/* Logo y texto */}
+      <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>
+        <img className='w-24 h-24 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo" />
+        <p className='FontCursive text-3xl md:text-6xl text-center text-white'>BASURA ON TIME</p>
+      </div>
 
+      {/* Formulario */}
+      <div className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full p-6 rounded-3xl md:w-[480px] md:gap-4 md:rounded-4xl md:p-8'>
+
+        <p className='FontCursive text-2xl md:text-5xl p-4 text-white text-center'>Conductor</p>
+
+        <input
+          className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[500px] h-8 md:h-10 text-center placeholder:text-center text-white text-sm md:text-lg'
+          type="email"
+          name="correo"
+          placeholder='Correo electrónico'
+          value={loginData.correo}
+          onChange={handleChange}
+          required
+        />
+
+        <div className="relative w-full max-w-[500px]">
           <input
-            type="email"
-            name="correo"
-            placeholder="Correo electrónico"
-            value={loginData.correo}
+            className='rounded-md bg-[var(--Vclaro2)] w-full h-8 md:h-10 text-white placeholder:text-center text-center text-sm md:text-lg'
+            type={showPassword ? "text" : "password"}
+            name="contraseña"
+            placeholder='Contraseña'
+            value={loginData.contraseña}
             onChange={handleChange}
-            className="w-full mb-4 p-3 rounded bg-[#e7f0fd] text-black"
             required
           />
-
-          <div className="relative mb-4">
-            <input
-              type="password"
-              name="contraseña"
-              placeholder="Contraseña"
-              value={loginData.contraseña}
-              onChange={handleChange}
-              className="w-full p-3 rounded bg-[#e7f0fd] text-black"
-              required
-            />
-          </div>
-
           <button
-            type="submit"
-            className="w-full bg-green-600 text-white py-2 rounded hover:bg-green-700 font-semibold"
+            type="button"
+            onClick={toggleShowPassword}
+            className="absolute inset-y-0 right-2 flex items-center text-gray-400 hover:text-white"
+            aria-label={showPassword ? "Ocultar contraseña" : "Mostrar contraseña"}
           >
-            Iniciar sesión
-          </button> 
-        </form>
+            {showPassword ? <EyeSlashIcon className="h-5 w-5" /> : <EyeIcon className="h-5 w-5" />}
+          </button>
+        </div>
+
+        <button
+          className='rounded-md w-full max-w-[500px] h-8 md:h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95 text-sm md:text-lg'
+          onClick={handleSubmit}
+        >
+          Iniciar sesión
+        </button>
+
       </div>
-    </div>
+    </section>
   );
 }

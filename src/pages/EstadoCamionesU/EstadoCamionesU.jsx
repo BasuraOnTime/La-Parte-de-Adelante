@@ -5,7 +5,7 @@ import { TruckIcon } from "lucide-react";
 function Card({ children, className = "" }) {
   return (
     <section
-      className={`rounded-2xl bg-[#01271E] shadow-lg ${className}`}
+      className={`rounded-2xl bg-[var(--Voscuro2)] shadow-lg ${className}`}
       role="region"
       aria-label="Estado de los camiones"
     >
@@ -23,13 +23,13 @@ function CardContent({ children, className = "" }) {
 function Input({ className = "", ...props }) {
   return (
     <input
-      className={`bg-[#014133] text-white rounded-xl px-5 py-3 text-lg w-full placeholder:text-green-700 focus:outline-none focus:ring-2 focus:ring-green-600 transition-all duration-200 ${className}`}
+      className={`bg-[var(--Voscuro2)] text-white rounded-xl px-5 py-3 text-lg w-full placeholder:text-gray-400 focus:outline-none focus:ring-2 focus-[var(--Vclaro)] transition-all duration-200 ${className}`}
       {...props}
     />
   );
 }
 
-// Datos puesto por jorge salvaje para ver que tal quedo. tal quedo pequeño david
+// Datos de prueba
 const datosCamiones = [
   { id: "T001", ubicacion: "Ciudad A", carga: "Carga completa", estado: "En ruta" },
   { id: "T002", ubicacion: "Ciudad B", carga: "Vacío", estado: "En mantenimiento" },
@@ -45,10 +45,10 @@ export default function PanelEstadoCamiones() {
   );
 
   return (
-    <div className="p-10 space-y-8 bg-[#001C16] text-white min-h-screen font-sans">
-      <header className="flex items-center gap-4 text-green-600">
+    <div className="p-6 md:p-10 space-y-8 bg-[var(--Voscuro)] text-white min-h-screen font-sans">
+      <header className="flex items-center gap-4 text-[var(--Vclaro)]">
         <TruckIcon className="w-8 h-8" />
-        <h2 className="text-4xl font-bold">Estado de los Camiones</h2>
+        <h2 className="text-3xl md:text-4xl font-bold">Estado de los Camiones</h2>
       </header>
 
       <Input
@@ -60,31 +60,31 @@ export default function PanelEstadoCamiones() {
 
       <Card>
         <CardContent className="overflow-x-auto">
-          <table className="w-full min-w-[600px] text-lg text-left">
-            <thead className="text-green-600 uppercase tracking-wide text-sm bg-green-800">
+          <table className="w-full min-w-[600px] text-left text-lg">
+            <thead className="bg-[var(--Voscuro)] uppercase tracking-wide text-sm text-[var(--Vclaro)]">
               <tr>
                 <th className="px-6 py-4">Ubicación</th>
                 <th className="px-6 py-4">Carga</th>
                 <th className="px-6 py-4">Estado</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-green-700">
+            <tbody className="divide-y divide-[var(--Vclaro2)]">
               {camionesFiltrados.length > 0 ? (
                 camionesFiltrados.map((camion, i) => (
                   <tr
                     key={camion.id}
                     className={`transition-colors duration-150 ${
-                      i % 2 === 0 ? "bg-[#012D22]" : "bg-[#014133]"
-                    } hover:bg-[#015B43]`}
+                      i % 2 === 0 ? "bg-[var(--Voscuro2)]" : "bg-[var(--Voscuro)]"
+                    } hover:bg-[var(--Vclaro2)]`}
                   >
                     <td className="px-6 py-4">{camion.ubicacion}</td>
                     <td className="px-6 py-4">{camion.carga}</td>
-                    <td className="px-6 py-4 font-semibold text-green-600">{camion.estado}</td>
+                    <td className="px-6 py-4 font-semibold text-[var(--Vclaro)]">{camion.estado}</td>
                   </tr>
                 ))
               ) : (
                 <tr>
-                  <td colSpan={4} className="text-center py-8 text-gray-400 italic">
+                  <td colSpan={3} className="text-center py-8 text-[var(--Vgris)]">
                     No se encontraron camiones con ese estado.
                   </td>
                 </tr>
