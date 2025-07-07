@@ -17,6 +17,7 @@ import Conductores from './pages/Conductores/Conductores';
 import LoginConductor from './pages/LoginConductor/LoginConductor';
 import UserDashboard from './pages/PanelDU/PanelDu';
 import PanelEstadoCamiones from './pages/EstadoCamionesU/EstadoCamionesU'
+import PanelC from './pages/PanelC/PanelC'
 
 export function App() {
   return (
@@ -33,6 +34,8 @@ export function App() {
       <Route path="LoginConductor" element={< LoginConductor/>}/>
       <Route path="PanelDU" element={< UserDashboard/>}/>
       <Route path="PanelEstadoCamiones" element={< PanelEstadoCamiones/>}/>
+       <Route path="PanelC" element={< PanelC/>}/>
+
 
       {/* Rutas accesibles por usuarios con login normal */}
       <Route path="/Usuario" element={

@@ -5,8 +5,10 @@ import {
   Truck,
   MapPin,
   Menu,
-  X as CloseIcon
+  X as CloseIcon,
+  FileText
 } from "lucide-react";
+
 import EstadoCamiones from "../EstadoCamionesU/EstadoCamionesU";
 import RutasU from "../RutasU/RutasU";
 import Usuario from "../Usuario/Usuario";
@@ -46,8 +48,8 @@ export default function UserDashboard() {
   };
 
   return (
-    <div className="h-screen flex flex-col md:flex-row bg-[var(--Voscuro)] text-white overflow-hidden">
-      
+    <div className="FontGeologica h-screen flex flex-col md:flex-row bg-[var(--Voscuro)] text-white overflow-hidden">
+
       {/* Menú hamburguesa móvil */}
       <div className="md:hidden flex items-center justify-between px-4 py-3 bg-[var(--Voscuro2)] shadow-md z-50">
         <h2 className="text-xl font-bold">Panel</h2>
@@ -141,10 +143,11 @@ function SidebarNav({ vista, setVista }) {
       />
       <NavItem
         active={vista === "solicitud"}
-        icon={<MapPin size={20} />}
+        icon={<FileText size={20} />}
         label="Solicitudes"
         onClick={() => setVista("solicitud")}
       />
+
     </nav>
   );
 }
@@ -153,9 +156,8 @@ function NavItem({ icon, label, onClick, active }) {
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left font-medium transition ${
-        active ? "bg-[var(--Voscuro)] text-white" : "text-gray-300 hover:bg-[var(--Voscuro)]"
-      }`}
+      className={`flex items-center gap-3 px-4 py-2 rounded-lg text-left font-medium transition ${active ? "bg-[var(--Voscuro)] text-white" : "text-gray-300 hover:bg-[var(--Voscuro)]"
+        }`}
     >
       {icon}
       <span>{label}</span>

@@ -10,7 +10,7 @@ export function Header() {
 
   return (
     <>
-      <div className="sticky top-0 bg-[var(--Voscuro2)] h-50 grid grid-cols-[1fr_auto] items-center z-50 FontGeologica text-white shadow-lg">
+      <div className="FontGeologica sticky top-0 bg-[var(--Voscuro2)] h-50 grid grid-cols-[1fr_auto] items-center z-50 FontGeologica text-white shadow-lg">
         
         {/* Logo y título */}
         <div className="flex items-center gap-4 m-4">
@@ -47,7 +47,6 @@ export function Header() {
           <ItemNavBar route='/Register' icon={FaUserPlus} label="Registro" />
           <ItemNavBar route='/InicioS' icon={FaSignInAlt} label="Login" />
           <ItemNavBar route='/LoginConductor' icon={FaTruckMoving} label="Conductor" />
-          <ItemNavBar route='/RutasU' icon={FaRegClock} label="Horario de recolección" />
         </div>
       )}
     </>
