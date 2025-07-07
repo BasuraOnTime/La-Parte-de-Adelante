@@ -14,6 +14,8 @@ import SolicitudesE from './pages/SolicitudesE/SolicitudesE';
 import RutasU from './pages/RutasU/RutasU';
 import ProtectedRoute from './UI/ProtectedRoute/ProtectedRoute';
 import Conductores from './pages/Conductores/Conductores';
+import LoginConductor from './pages/LoginConductor/LoginConductor';
+import UserDashboard from './pages/PanelDU/PanelDu';
 
 export function App() {
   return (
@@ -27,6 +29,8 @@ export function App() {
       <Route path="/RutasU" element={<RutasU />} />
       <Route path="/SolicitudesE" element={<SolicitudesE />} />
       <Route path="Conductores" element={< Conductores/>} />
+      <Route path="LoginConductor" element={< LoginConductor/>}/>
+       <Route path="PanelDU" element={< UserDashboard/>}/>
 
       {/* Rutas accesibles por usuarios con login normal */}
       <Route path="/Usuario" element={
