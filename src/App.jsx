@@ -16,6 +16,7 @@ import ProtectedRoute from './UI/ProtectedRoute/ProtectedRoute';
 import Conductores from './pages/Conductores/Conductores';
 import LoginConductor from './pages/LoginConductor/LoginConductor';
 import UserDashboard from './pages/PanelDU/PanelDu';
+import PanelEstadoCamiones from './pages/EstadoCamionesU/EstadoCamionesU'
 
 export function App() {
   return (
@@ -30,7 +31,8 @@ export function App() {
       <Route path="/SolicitudesE" element={<SolicitudesE />} />
       <Route path="Conductores" element={< Conductores/>} />
       <Route path="LoginConductor" element={< LoginConductor/>}/>
-       <Route path="PanelDU" element={< UserDashboard/>}/>
+      <Route path="PanelDU" element={< UserDashboard/>}/>
+      <Route path="PanelEstadoCamiones" element={< PanelEstadoCamiones/>}/>
 
       {/* Rutas accesibles por usuarios con login normal */}
       <Route path="/Usuario" element={

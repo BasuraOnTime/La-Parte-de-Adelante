@@ -7,8 +7,8 @@ import {
   Menu,
   X as CloseIcon
 } from "lucide-react";
-import PanelEstadoCamionesU from "../EstadoCamioneU/EstadoCamionesU";
-import ConsultaRutasU from "../ConsultarRU/ConsultarRU";
+import EstadoCamiones  from '../EstadoCamionesU/EstadoCamionesU'
+import ConsultaRutasU from "../ConsultasRU/ConsultasRU"
 import Usuario from "../Usuario/Usuario";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
@@ -20,7 +20,7 @@ export default function UserDashboard() {
   const renderVista = () => {
     switch (vista) {
       case "camiones":
-        return <PanelEstadoCamionesU />;
+        return < EstadoCamiones/>;
       case "rutas":
         return <ConsultaRutasU />;
       case "usuario":
