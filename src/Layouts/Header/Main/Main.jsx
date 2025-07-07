@@ -1,6 +1,5 @@
-import React from 'react'
+import logoBasuraOnTime from "../../../assets/img/icons/logoBasuraOnTime.png";
 import TextBox from '../../../UI/Text-Box/Text-Box'
-import Button2 from '../../../UI/Button2/Button2'
 import './Main.css'
 
 const Main = () => {
@@ -8,18 +7,13 @@ const Main = () => {
     <main className="FontGeologica">
 
       {/* Hero Section */}
-      <section className="bg-white text-white py-30 text-center px-6">
-        <h1 className="text-2xl md:text-4xl font-bold mb-4 text-[var(--Voscuro2)]">
-          Tu ciudad más limpia empieza contigo
-        </h1>
-        <p className="text-base md:text-lg mb-6 text-[var(--Voscuro2)]">
-          Solicitá la recolección de residuos en tu zona con un solo clic.
-        </p>
-        <Button2 />
-      </section>
+        <section className="bg-white text-[var(--Voscuro2)] py-30 px-6 flex flex-col items-center justify-center text-center min-h-[50vh]">
+          <img src={logoBasuraOnTime} alt="logo" className="w-auto h-[280px]" />
+          <p className="FontCursive text-[var(--Voscuro2)] text-6xl">Basura On Time</p>
+        </section>
 
       {/* Servicios */}
-      <section className="py-16 px-6 bg-[var(--Voscuro2)] text-white text-center">
+      <section className="py-16 px-6 bg-[var(--Voscuro)] text-white text-center">
         <h2 className="text-2xl md:text-3xl font-semibold mb-8">Nuestros Servicios</h2>
         <div className="grid md:grid-cols-3 gap-6 max-w-[1200px] mx-auto">
           <TextBox />
