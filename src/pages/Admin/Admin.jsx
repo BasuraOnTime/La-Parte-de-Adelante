@@ -26,70 +26,84 @@ const Admin = () => {
         Swal.showLoading();
       }
     });
-    const response = await axios.post(URL, { email, password });
-    const token = response.data.token; 
 
-    setTimeout(() => {
-      if (token) {
-        Swal.fire({
-          title: 'Bienvenido',
-          text: 'Has iniciado sesión correctamente',
-          icon: 'success',
-          showConfirmButton: false,
-          allowEscapeKey: false,
-          allowOutsideClick: false,
-          timer: 2000,
-          timerProgressBar: true,
-        }).then((result) => {
-          if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
-            localStorage.setItem('token', token);
-            navigate('/PanelAdmin');
-            setEmail('');
-            setPassword('');
-          }
-        });
-      } else {
-        Swal.fire({
-          title: 'Error',
-          text: 'Usuario o contraseña incorrectos',
-          icon: 'error',
-          confirmButtonText: 'Intentar de nuevo',
-          confirmButtonColor: '#0A372D',
-        });
-      }
-    }, 1500);
+    try {
+      const response = await axios.post(URL, { email, password });
+      const token = response.data.token;
+
+      setTimeout(() => {
+        if (token) {
+          Swal.fire({
+            title: 'Bienvenido',
+            text: 'Has iniciado sesión correctamente',
+            icon: 'success',
+            showConfirmButton: false,
+            allowEscapeKey: false,
+            allowOutsideClick: false,
+            timer: 2000,
+            timerProgressBar: true,
+          }).then((result) => {
+            if (result.isConfirmed || result.dismiss === Swal.DismissReason.timer) {
+              localStorage.setItem('token', token);
+              navigate('/PanelAdmin');
+              setEmail('');
+              setPassword('');
+            }
+          });
+        } else {
+          Swal.fire({
+            title: 'Error',
+            text: 'Usuario o contraseña incorrectos',
+            icon: 'error',
+            confirmButtonText: 'Intentar de nuevo',
+            confirmButtonColor: '#0A372D',
+          });
+        }
+      }, 1500);
+
+    } catch (error) {
+      console.error("Error en inicio de sesión:", error);
+      Swal.fire({
+        title: 'Error',
+        text: 'Hubo un problema al iniciar sesión.',
+        icon: 'error',
+        confirmButtonText: 'Intentar de nuevo',
+        confirmButtonColor: '#0A372D',
+      });
+    }
   };
 
-  const toggleShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const toggleShowPassword = () => setShowPassword(!showPassword);
 
   return (
-    
-    <section className='sectFirst glass p-[50px] place-items-center'>
-      <div className='flex flex-col justify-center items-center'>
-        <img className='Img-logo' src={logoBasuraOnTime} alt="" />
-        <p className='FontCursive text-6xl text-center text-white'>BASURA ON TIME</p>
+    <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
+
+      {/* Logo y texto */}
+      <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>
+        <img className='w-20 h-20 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo" />
+        <p className='FontCursive text-3xl text-center text-white md:text-6xl'>BASURA ON TIME</p>
       </div>
-      <div className='FontGeologica flex flex-col justify-center items-center gap-3.5 bg-[var(--Voscuro2)] w-120 h-100 rounded-4xl'>
-        <p className='FontCursive text-5xl p-7 text-white'>Administrador</p>
+
+      {/* Formulario */}
+      <div className='FontGeologica flex flex-col justify-center items-center gap-3 bg-[var(--Voscuro2)] w-full max-w-[400px] p-5 rounded-3xl md:w-[480px] md:p-8 md:gap-4'>
+
+        <p className='FontCursive text-2xl p-3 text-white text-center md:text-5xl md:p-7'>Administrador</p>
 
         <input
           type="text"
-          placeholder='Correo'
+          placeholder='Correo electrónico'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className='rounded-md bg-[var(--Vclaro2)] w-100 h-10 text-center placeholder:text-center text-white'
+          className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-center placeholder:text-center text-white text-base md:text-lg'
         />
 
-        {/* Input de contraseña con ícono de ojo */}
-        <div className="relative w-100">
+        <div className="relative w-full">
           <input
             type={showPassword ? "text" : "password"}
             placeholder='Contraseña'
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-white placeholder:text-center text-center'
+            className='rounded-md bg-[var(--Vclaro2)] w-full h-10 text-white placeholder:text-center text-center text-base md:text-lg'
           />
           <button
             onClick={toggleShowPassword}

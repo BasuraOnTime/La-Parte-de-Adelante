@@ -1,21 +1,14 @@
 @import "tailwindcss";
 
-/* Aplica a todo el scroll vertical */
-::-webkit-scrollbar {
-    width: 10px;
-  }
-  
-  ::-webkit-scrollbar-track {
-    background: #e0f2f1; /* color del fondo del track */
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background-color: #10b981; /* color del "pulgón" */
-    border-radius: 99deg;
-    border: 2px solid #e0f2f1;
-  }
-  
-  ::-webkit-scrollbar-thumb:hover {
-    background-color: #059669;
-  }
+:root {
+  --Vclaro: #008D5D;
+  --Vclaro2: #0A372D;
+  --Vclaro3: #004435;
+  --Voscuro: #001F14;
+  --Voscuro2: #032C22;
+  --Voscuro3: #001004;
+  --Voscuro4: #00241f;
+  --Rojo:#531b16;
+  --Vgris: #859B96;
+}
 
