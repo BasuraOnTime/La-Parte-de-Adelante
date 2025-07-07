@@ -9,7 +9,7 @@ import "./Register.css";
 
 const Register = () => {
   let success = false;
-  const URL = 'https://express-latest-6gmf.onrender.com/register';
+  const URL = 'http://localhost:10101/register';
 
   const [id_rol, setId_rol] = useState(2);
   const [email, setEmail] = useState('');

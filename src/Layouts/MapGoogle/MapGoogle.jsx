@@ -17,7 +17,7 @@ export const MapaGoogle = ({latitud, longitud}) => {
     };
     
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: 'AIzaSyAbTX5wP7twg96yad7yEg99u9yT60ZPwp4', // ⚠️ Reemplaza con tu clave
+    googleMapsApiKey: 'AIzaSyAbTX5wP7twg96yad7yEg99u9yT60ZPwp4', 
   });
 
   if (!isLoaded) return <div>Cargando...</div>;

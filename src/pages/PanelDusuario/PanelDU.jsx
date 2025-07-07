@@ -17,7 +17,7 @@ import {io} from "socket.io-client"
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
-  const URL = 'https://express-latest-6gmf.onrender.com/profile';
+  const URL = 'http://localhost:10101/profile';
   const socket = io('http://localhost:10101');
   const token = localStorage.getItem("token");
   const [user, setUser] = useState({ nombres: "", email: "" });
@@ -43,6 +43,7 @@ export default function UserDashboard() {
         }
      }
      verifyToken();
+     console.log(id_usuario)
      socket.emit('register_user', id_usuario )
      
      socket.on('truck_nearby', (data) =>{
