@@ -134,9 +134,9 @@ const Camiones = () => {
   return (
     <section className="sectFirst glass min-h-screen flex flex-col justify-center items-center p-4">
 
-      <div className="absolute top-4 left-4 z-50 scale-80 md:scale-100">
-        <BotonBack />
-      </div>
+      <div className="absolute top-4 left-4 z-50">
+               <BotonBack route="/PanelAdmin" content=" " />
+             </div>
 
       <h1 className="FontCursive text-4xl md:text-6xl text-white mb-8 text-center">
         Gestión de Camiones

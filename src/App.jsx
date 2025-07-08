@@ -17,6 +17,7 @@ import ConsultarRU from './pages/ConsultarRU/ConsultarRU'
 import PanelDU from './pages/PanelDusuario/PanelDU'
 import RegistroC from './pages/RegistroC/RegistroConductor'
 import LoginC from './pages/LoginC/LoginConductor'
+import Conductores from './pages/Conductores/Conductores'
 
 
 export function App() {
@@ -35,6 +36,7 @@ export function App() {
         <Route path="/Admin" element={<Admin />} />
         <Route path="/PanelAdmin" element={<PanelAdmin />} />
         <Route path="/Camiones" element={<Camiones />} />
+        <Route path="/Conductores" element={<Conductores />} />
         <Route path="/Rutas" element={<Rutas />} />
         <Route path="/RutasU" element={<RutasU />} />
         <Route path="/Solicitudes" element={<Solicitudes />} />

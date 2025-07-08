@@ -5,6 +5,7 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import "./Admin.css";
+import { BotonBack } from "../../UI/BotonBack/BotonBack";
 
 const Admin = () => {
   const URL = "https://express-latest-6gmf.onrender.com/authAdmin";
@@ -77,7 +78,9 @@ const Admin = () => {
 
   return (
     <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
-
+      <div className="absolute top-4 left-4 z-50">
+                        <BotonBack route="/" content=" " />
+                      </div>
       {/* Logo y texto */}
       <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>
         <img className='w-20 h-20 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo" />

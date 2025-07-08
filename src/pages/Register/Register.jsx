@@ -81,11 +81,12 @@ const Register = () => {
 
   return (
     <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
+      <div className="absolute top-4 left-4 z-50">
+         <BotonBack route="/" content=" " />
+      </div>
 
       {/* Botón Volver */}
-      <div className="absolute top-4 left-4 md:top-6 md:left-6 z-50 scale-80 md:scale-100">
-        <ItemNavBar route="/" content="Volver" />
-      </div>
+    
 
       {/* Logo y título */}
       <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>

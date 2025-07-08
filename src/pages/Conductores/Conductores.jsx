@@ -1,9 +1,8 @@
 import { useState } from 'react';
-import './Conductores.css';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { MdEdit } from "react-icons/md";
 import { AiOutlineDelete } from "react-icons/ai";
-import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
+import { BotonBack } from "../../UI/BotonBack/BotonBack";
 import Swal from 'sweetalert2';
 
 const Conductores = () => {
@@ -102,9 +101,9 @@ const Conductores = () => {
 
       {/* Header móvil */}
       <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-8 pb-5 fixed top-0 left-0 z-50">
-        <div className="absolute top-2 left-2 z-50 scale-80">
-          <ItemNavBar route="/PanelAdmin" content=" " />
-        </div>
+         <div className="absolute top-4 left-4 z-50">
+                  <BotonBack route="/PanelAdmin" content=" " />
+                </div>
         <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-28 h-auto mt-2" />
         <p className="FontCursive text-base md:text-3xl text-white mt-2">BASURA ON TIME</p>
       </div>
@@ -112,8 +111,8 @@ const Conductores = () => {
       {/* Logo lateral PC */}
       <div className="hidden md:flex flex-col justify-center items-center h-screen bg-[var(--Voscuro2)] fixed left-0 z-10 xl:w-75 2xl:w-140">
         <div className="absolute top-4 left-4 z-50">
-          <ItemNavBar route="/PanelAdmin" content=" " />
-        </div>
+                 <BotonBack route="/PanelAdmin" content=" " />
+               </div>
         <img className="xl:w-50 2xl:w-90" src={logoBasuraOnTime} alt="Logo Basura On Time" />
         <p className="FontCursive xl:text-4xl 2xl:text-5xl text-center text-white">BASURA ON TIME</p>
       </div>
