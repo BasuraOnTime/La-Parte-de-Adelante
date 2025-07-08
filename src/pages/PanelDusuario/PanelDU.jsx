@@ -18,10 +18,12 @@ import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
   const URL = 'http://localhost:10101/profile';
+  const URLN = 'http://localhost:10101/notify/enviar-sms'
   const socket = io('http://localhost:10101');
   const token = localStorage.getItem("token");
   const [user, setUser] = useState({ nombres: "", email: "" });
   const [id_usuario, setId_usuario] = useState('')
+  const [telefono, setTelefono] = useState('')
   const [vista, setVista] = useState("inicio");
   const [menuAbierto, setMenuAbierto] = useState(false);
   const navigate = useNavigate();
@@ -35,6 +37,7 @@ export default function UserDashboard() {
                 }
             });
             setId_usuario(response.data.data[0].id_usuario)
+            setTelefono(response.data.data[0].telefono)
             setUser(response.data.data[0]);
         } catch (error) {
             console.error('Error verifying token:', error);
@@ -43,17 +46,38 @@ export default function UserDashboard() {
         }
      }
      verifyToken();
-     console.log(id_usuario)
-     socket.emit('register_user', id_usuario )
-     
-     socket.on('truck_nearby', (data) =>{
-        alert(`🚛 El camión está cerca: ${data.message}`);
-     })
-
-     return() =>{
-      socket.off('truck_nearby')
-     }
   }, [])
+
+  useEffect(() => {
+    if (id_usuario) {
+      console.log('Registrando socket con id_usuario:', id_usuario);
+      socket.emit('register_user', String(id_usuario).trim());
+
+      socket.on('truck_nearby', async (data) => {
+        alert(`El camion esta cerca: ${data.message}`);
+        let mensaje = `El camión esta cerca: ${data.message}`
+        let numero = "57"+telefono
+        console.log(numero)
+        try{
+          await axios.post(URLN, {
+            numero,
+            mensaje
+          },
+          {
+            headers: {
+                    Authorization: `Bearer ${token}`
+                }
+          }
+        )
+        } catch(error) {
+          console.error(error)
+        }
+      });
+      return () => {
+        socket.off('truck_nearby');
+      };
+    }
+  }, [id_usuario]);
 
   const renderVista = () => {
     switch (vista) {
