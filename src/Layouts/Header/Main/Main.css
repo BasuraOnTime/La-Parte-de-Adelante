@@ -9,3 +9,8 @@ html {
 .section-offset {
   scroll-margin-top: 120px; /* Ajusta si tu Header mide más o menos */
 }
+
+.FontCursiveClean {
+  font-family: 'Lobster', cursive;
+  text-shadow: none;
+}

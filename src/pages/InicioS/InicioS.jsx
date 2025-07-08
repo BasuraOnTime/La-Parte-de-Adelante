@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 import './inicioS.css';
 
 const XLanding = () => {
+  const URL = 'https://express-latest-6gmf.onrender.com/auth';
   const navigate = useNavigate();
   const [email, setCorreo] = useState('');
   const [password, setContraseña] = useState('');
@@ -14,30 +16,33 @@ const XLanding = () => {
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
-  const handleLoginSubmit = (e) => {
+  const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    try {
+      const response = await axios.post(URL, { email, password });
+      const token = response.data.token;
 
-    const usuarioEmail = 'usuario@ejemplo.com';
-    const usuarioPass = 'usuario123';
+      if (token) {
+        localStorage.setItem('token', token);
+         localStorage.setItem('rol', 'usuario');
+        // Puedes guardar también el rol si lo envía el backend
+        // localStorage.setItem('rol', response.data.rol);
 
-    if (email === usuarioEmail && password === usuarioPass) {
-      localStorage.setItem('token', 'soyusuario');
-      localStorage.setItem('rol', 'usuario');
-
-      Swal.fire({
-        icon: 'success',
-        title: 'Inicio de sesión exitoso',
-        showConfirmButton: false,
-        timer: 1500,
-      }).then(() => navigate('/Usuario'));
-    } else {
+        Swal.fire({
+          icon: 'success',
+          title: 'Inicio de sesión exitoso',
+          showConfirmButton: false,
+          timer: 1500,
+        }).then(() => navigate('/'));
+      }
+    } catch (error) {
       Swal.fire({
         icon: 'error',
-        title: 'Credenciales inválidas',
-        text: 'Correo o contraseña incorrectos',
-        timer: 2000,
-        timerProgressBar: true,
+        title: 'Error al iniciar sesión',
+        text: 'Verifica tus credenciales.',
         showConfirmButton: false,
+        timer: 2000,
+        timerProgressBar: true
       });
     }
   };

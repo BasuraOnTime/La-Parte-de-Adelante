@@ -4,14 +4,22 @@ const ProtectedRoute = ({ children, requiredRole }) => {
   const token = localStorage.getItem('token');
   const rol = localStorage.getItem('rol');
 
-  // Si no hay token, redirigir al login correspondiente
+  console.log('Token:', token);
+  console.log('Rol:', rol);
+  console.log('Ruta requiere:', requiredRole);
+
   if (!token) {
-    return <Navigate to={requiredRole === 'admin' ? '/Admin' : '/InicioS'} />;
+    if (requiredRole === 'admin') return <Navigate to="/Admin" />;
+    if (requiredRole === 'usuario') return <Navigate to="/InicioS" />;
+    if (requiredRole === 'conductor') return <Navigate to="/LoginConductor" />;
+    return <Navigate to="/" />;
   }
 
-  // Si hay un rol requerido y no coincide con el del usuario
   if (requiredRole && rol !== requiredRole) {
-    return <Navigate to={rol === 'admin' ? '/PanelAdmin' : '/Admin'} />;
+    if (rol === 'admin') return <Navigate to="/PanelAdmin" />;
+    if (rol === 'usuario') return <Navigate to="/PanelDU" />;
+    if (rol === 'conductor') return <Navigate to="/PanelC" />;
+    return <Navigate to="/" />;
   }
 
   return children;

@@ -23,3 +23,5 @@ npm install tailwindcss @tailwindcss/vite,
 npm install gsap
 npm install axios
 npm install @heroicons/react
+npm install @react-google-maps/api
+npm install socket.io-client

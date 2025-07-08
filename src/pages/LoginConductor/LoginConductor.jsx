@@ -4,13 +4,11 @@ import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import Swal from 'sweetalert2';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
+import axios from 'axios';
 
 export default function LoginConductor() {
   const navigate = useNavigate();
-  const [loginData, setLoginData] = useState({
-    correo: '',
-    contraseña: ''
-  });
+  const [loginData, setLoginData] = useState({ correo: '', contraseña: '' });
   const [showPassword, setShowPassword] = useState(false);
 
   const handleChange = (e) => {
@@ -19,51 +17,66 @@ export default function LoginConductor() {
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const emailPrueba = 'conductor@ejemplo.com';
-    const passPrueba = 'conductor123';
+    if (!loginData.correo || !loginData.contraseña) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Por favor, completa todos los campos.',
+        confirmButtonColor: '#0A372D',
+      });
+      return;
+    }
 
-    if (loginData.correo === emailPrueba && loginData.contraseña === passPrueba) {
-      localStorage.setItem('token', 'soyconductor');
-      localStorage.setItem('rol', 'conductor');
+    try {
+      const response = await axios.post('https://express-latest-6gmf.onrender.com/loginConductor/iniciar', {
+        email: loginData.correo,
+        password: loginData.contraseña
+      });
+
+      const {id_usuario } = response.data;
+
+      // Puedes usar estos valores en memoria si los necesitas
+      console.log('ID usuario:', id_usuario);
 
       Swal.fire({
         icon: 'success',
         title: 'Inicio de sesión exitoso',
         showConfirmButton: false,
         timer: 1500,
-      }).then(() => navigate('/PanelConductor'));
-    } else {
+      }).then(() => navigate('/PanelC'));
+    } catch (error) {
+      console.error(error);
+      let mensaje = 'Correo o contraseña incorrectos.';
+
+      if (error.response?.data?.message) {
+        mensaje = error.response.data.message;
+      }
+
       Swal.fire({
         icon: 'error',
-        title: 'Credenciales inválidas',
-        text: 'Correo o contraseña incorrectos',
-        timer: 2000,
-        timerProgressBar: true,
-        showConfirmButton: false,
+        title: 'Error de autenticación',
+        text: mensaje,
+        showConfirmButton: true,
+        confirmButtonColor: '#0A372D'
       });
     }
   };
 
   return (
     <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
-
-      {/* Botón de volver fijo */}
       <div className="absolute top-4 left-4 md:top-6 md:left-6 z-50 scale-80 md:scale-100">
         <ItemNavBar route="/" content="Volver" />
       </div>
 
-      {/* Logo y texto */}
       <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>
         <img className='w-24 h-24 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo" />
         <p className='FontCursive text-3xl md:text-6xl text-center text-white'>BASURA ON TIME</p>
       </div>
 
-      {/* Formulario */}
-      <div className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full p-6 rounded-3xl md:w-[480px] md:gap-4 md:rounded-4xl md:p-8'>
-
+      <form onSubmit={handleSubmit} className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full p-6 rounded-3xl md:w-[480px] md:gap-4 md:rounded-4xl md:p-8'>
         <p className='FontCursive text-2xl md:text-5xl p-4 text-white text-center'>Conductor</p>
 
         <input
@@ -97,13 +110,12 @@ export default function LoginConductor() {
         </div>
 
         <button
+          type="submit"
           className='rounded-md w-full max-w-[500px] h-8 md:h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95 text-sm md:text-lg'
-          onClick={handleSubmit}
         >
           Iniciar sesión
         </button>
-
-      </div>
+      </form>
     </section>
   );
 }

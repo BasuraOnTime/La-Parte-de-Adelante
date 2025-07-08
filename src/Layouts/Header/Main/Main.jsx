@@ -13,7 +13,7 @@ const Main = () => {
           className="w-40 sm:w-60 md:w-80 lg:w-96 xl:w-[300px] 2xl:w-[400px]"
         />
 
-        <p className="FontCursive text-[var(--Voscuro2)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl">
+        <p className="FontCursiveClean text-[var(--Voscuro2)] text-4xl sm:text-5xl md:text-6xl lg:text-7xl ">
           Basura On Time
         </p>
 
@@ -92,13 +92,13 @@ const Main = () => {
           <div>
             <h4 className="text-lg FontGeologica mb-4">Síguenos</h4>
             <div className="flex justify-center gap-6 text-2xl">
-              <a href="https://www.facebook.com" target="_blank" aria-label="Facebook" className="hover:text-[var(--Vclaro)]">
+              <a href="https://www.facebook.com/profile.php?id=61577996528752" target="_blank" aria-label="Facebook" className="hover:text-[var(--Vclaro)]">
                 <FaFacebook />
               </a>
-              <a href="https://www.twitter.com" target="_blank" aria-label="Twitter" className="hover:text-[var(--Vclaro)]">
+              <a href="https://x.com/OnBasura" target="_blank" aria-label="Twitter" className="hover:text-[var(--Vclaro)]">
                 <FaTwitter />
               </a>
-              <a href="https://www.instagram.com" target="_blank" aria-label="Instagram" className="hover:text-[var(--Vclaro)]">
+              <a href="https://www.instagram.com/ba_on_time/" target="_blank" aria-label="Instagram" className="hover:text-[var(--Vclaro)]">
                 <FaInstagram />
               </a>
             </div>
