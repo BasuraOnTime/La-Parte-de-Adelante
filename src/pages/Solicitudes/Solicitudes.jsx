@@ -1,23 +1,38 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { FcOk } from "react-icons/fc";
 import { MdOutlineCancel } from "react-icons/md";
 import Swal from 'sweetalert2';
+import axios from 'axios';
 import { BotonBack } from '../../UI/BotonBack/BotonBack';
 import './Solicitudes.css';
 
 const Solicitudes = () => {
-  const [solicitudes, setSolicitudes] = useState([
-    { id: 1, tipo: 'Residuo especial', solicitante: 'Brayan Aguirre', fecha: '17/07/25', aceptada: false },
-    { id: 2, tipo: 'Residuo especial', solicitante: 'David Muñoz', fecha: '15/09/25', aceptada: false },
-    { id: 3, tipo: 'Residuo especial', solicitante: 'Brayan Aguirre', fecha: '17/07/25', aceptada: false },
-    { id: 4, tipo: 'Residuo especial', solicitante: 'David Muñoz', fecha: '15/09/25', aceptada: false },
-    { id: 5, tipo: 'Residuo especial', solicitante: 'Brayan Aguirre', fecha: '17/07/25', aceptada: false },
-  ]);
+  const URL = 'https://express-latest-6gmf.onrender.com/settingsRequest';
+  const token = localStorage.getItem("token");
 
+  const [solicitudes, setSolicitudes] = useState([]);
   const [searchTerm, setSearchTerm] = useState('');
 
-  const aceptarSolicitud = (id) => {
+  const fetchSolicitudes = async () => {
+    try {
+      const response = await axios.get(URL, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      console.log('Solicitudes obtenidas:', response.data.data[0]);
+      setSolicitudes([response.data.data[0]]);
+    } catch (error) {
+      console.error('Error fetching solicitudes:', error);
+    }
+  };
+
+  useEffect(() => {
+    fetchSolicitudes();
+  }, []);
+
+  const aceptarSolicitud = (index) => {
     Swal.fire({
       title: '¿Aceptar esta solicitud?',
       icon: 'question',
@@ -30,9 +45,10 @@ const Solicitudes = () => {
       allowOutsideClick: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        setSolicitudes(solicitudes.map(s =>
-          s.id === id ? { ...s, aceptada: true } : s
-        ));
+        const nuevasSolicitudes = [...solicitudes];
+        nuevasSolicitudes[index].aceptada = true;
+        setSolicitudes(nuevasSolicitudes);
+
         Swal.fire({
           icon: 'success',
           title: 'Solicitud aceptada',
@@ -43,7 +59,7 @@ const Solicitudes = () => {
     });
   };
 
-  const eliminarSolicitud = (id) => {
+  const eliminarSolicitud = (index) => {
     Swal.fire({
       title: '¿Eliminar esta solicitud?',
       icon: 'warning',
@@ -56,7 +72,9 @@ const Solicitudes = () => {
       allowOutsideClick: false,
     }).then((result) => {
       if (result.isConfirmed) {
-        setSolicitudes(solicitudes.filter(s => s.id !== id));
+        const nuevasSolicitudes = solicitudes.filter((_, i) => i !== index);
+        setSolicitudes(nuevasSolicitudes);
+
         Swal.fire({
           icon: 'success',
           title: 'Solicitud eliminada',
@@ -68,94 +86,92 @@ const Solicitudes = () => {
   };
 
   const filteredSolicitudes = solicitudes.filter(s =>
-    s.tipo.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    s.solicitante.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    s.fecha.includes(searchTerm)
+    s.zona.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    s.tipo_residuo.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    s.fecha_solicitud.includes(searchTerm) ||
+    s.tamano.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    s.nombres.toLowerCase().includes(searchTerm.toLowerCase()) ||
+    s.cantidad.toString().includes(searchTerm)
   );
 
   return (
-    <section className="sectFirst min-h-screen flex flex-col md:flex-row bg-[var(--Voscuro2)]">
-
-      {/* Sidebar PC */}
-      <div className="hidden md:flex flex-col justify-center items-center xl:w-100 2xl:w-160 h-screen bg-[var(--Voscuro2)] fixed left-0 z-10">
+    <section className='sectFirst flex flex-col md:flex-row'>
+      <aside className='min-h-screen flex flex-col justify-center items-center w-full md:w-1/4 bg-[var(--Voscuro2)] p-4'>
         <div className="absolute top-4 left-4 z-50">
           <BotonBack route="/PanelAdmin" content=" " />
         </div>
-        <img className="xl:w-50 2xl:w-90" src={logoBasuraOnTime} alt="Logo Basura On Time" />
-        <p className="FontCursive xl:text-4xl 2xl:text-5xl text-center text-white">BASURA ON TIME</p>
-      </div>
+        <img className='w-28 mb-3' src={logoBasuraOnTime} alt="Logo Basura On Time" />
+        <p className='FontCursive text-3xl text-center text-white'>BASURA ON TIME</p>
+      </aside>
 
-      {/* Header móvil */}
-      <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-8 pb-5 fixed top-0 left-0 z-50">
-        <div className="absolute top-2 left-2 z-50 scale-80">
-          {/* ⚠️ Asegúrate de tener este componente importado correctamente */}
-          {/* <ItemNavBar route="/PanelAdmin" content=" " /> */}
-        </div>
-        <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-28 h-auto mt-2" />
-        <p className="FontCursive text-base md:text-3xl text-white mt-2">BASURA ON TIME</p>
-      </div>
+      <main className='flex-1 bg-[var(--Voscuro2)] py-6 overflow-x-auto'>
+        <div className='container mx-auto px-4'>
+          <h1 className='text-3xl md:text-4xl text-white mb-4'>Gestión de Solicitudes</h1>
 
-      {/* Contenido */}
-      <div className="flex-1 flex flex-col items-center justify-start xl:ml-30 2xl:ml-65 px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
-        <div className="mt-30 sm:mt-15 xl:ml-70 2xl:ml-100 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[800px] max-h-[70vh] overflow-y-auto overflow-x-hidden">
-          <h1 className="text-xl md:text-5xl text-white mb-6 text-center">Gestión de Solicitudes</h1>
-
-          <div className="flex flex-col md:flex-row gap-8 mb-6">
+          <div className='mb-4'>
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="text-white rounded-md border border-[var(--Vclaro3)] text-center w-full h-12 md:w-120 text-sm md:text-xl"
-              placeholder="Buscar solicitud..."
+              className='w-full md:w-1/3 text-white bg-transparent border border-[var(--Vclaro3)] rounded-md px-3 py-1.5 text-sm placeholder:text-gray-400'
+              placeholder='Buscar solicitud...'
             />
           </div>
 
-          <div className="w-full overflow-x-auto text-white">
-            {/* Títulos escritorio */}
-            <div className="hidden md:grid grid-cols-5 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)] min-w-[600px]">
-              <p>Id</p>
-              <p>Tipo</p>
-              <p>Solicitante</p>
-              <p>Fecha</p>
-              <p>Acciones</p>
-            </div>
-
-            {filteredSolicitudes.map(({ id, tipo, solicitante, fecha, aceptada }) => (
-              <div key={id} className={`grid grid-cols-1 md:grid-cols-5 gap-3 md:gap-2 text-left md:text-center text-sm md:text-lg p-4 border border-[var(--Vclaro3)] min-w-[220px] md:min-w-0 ${aceptada ? 'bg-[var(--Vclaro)] bg-opacity-40' : ''}`}>
-
-                <div><span className="font-bold md:hidden">Id: </span>{id.toString().padStart(2, '0')}</div>
-                <div><span className="font-bold md:hidden">Tipo: </span>{tipo}</div>
-                <div><span className="font-bold md:hidden">Solicitante: </span>{solicitante}</div>
-                <div><span className="font-bold md:hidden">Fecha: </span>{fecha}</div>
-
-                <div className="flex gap-2 md:justify-center justify-start mt-2 md:mt-0">
-                  <button
-                    disabled={aceptada}
-                    onClick={() => aceptarSolicitud(id)}
-                    className={`flex justify-center items-center rounded-md w-10 h-10
-                      ${aceptada ? 'bg-[var(--Vclaro3)] cursor-not-allowed' : 'bg-[var(--Vclaro3)] hover:scale-105 hover:shadow-2xl hover:bg-opacity-90'}
-                      text-white group transition-all duration-300 ease-in-out active:scale-95`}
-                    title={aceptada ? 'Solicitud aceptada' : 'Aceptar solicitud'}
-                  >
-                    <FcOk className='transition-transform duration-300 group-hover:rotate-2 group-hover:scale-105' />
-                  </button>
-                  <button
-                    disabled={aceptada}
-                    onClick={() => eliminarSolicitud(id)}
-                    className={`flex justify-center items-center rounded-md w-10 h-10
-                      ${aceptada ? 'bg-[var(--Rojo)] cursor-not-allowed' : 'bg-[var(--Rojo)] hover:scale-105 hover:shadow-2xl hover:bg-opacity-90'}
-                      text-white group transition-all duration-300 ease-in-out active:scale-95`}
-                    title={aceptada ? 'No se puede eliminar una solicitud aceptada' : 'Eliminar solicitud'}
-                  >
-                    <MdOutlineCancel className='transition-transform duration-300 group-hover:rotate-2 group-hover:scale-105' />
-                  </button>
-                </div>
-
+          <div className='overflow-x-auto'>
+            <div className='min-w-[800px] text-sm'>
+              <div className='grid grid-cols-7 gap-2 bg-[var(--Voscuro4)] border border-[var(--Vclaro3)] text-white font-semibold py-2 px-2 rounded-t-md'>
+                <span>Zona</span>
+                <span>Cant.</span>
+                <span>Tipo</span>
+                <span>Fecha</span>
+                <span>Tamaño</span>
+                <span>Solicitante</span>
+                <span>Acciones</span>
               </div>
-            ))}
+
+              {filteredSolicitudes.length === 0 ? (
+                <p className='text-white text-center mt-3 text-sm'>No hay solicitudes que coincidan.</p>
+              ) : filteredSolicitudes.map(({ zona, cantidad, tipo_residuo, fecha_solicitud, tamano, nombres, aceptada }, index) => (
+                <div
+                  key={index}
+                  className={`grid grid-cols-7 gap-2 border-b border-[var(--Vclaro3)] text-white py-1.5 px-2 items-center ${aceptada ? 'bg-[var(--Vclaro)] bg-opacity-20' : ''}`}
+                >
+                  <span>{zona}</span>
+                  <span>{cantidad}</span>
+                  <span>{tipo_residuo}</span>
+                  <span>{fecha_solicitud}</span>
+                  <span>{tamano}</span>
+                  <span>{nombres}</span>
+                  <div className='flex gap-1.5'>
+                    <button
+                      disabled={aceptada}
+                      onClick={() => aceptarSolicitud(index)}
+                      className={`flex items-center justify-center rounded-md w-8 h-8
+                        ${aceptada ? 'bg-gray-400 cursor-not-allowed' : 'bg-[var(--Vclaro3)] hover:scale-105'}
+                        transition-all duration-200`}
+                      title={aceptada ? 'Solicitud aceptada' : 'Aceptar solicitud'}
+                    >
+                      <FcOk size={18} />
+                    </button>
+
+                    <button
+                      disabled={aceptada}
+                      onClick={() => eliminarSolicitud(index)}
+                      className={`flex items-center justify-center rounded-md w-8 h-8
+                        ${aceptada ? 'bg-gray-400 cursor-not-allowed' : 'bg-[var(--Rojo)] hover:scale-105'}
+                        transition-all duration-200`}
+                      title={aceptada ? 'No se puede eliminar una solicitud aceptada' : 'Eliminar solicitud'}
+                    >
+                      <MdOutlineCancel size={18} />
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     </section>
   );
 };

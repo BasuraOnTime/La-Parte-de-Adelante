@@ -1,21 +1,83 @@
-import { useState } from "react";
 import {
   UserCircle,
   Home,
   Truck,
   MapPin,
   Menu,
+  LogOut,
   X as CloseIcon
 } from "lucide-react";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import PanelEstadoCamionesU from "../EstadoCamioneU/EstadoCamionesU";
 import ConsultaRutasU from "../ConsultarRU/ConsultarRU";
 import Usuario from "../Usuario/Usuario";
+import axios from "axios";
+import {io} from "socket.io-client"
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
-  const [user] = useState({ name: "David", email: "david@puto.com" });
+  const URL = 'http://localhost:10101/profile';
+  const URLN = 'http://localhost:10101/notify/enviar-sms'
+  const socket = io('http://localhost:10101');
+  const token = localStorage.getItem("token");
+  const [user, setUser] = useState({ nombres: "", email: "" });
+  const [id_usuario, setId_usuario] = useState('')
+  const [telefono, setTelefono] = useState('')
   const [vista, setVista] = useState("inicio");
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+     const verifyToken = async () => {
+        try {
+            const response = await axios.get(URL, {
+                headers: {
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            setId_usuario(response.data.data[0].id_usuario)
+            setTelefono(response.data.data[0].telefono)
+            setUser(response.data.data[0]);
+        } catch (error) {
+            console.error('Error verifying token:', error);
+            localStorage.removeItem('token');
+            navigate('/InicioS');
+        }
+     }
+     verifyToken();
+  }, [])
+
+  useEffect(() => {
+    if (id_usuario) {
+      console.log('Registrando socket con id_usuario:', id_usuario);
+      socket.emit('register_user', String(id_usuario).trim());
+
+      socket.on('truck_nearby', async (data) => {
+        alert(`El camion esta cerca: ${data.message}`);
+        let mensaje = `El camión esta cerca: ${data.message}`
+        let numero = "57"+telefono
+        console.log(numero)
+        try{
+          await axios.post(URLN, {
+            numero,
+            mensaje
+          },
+          {
+            headers: {
+                    Authorization: `Bearer ${token}`
+                }
+          }
+        )
+        } catch(error) {
+          console.error(error)
+        }
+      });
+      return () => {
+        socket.off('truck_nearby');
+      };
+    }
+  }, [id_usuario]);
 
   const renderVista = () => {
     switch (vista) {
@@ -91,7 +153,7 @@ export default function UserDashboard() {
       {/* Contenido principal */}
       <main className="flex-1 p-6 md:p-10 space-y-6 pt-20 md:pt-0">
         <header className="flex items-center justify-between mb-4">
-          <h1 className="text-3xl font-bold">¡Hola, {user.name}!</h1>
+          <h1 className="text-3xl font-bold">¡Hola, {user.nombres}!</h1>
           <UserCircle className="text-white" size={45} />
         </header>
 
@@ -117,38 +179,50 @@ export default function UserDashboard() {
 
 function SidebarNav({ vista, setVista }) {
   return (
-    <nav className="flex flex-col gap-2">
-      <NavItem
-        active={vista === "inicio"}
-        icon={<Home size={20} />}
-        label="Inicio"
-        onClick={() => setVista("inicio")}
-      />
-      <NavItem
-        active={vista === "camiones"}
-        icon={<Truck size={20} />}
-        label="Camiones"
-        onClick={() => setVista("camiones")}
-      />
-      <NavItem
-        active={vista === "rutas"}
-        icon={<MapPin size={20} />}
-        label="Rutas"
-        onClick={() => setVista("rutas")}
-      />
-      <NavItem
-        active={vista === "usuario"}
-        icon={<UserCircle size={20} />}
-        label="Usuario"
-        onClick={() => setVista("usuario")}
-      />
-      <NavItem
-        active={vista === "solicitud"}
-        icon={<MapPin size={20} />}
-        label="Solicitudes"
-        onClick={() => setVista("solicitud")}
-      />
-    </nav>
+    <>
+      <div className="p-6 border-b border-[#003830]">
+        <h2 className="text-2xl font-bold text-white">Mi Panel</h2>
+      </div>
+      <nav className="flex flex-col gap-1 p-4 flex-1">
+        <NavItem
+          active={vista === "inicio"}
+          icon={<Home size={22} />}
+          label="Inicio"
+          onClick={() => setVista("inicio")}
+        />
+        <NavItem
+          active={vista === "camiones"}
+          icon={<Truck size={22} />}
+          label="Camiones"
+          onClick={() => setVista("camiones")}
+        />
+        <NavItem
+          active={vista === "rutas"}
+          icon={<MapPin size={22} />}
+          label="Rutas"
+          onClick={() => setVista("rutas")}
+        />
+        <NavItem
+          active={vista === "usuario"}
+          icon={<UserCircle size={22} />}
+          label="Usuario"
+          onClick={() => setVista("usuario")}
+        />
+        <NavItem
+          active={vista === "solicitud"}
+          icon={<MapPin size={22} />}
+          label="Solicitudes"
+          onClick={() => setVista("solicitud")}
+        />
+      </nav>
+      <div className="p-4 border-t border-[#003830]">
+        <NavItem
+          icon={<LogOut size={22} />}
+          label="Cerrar sesión"
+          onClick={() => alert("Sesión cerrada")}
+        />
+      </div>
+    </>
   );
 }
 

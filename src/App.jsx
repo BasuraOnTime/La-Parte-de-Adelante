@@ -17,7 +17,10 @@ import ConsultarRU from './pages/ConsultarRU/ConsultarRU'
 import PanelDU from './pages/PanelDusuario/PanelDU'
 import RegistroC from './pages/RegistroC/RegistroConductor'
 import LoginC from './pages/LoginC/LoginConductor'
+import PanelC from './pages/PanelC/Panel'
+import Recuperar from './pages/RecuperarC/Recuperar'
 import Conductores from './pages/Conductores/Conductores'
+
 
 
 export function App() {
@@ -27,16 +30,15 @@ export function App() {
       
 
       <Routes>
-        <Route path="/InicioS" element={<InicioS />} />
         <Route path="/" element={<Home />} />
         <Route path="/Register" element={<Register />} />
         <Route path="/Usuario" element={<Usuario />} />
         <Route path="/EstadoCamionesU" element={<EstadoCamionesU />} />
         <Route path="/ContraR" element={<ContraR />} />
+        <Route path="/Conductores" element={<Conductores />} />
         <Route path="/Admin" element={<Admin />} />
         <Route path="/PanelAdmin" element={<PanelAdmin />} />
         <Route path="/Camiones" element={<Camiones />} />
-        <Route path="/Conductores" element={<Conductores />} />
         <Route path="/Rutas" element={<Rutas />} />
         <Route path="/RutasU" element={<RutasU />} />
         <Route path="/Solicitudes" element={<Solicitudes />} />
@@ -45,7 +47,11 @@ export function App() {
         <Route path="/ConsultarRU" element={<ConsultarRU />} />
         <Route path="/PanelDU" element={<PanelDU />} /> 
         <Route path="/RegistroC" element={<RegistroC />} /> 
-        <Route path="/LoginC" element={<LoginC />} /> 
+        <Route path="/LoginC" element={<LoginC />} />
+        <Route path="/PanelC" element={<PanelC />} />
+        <Route path="/PanelDU" element={<PanelDU />} />
+        <Route path="/Recuperar" element={<Recuperar />} />
+        
       </Routes>
     </>
   )

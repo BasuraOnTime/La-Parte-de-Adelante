@@ -23,3 +23,4 @@ npm install tailwindcss @tailwindcss/vite,
 npm install gsap
 npm install axios
 npm install @heroicons/react
+npm install socket.io-client

@@ -2,10 +2,12 @@ import React, { useState } from 'react';
 import Swal from 'sweetalert2';
 import { BotonBack } from '../../UI/BotonBack/BotonBack';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
+import axios from 'axios';
 import './ContraR.css';
 
 const ContraR = () => {
   const [email, setEmail] = useState('');
+  const URL = 'https://express-latest-6gmf.onrender.com/validateEmail';
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,45 +21,34 @@ const ContraR = () => {
         Swal.showLoading();
       }
     });
-
     try {
-      // Aquí deberías hacer tu llamada al backend para enviar el enlace.
-      // Simulando respuesta con un delay de 2 segundos
-      await new Promise((resolve) => setTimeout(resolve, 2000));
-
-      // Simula validación de correo (cambia por tu lógica real)
-      const correoExiste = email === "correo@valido.com"; // cambia esto según tu lógica real
-
-      Swal.close();
-
-      if (correoExiste) {
+      const response = await axios.post(URL, { email });
+      const token = response.data.token;
+      console.log(token);
+      if (token) {
+        localStorage.setItem('token', token);
+      }
+      if (response.status === 200) {
         Swal.fire({
+          title: 'Éxito',
+          text: 'Se ha enviado un enlace de recuperación a tu correo electrónico.',
           icon: 'success',
-          title: 'Enlace enviado',
-          text: `Se ha enviado un enlace de recuperación a: ${email}`,
-          showConfirmButton: false,
-          timer: 2500,
-          timerProgressBar: true,
+          confirmButtonText: 'Aceptar'
         });
       } else {
         Swal.fire({
+          title: 'Error',
+          text: response.data.mensaje || 'No se pudo enviar el enlace de recuperación.',
           icon: 'error',
-          title: 'Correo no encontrado',
-          text: 'Este correo no está registrado. Por favor verifica o regístrate.',
-          showConfirmButton: false,
-          timer: 2500,
-          timerProgressBar: true,
+          confirmButtonText: 'Aceptar'
         });
       }
     } catch (error) {
-      Swal.close();
       Swal.fire({
-        icon: 'error',
         title: 'Error',
-        text: 'Hubo un problema al enviar el enlace. Intenta más tarde.',
-        showConfirmButton: false,
-        timer: 2500,
-        timerProgressBar: true,
+        text: 'Ocurrió un error al procesar la solicitud. Por favor, inténtalo de nuevo más tarde.',
+        icon: 'error',
+        confirmButtonText: 'Aceptar'
       });
     }
   };
@@ -85,6 +76,7 @@ const ContraR = () => {
           />
           <button
             type="submit"
+            onClick={handleSubmit}
             className="rounded-md w-100 h-10 bg-[var(--Vclaro)] text-white font-semibold group cursor-pointer transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95"
           >
             Enviar enlace de recuperación
