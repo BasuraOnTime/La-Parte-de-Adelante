@@ -1,12 +1,10 @@
-// UserDashboard.jsx fusionado con lógica backend, notificaciones, y diseño completo
-
+import ItemNavBar from "../../UI/BotonBack/BotonBack";
 import {
   UserCircle,
   Home,
   Truck,
   MapPin,
   Menu,
-  LogOut,
   X as CloseIcon,
   FileText
 } from "lucide-react";
@@ -16,7 +14,7 @@ import axios from "axios";
 import { io } from "socket.io-client";
 
 import PanelEstadoCamionesU from "../EstadoCamionesU/EstadoCamionesU";
-import RutasU from "../RutasU/RutasU"
+import RutasU from "../RutasU/RutasU";
 import Usuario from "../Usuario/Usuario";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
@@ -37,9 +35,7 @@ export default function UserDashboard() {
     const verifyToken = async () => {
       try {
         const response = await axios.get(URL, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         });
         const data = response.data.data[0];
         setUser(data);
@@ -59,7 +55,13 @@ export default function UserDashboard() {
       socket.emit('register_user', String(id_usuario).trim());
 
       socket.on('truck_nearby', async (data) => {
-        alert(`El camión está cerca: ${data.message}`);
+        Swal.fire({
+          icon: 'info',
+          title: '¡Atención!',
+          text: `El camión está cerca: ${data.message}`,
+          confirmButtonText: 'Entendido',
+          confirmButtonColor: '#3085d6'
+        });
         const mensaje = `El camión está cerca: ${data.message}`;
         const numero = "57" + telefono;
 
@@ -110,12 +112,15 @@ export default function UserDashboard() {
         </button>
       </div>
 
-      {/* Sidebar escritorio */}
-      <aside className="w-64 bg-[var(--Voscuro2)] shadow-lg hidden md:flex flex-col pt-2">
+      {/* Sidebar escritorio con botón Volver */}
+      <aside className="w-64 bg-[var(--Voscuro2)] shadow-lg hidden md:flex flex-col pt-4 px-4 gap-4">
+        <div className="self-start scale-90 mb-2">
+          <ItemNavBar route="/" content="Volver" />
+        </div>
         <SidebarNav vista={vista} setVista={setVista} />
       </aside>
 
-      {/* Sidebar móvil */}
+      {/* Sidebar móvil con botón Volver */}
       {menuAbierto && (
         <>
           <div className="fixed inset-0 bg-black bg-opacity-50 z-40" onClick={() => setMenuAbierto(false)}></div>
@@ -125,6 +130,9 @@ export default function UserDashboard() {
               <button onClick={() => setMenuAbierto(false)}>
                 <CloseIcon size={24} />
               </button>
+            </div>
+            <div className="mb-4">
+              <ItemNavBar route="/" content="Volver" />
             </div>
             <SidebarNav
               vista={vista}
@@ -165,7 +173,7 @@ export default function UserDashboard() {
 
 function SidebarNav({ vista, setVista }) {
   return (
-    <nav className="flex flex-col gap-2 px-4 py-4">
+    <nav className="flex flex-col gap-2 px-2 py-2">
       <NavItem active={vista === "inicio"} icon={<Home size={20} />} label="Inicio" onClick={() => setVista("inicio")} />
       <NavItem active={vista === "camiones"} icon={<Truck size={20} />} label="Camiones" onClick={() => setVista("camiones")} />
       <NavItem active={vista === "rutas"} icon={<MapPin size={20} />} label="Rutas" onClick={() => setVista("rutas")} />

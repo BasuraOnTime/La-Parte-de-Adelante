@@ -60,9 +60,9 @@ export function App() {
 
       {/* Rutas protegidas por conductor */}
       <Route path="/PanelC" element={
-        <ProtectedRoute requiredRole="conductor">
+      
           <PanelC />
-        </ProtectedRoute>
+  
       } />
 
       {/* Rutas protegidas por admin */}

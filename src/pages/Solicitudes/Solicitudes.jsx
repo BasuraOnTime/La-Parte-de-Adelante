@@ -7,7 +7,7 @@ import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import './Solicitudes.css';
 
 const Solicitudes = () => {
-  const URL = 'https://express-latest-6gmf.onrender.com/settingsRequest';
+  const URL = 'http://localhost:10101/settingsRequest';
   const token = localStorage.getItem("token");
 
   const [solicitudes, setSolicitudes] = useState([]);

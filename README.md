@@ -25,3 +25,4 @@ npm install axios
 npm install @heroicons/react
 npm install @react-google-maps/api
 npm install socket.io-client
+npm install jwt-decode

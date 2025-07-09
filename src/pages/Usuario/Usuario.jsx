@@ -7,7 +7,7 @@ import { MapaGoogle } from '../../Layouts/MapGoogle/MapGoogle';
 import './Usuario.css';
 
 const UserProfileApp = () => {
-  const URL = 'https://express-latest-6gmf.onrender.com/profile';
+  const URL = 'http://localhost:10101/profile';
   const token = localStorage.getItem('token');
 
   const [showModal, setShowModal] = useState(false);

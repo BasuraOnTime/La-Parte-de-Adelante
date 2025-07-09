@@ -4,9 +4,10 @@ import { FaUserCircle, FaPowerOff, FaSignOutAlt } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 
 export default function PanelConductor() {
+  const token=localStorage.getItem('token')
   const [encendido, setEncendido] = useState(false);
   const intervalRef = useRef(null);
-  const URL = "https://express-latest-6gmf.onrender.com/truck_location";
+  const URL = "http://localhost:10101/truck_location";
 
   const sendTruckLocation = async (lat, lng) => {
     console.log("📡 Enviando ubicación:", lat, lng);
@@ -14,7 +15,10 @@ export default function PanelConductor() {
     try {
       const response = await axios.post(URL,{
         lat,
-        lng
+        lng,
+        estado: "Activo"
+      },{
+       headers: { Authorization: `Bearer ${token}` }
       })
 
       const data = await response.data

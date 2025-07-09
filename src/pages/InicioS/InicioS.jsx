@@ -8,7 +8,7 @@ import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
 
 
 const XLanding = () => {
-  const URL = 'https://express-latest-6gmf.onrender.com/auth';
+  const URL = 'http://localhost:10101/auth';
   const navigate = useNavigate();
   const [email, setCorreo] = useState('');
   const [password, setContraseña] = useState('');
