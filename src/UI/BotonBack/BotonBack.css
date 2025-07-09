@@ -11,15 +11,12 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  border: 3px solid #000000;
   border-radius: 12px;
   padding: 0;
   text-decoration: none;
   color: #ffffff;
-
   font-weight: bold;
   position: relative;
-  box-shadow: 4px 4px 0px #000000;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   height: 60px;
@@ -28,8 +25,9 @@
 }
 
 .brutalist-button.openai {
-  background-color: #356854;
+  background: var(--Vclaro) center center;
 }
+
 
 .brutalist-button::before {
   content: "";
@@ -51,14 +49,7 @@
 
 
 
-@keyframes spin {
-  0% {
-    transform: translate(-50%, -50%) rotate(0deg);
-  }
-  100% {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
-}
+
 
 .brutalist-button:hover .openai-logo {
   animation: spin 5s linear infinite;
@@ -116,6 +107,5 @@
 @media (hover: hover) and (pointer: fine) {
   .brutalist-button:hover {
     transform: translate(-4px, -4px);
-    box-shadow: 8px 8px 0px #000000;
   }
 }

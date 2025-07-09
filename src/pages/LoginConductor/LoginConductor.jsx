@@ -1,86 +1,103 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
-import axios from 'axios';
-import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
+import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
+import Swal from 'sweetalert2';
 import { EyeIcon, EyeSlashIcon } from '@heroicons/react/24/outline';
-import './inicioS.css';
+import axios from 'axios';
 
-const XLanding = () => {
-  const URL = 'https://express-latest-6gmf.onrender.com/auth';
+export default function LoginConductor() {
   const navigate = useNavigate();
-  const [email, setCorreo] = useState('');
-  const [password, setContraseña] = useState('');
+  const [loginData, setLoginData] = useState({ correo: '', contraseña: '' });
   const [showPassword, setShowPassword] = useState(false);
+
+  const handleChange = (e) => {
+    setLoginData({ ...loginData, [e.target.name]: e.target.value });
+  };
 
   const toggleShowPassword = () => setShowPassword(!showPassword);
 
-  const handleLoginSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if (!loginData.correo || !loginData.contraseña) {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Campos incompletos',
+        text: 'Por favor, completa todos los campos.',
+        confirmButtonColor: '#0A372D',
+      });
+      return;
+    }
+
     try {
-      const response = await axios.post(URL, { email, password });
-      const token = response.data.token;
+      const response = await axios.post('https://express-latest-6gmf.onrender.com/loginConductor/iniciar', {
+        email: loginData.correo,
+        password: loginData.contraseña
+      });
 
-      if (token) {
-        localStorage.setItem('token', token);
-         localStorage.setItem('rol', 'usuario');
-        // Puedes guardar también el rol si lo envía el backend
-        // localStorage.setItem('rol', response.data.rol);
+      const {id_usuario } = response.data;
 
-        Swal.fire({
-          icon: 'success',
-          title: 'Inicio de sesión exitoso',
-          showConfirmButton: false,
-          timer: 1500,
-        }).then(() => navigate('/'));
-      }
+      // Puedes usar estos valores en memoria si los necesitas
+      console.log('ID usuario:', id_usuario);
+
+      Swal.fire({
+        icon: 'success',
+        title: 'Inicio de sesión exitoso',
+        showConfirmButton: false,
+        timer: 1500,
+      }).then(() => navigate('/PanelC'));
     } catch (error) {
+      console.error(error);
+      let mensaje = 'Correo o contraseña incorrectos.';
+
+      if (error.response?.data?.message) {
+        mensaje = error.response.data.message;
+      }
+
       Swal.fire({
         icon: 'error',
-        title: 'Error al iniciar sesión',
-        text: 'Verifica tus credenciales.',
-        showConfirmButton: false,
-        timer: 2000,
-        timerProgressBar: true
+        title: 'Error de autenticación',
+        text: mensaje,
+        showConfirmButton: true,
+        confirmButtonColor: '#0A372D'
       });
     }
   };
 
   return (
     <section className='sectFirst glass min-h-screen flex flex-col md:flex-row justify-center items-center p-4 md:gap-20'>
-
-      {/* Botón de volver fijo arriba a la izquierda */}
       <div className="absolute top-4 left-4 md:top-6 md:left-6 z-50 scale-80 md:scale-100">
         <ItemNavBar route="/" content="Volver" />
       </div>
 
-      {/* Logo y texto */}
       <div className='flex flex-col justify-center items-center mb-6 md:mb-0'>
         <img className='w-24 h-24 mb-4 md:w-[200px] md:h-[200px]' src={logoBasuraOnTime} alt="Logo" />
         <p className='FontCursive text-3xl md:text-6xl text-center text-white'>BASURA ON TIME</p>
       </div>
 
-      {/* Formulario */}
-      <div className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full p-6 rounded-3xl md:w-[480px] md:gap-4 md:rounded-4xl md:p-8'>
-
-        <p className='FontCursive text-2xl md:text-5xl p-4 text-white text-center'>Iniciar sesión</p>
+      <form onSubmit={handleSubmit} className='FontGeologica flex flex-col justify-center items-center gap-4 bg-[var(--Voscuro2)] w-full p-6 rounded-3xl md:w-[480px] md:gap-4 md:rounded-4xl md:p-8'>
+        <p className='FontCursive text-2xl md:text-5xl p-4 text-white text-center'>Conductor</p>
 
         <input
           className='rounded-md bg-[var(--Vclaro2)] w-full max-w-[500px] h-8 md:h-10 text-center placeholder:text-center text-white text-sm md:text-lg'
-          type="text"
+          type="email"
+          name="correo"
           placeholder='Correo electrónico'
-          value={email}
-          onChange={(e) => setCorreo(e.target.value)}
+          value={loginData.correo}
+          onChange={handleChange}
+          required
         />
 
         <div className="relative w-full max-w-[500px]">
           <input
             className='rounded-md bg-[var(--Vclaro2)] w-full h-8 md:h-10 text-white placeholder:text-center text-center text-sm md:text-lg'
             type={showPassword ? "text" : "password"}
+            name="contraseña"
             placeholder='Contraseña'
-            value={password}
-            onChange={(e) => setContraseña(e.target.value)}
+            value={loginData.contraseña}
+            onChange={handleChange}
+            required
           />
           <button
             type="button"
@@ -93,29 +110,12 @@ const XLanding = () => {
         </div>
 
         <button
+          type="submit"
           className='rounded-md w-full max-w-[500px] h-8 md:h-10 bg-[var(--Vclaro)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95 text-sm md:text-lg'
-          onClick={handleLoginSubmit}
         >
           Iniciar sesión
         </button>
-
-        <button
-          className='rounded-md w-full max-w-[500px] h-8 md:h-10 bg-[var(--Voscuro3)] text-white group cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl hover:bg-opacity-90 active:scale-95 text-sm md:text-lg'
-          onClick={() => navigate('/register')}
-        >
-          Crear cuenta
-        </button>
-
-        <button
-          className='text-white underline text-xs md:text-sm hover:text-[var(--Vclaro)] transition cursor-pointer'
-          onClick={() => navigate('/ContraR')}
-        >
-          ¿Olvidaste tu contraseña?
-        </button>
-
-      </div>
+      </form>
     </section>
   );
-};
-
-export default XLanding;
+}
