@@ -21,9 +21,9 @@ import Usuario from "../Usuario/Usuario";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
-  const URL = 'https://express-latest-6gmf.onrender.com/profile';
-  const URLN = 'https://express-latest-6gmf.onrender.com/notify/enviar-sms';
-  const socket = io('https://express-latest-6gmf.onrender.com');
+  const URL = 'http://localhost:10101/profile';
+  const URLN = 'http://localhost:10101/enviar-sms';
+  const socket = io('http://localhost:10101');
   const token = localStorage.getItem("token");
 
   const [user, setUser] = useState({ nombres: "", email: "" });

@@ -11,7 +11,7 @@ import axios from 'axios';
 const Camiones = () => {
   const token = localStorage.getItem('token');
   const URLM = 'https://express-latest-6gmf.onrender.com/settingsTruck';
-  const URLAdd = 'https://express-latest-6gmf.onrender.com/addTruck';
+  const URLAdd = 'http://localhost:10101/addTruck';
   const URLDelete = 'https://express-latest-6gmf.onrender.com/deleteTruck';
   const URLEdit = 'https://express-latest-6gmf.onrender.com/modifyTruck';
 
@@ -235,32 +235,80 @@ const Camiones = () => {
         </div>
       </div>
 
-      {/* Modal Formulario */}
-      {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
-          <form onSubmit={handleSubmitTruck} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
-            <h2 className="text-2xl mb-2">{modoEdicion ? 'Editar Camión' : 'Agregar Camión'}</h2>
+  {/* Modal Formulario */}
+    {showForm && (
+    <div className="fixed inset-0 bg-black bg-opacity-60 flex justify-center items-center z-50">
+     <form onSubmit={handleSubmitTruck} className="bg-[var(--Voscuro4)] p-6 rounded-lg shadow-lg w-96 text-white flex flex-col gap-4">
+      <h2 className="text-2xl mb-2">{modoEdicion ? 'Editar Camión' : 'Agregar Camión'}</h2>
 
-            <input type="text" name="placa" value={nuevoCamion.placa} onChange={handleInputChange} placeholder="Placa" required disabled={modoEdicion} className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
-            <input type="text" name="modelo" value={nuevoCamion.modelo} onChange={handleInputChange} placeholder="Modelo" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
-            <select name="capacidad" value={nuevoCamion.capacidad} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
-              <option value="Alta">Alta</option><option value="Media">Media</option><option value="Baja">Baja</option>
-            </select>
-            <select name="estado_camion" value={nuevoCamion.estado_camion} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
-              <option value="Activo">Activo</option><option value="Inactivo">Inactivo</option><option value="Mantenimiento">Mantenimiento</option>
-            </select>
-            <input type="text" name="marca" value={nuevoCamion.marca} onChange={handleInputChange} placeholder="Marca" required className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border" />
-            <select name="tipo_c" value={nuevoCamion.tipo_c} onChange={handleInputChange} className="p-2 rounded bg-[var(--Voscuro2)] text-white border">
-              <option value="Recolección">Recolección</option><option value="Traslado">Traslado</option>
-            </select>
+       <input
+         type="text"
+         name="placa"
+         value={nuevoCamion.placa}
+         onChange={handleInputChange}
+         placeholder="Placa"
+         required
+         disabled={modoEdicion}
+         className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
+       />
+       <input
+         type="text"
+         name="modelo"
+         value={nuevoCamion.modelo}
+         onChange={handleInputChange}
+         placeholder="Modelo"
+          required
+         className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
+        />
+       <select
+         name="capacidad"
+         value={nuevoCamion.capacidad}
+         onChange={handleInputChange}
+         className="p-2 rounded bg-[var(--Voscuro2)] text-white border"
+        >
+         <option value="Alta">Alta</option>
+          <option value="Media">Media</option>
+          <option value="Baja">Baja</option>
+        </select>
 
-            <div className="flex justify-end gap-4">
-              <button type="button" onClick={driveCancelTruck} className="bg-[var(--Rojo)] px-4 py-2 rounded">Cancelar</button>
-              <button type="submit" className="bg-[var(--Vclaro3)] px-4 py-2 rounded">Guardar</button>
-            </div>
-          </form>
+
+        <input
+          type="text"
+          name="marca"
+          value={nuevoCamion.marca}
+          onChange={handleInputChange}
+          placeholder="Marca"
+          required
+          className="p-2 rounded bg-[var(--Voscuro2)] text-white placeholder-white border"
+        />
+        <select
+          name="tipo_c"
+          value={nuevoCamion.tipo_c}
+          onChange={handleInputChange}
+          className="p-2 rounded bg-[var(--Voscuro2)] text-white border"
+        >
+          <option value="Recolección">Recolección</option>
+          <option value="Traslado">Traslado</option>
+        </select>
+
+        <div className="flex justify-end gap-4">
+          <button
+            type="button"
+            onClick={driveCancelTruck}
+            className="bg-[var(--Rojo)] px-4 py-2 rounded"
+          >
+            Cancelar
+          </button>
+          <button
+            type="submit"
+            className="bg-[var(--Vclaro3)] px-4 py-2 rounded"
+          >
+            Guardar
+          </button>
         </div>
-      )}
+      </form>
+    </div>
+    )}
     </section>
   );
 };

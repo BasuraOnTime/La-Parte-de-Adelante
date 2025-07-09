@@ -5,16 +5,18 @@ import { useNavigate } from "react-router-dom";
 
 export default function PanelConductor() {
   const [encendido, setEncendido] = useState(false);
+  const token = localStorage.getItem('token')
   const intervalRef = useRef(null);
-  const URL = "https://express-latest-6gmf.onrender.com/truck_location";
+  const URL = "http://localhost:10101/truck_location";
 
   const sendTruckLocation = async (lat, lng) => {
-    console.log("📡 Enviando ubicación:", lat, lng);
-
     try {
       const response = await axios.post(URL,{
         lat,
-        lng
+        lng,
+        estado: "Activo"
+      },{
+        headers: { Authorization: `Bearer ${token}` }
       })
 
       const data = await response.data
@@ -36,26 +38,19 @@ export default function PanelConductor() {
         },
         { enableHighAccuracy: true }
       );
-    } else {
-      console.error("❌ Geolocalización no soportada");
-    }
+    } 
   };
 
   const toggleEncendido = () => {
     if (!encendido) {
-      // ✅ Encender: envía una vez y activa intervalo cada 5 min
       getLocationAndSend();
       intervalRef.current = setInterval(getLocationAndSend, 5 * 60 * 1000);
-      console.log("🚚 Camión ENCENDIDO");
     } else {
-      // ✅ Apagar: limpiar intervalo
       clearInterval(intervalRef.current);
-      console.log("🛑 Camión APAGADO");
     }
     setEncendido(!encendido);
   };
 
-  // Limpieza por si sales del componente
   useEffect(() => {
     return () => {
       clearInterval(intervalRef.current);
@@ -65,9 +60,8 @@ export default function PanelConductor() {
   const navigate = useNavigate();
 
   const cerrarSesion = () => {
-    // Aquí tu lógica de cerrar sesión
-    console.log("🚪 Cerrar sesión");
-    navigate("/login");
+    localStorage.removeItem('token')
+    navigate("/loginConductor");
   };
 
   return (

@@ -31,15 +31,13 @@ export default function LoginConductor() {
     }
 
     try {
-      const response = await axios.post('https://express-latest-6gmf.onrender.com/loginConductor/iniciar', {
+      const response = await axios.post('http://localhost:10101/loginConductor', {
         email: loginData.correo,
         password: loginData.contraseña
-      });
+      },);
 
-      const {id_usuario } = response.data;
-
-      // Puedes usar estos valores en memoria si los necesitas
-      console.log('ID usuario:', id_usuario);
+      const token = response.data.token
+      localStorage.setItem('token', token)
 
       Swal.fire({
         icon: 'success',
