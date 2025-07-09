@@ -8,7 +8,7 @@ import "./Admin.css";
 
 
 const Admin = () => {
-  const URL = "https://express-latest-6gmf.onrender.com/authAdmin";
+  const URL = "http://localhost:10101/authAdmin";
   const navigate = useNavigate();
 
   const [email, setEmail] = useState('');
