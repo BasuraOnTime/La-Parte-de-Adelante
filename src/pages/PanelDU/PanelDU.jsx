@@ -1,5 +1,5 @@
 // UserDashboard.jsx fusionado con lógica backend, notificaciones, y diseño completo
-
+import Swal from "sweetalert2";
 import {
   UserCircle,
   Home,
@@ -10,10 +10,11 @@ import {
   X as CloseIcon,
   FileText
 } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, use } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import { io } from "socket.io-client";
+import { socket } from "../../Layouts/Socket/Socket";
+import { useLoadScript } from '@react-google-maps/api';
 
 import PanelEstadoCamionesU from "../EstadoCamionesU/EstadoCamionesU";
 import RutasU from "../RutasU/RutasU"
@@ -21,64 +22,83 @@ import Usuario from "../Usuario/Usuario";
 import Solicitud from "../SolicitudesE/SolicitudesE";
 
 export default function UserDashboard() {
-  const URL = 'http://localhost:10101/profile';
-  const URLN = 'http://localhost:10101/enviar-sms';
-  const socket = io('http://localhost:10101');
+  const URL = 'https://express-latest-6gmf.onrender.com/profile';
+  const URLN = 'https://express-latest-6gmf.onrender.com/notify/enviar-sms';
+  
   const token = localStorage.getItem("token");
+  
+  const { isLoaded } = useLoadScript({
+    googleMapsApiKey: 'AIzaSyAbTX5wP7twg96yad7yEg99u9yT60ZPwp4',
+  });
 
   const [user, setUser] = useState({ nombres: "", email: "" });
   const [id_usuario, setId_usuario] = useState('');
+  const [latitud, setLatitud] = useState('');
+  const [longitud, setLongitud] = useState('');
   const [telefono, setTelefono] = useState('');
   const [vista, setVista] = useState("inicio");
   const [menuAbierto, setMenuAbierto] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
-    const verifyToken = async () => {
-      try {
-        const response = await axios.get(URL, {
-          headers: {
-            Authorization: `Bearer ${token}`
-          }
+  const verifyToken = async () => {
+    try {
+      const response = await axios.get(URL, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
+      const data = response.data.data[0];
+      setUser(data);
+      setId_usuario(data.id_usuario);
+      setTelefono(data.telefono);
+      setLatitud(data.latitud)
+      setLongitud(data.longitud)
+    } catch (error) {
+      console.error('Error verifying token:', error);
+      localStorage.removeItem('token');
+      navigate('/InicioS');
+    }
+  };
+  verifyToken();
+}, []);
+
+useEffect(() => {
+  if (id_usuario && telefono) {
+    console.log('✅ Registrando socket:', id_usuario);
+
+    socket.emit('register_user', String(id_usuario).trim());
+
+    const listener = async (data) => {
+      Swal.fire({
+          icon: 'info',
+          title: '¡Atención!',
+          text: ` ${data.message}`,
+          confirmButtonText: 'Entendido',
+          confirmButtonColor: '#3085d6'
         });
-        const data = response.data.data[0];
-        setUser(data);
-        setId_usuario(data.id_usuario);
-        setTelefono(data.telefono);
+      const mensaje = `El camión está cerca: ${data.message}`;
+      const numero = "57" + telefono;
+
+      try {
+        await axios.post(URLN, { numero, mensaje }, {
+          headers: { Authorization: `Bearer ${token}` }
+        });
       } catch (error) {
-        console.error('Error verifying token:', error);
-        localStorage.removeItem('token');
-        navigate('/InicioS');
+        console.error('Error enviando SMS:', error);
       }
     };
-    verifyToken();
-  }, []);
 
-  useEffect(() => {
-    if (id_usuario) {
-      socket.emit('register_user', String(id_usuario).trim());
+    socket.on('truck_nearby', listener);
 
-      socket.on('truck_nearby', async (data) => {
-        alert(`El camión está cerca: ${data.message}`);
-        const mensaje = `El camión está cerca: ${data.message}`;
-        const numero = "57" + telefono;
+    return () => socket.off('truck_nearby', listener);
+   }
+  }, [id_usuario, telefono]); 
 
-        try {
-          await axios.post(URLN, { numero, mensaje }, {
-            headers: { Authorization: `Bearer ${token}` }
-          });
-        } catch (error) {
-          console.error('Error enviando SMS:', error);
-        }
-      });
+  if (!isLoaded) return <div>Cargando mapa...</div>;
 
-      return () => socket.off('truck_nearby');
-    }
-  }, [id_usuario]);
 
   const renderVista = () => {
     switch (vista) {
-      case "camiones": return <PanelEstadoCamionesU />;
+      case "camiones": return <PanelEstadoCamionesU destinolat={latitud} destinoLng={longitud} />;
       case "rutas": return <RutasU />;
       case "usuario": return <Usuario />;
       case "solicitud": return <Solicitud />;

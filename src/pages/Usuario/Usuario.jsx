@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { Pencil, Trash2, Mail, User, Phone, Lock } from 'lucide-react';
 import Swal from 'sweetalert2';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
-import { MapaGoogle } from '../../Layouts/MapGoogle/MapGoogle';
+import MapaUbicacion from '../../Layouts/MapGoogle/Mapaubicacion';
 import { useNavigate } from "react-router-dom";
 import './Usuario.css';
 
@@ -131,7 +131,7 @@ const UserProfileApp = () => {
           <div><label className="text-sm text-gray-600 flex items-center gap-1"><User size={16} /> Apellidos</label><p className="mt-1 text-base">{apellido}</p></div>
           <div><label className="text-sm text-gray-600 flex items-center gap-1"><Phone size={16} /> Teléfono</label><p className="mt-1 text-base">{Telefono}</p></div>
 
-          <MapaGoogle latitud={latitud} longitud={longitud} />
+          <MapaUbicacion latitud={latitud} longitud={longitud} />
 
           <div><label className="text-sm text-gray-600 flex items-center gap-1"><Lock size={16} /> Contraseña</label><p className="mt-1 text-base">••••••••</p></div>
 

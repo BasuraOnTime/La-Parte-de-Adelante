@@ -19,6 +19,7 @@ export default function PanelConductor() {
         headers: { Authorization: `Bearer ${token}` }
       })
 
+      console.log(lat, lng)
       const data = await response.data
       console.log("✅ Respuesta del servidor:", data);
     } catch (err) {
@@ -42,14 +43,27 @@ export default function PanelConductor() {
   };
 
   const toggleEncendido = () => {
-    if (!encendido) {
-      getLocationAndSend();
-      intervalRef.current = setInterval(getLocationAndSend, 5 * 60 * 1000);
+  setEncendido((prevEncendido) => {
+    if (!prevEncendido) {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+      }
+      getLocationAndSend()
+      intervalRef.current = setInterval(() => {
+        getLocationAndSend()
+      }, 5 * 60 * 1000); 
     } else {
-      clearInterval(intervalRef.current);
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
     }
-    setEncendido(!encendido);
-  };
+
+    return !prevEncendido;
+  });
+};
+
+
 
   useEffect(() => {
     return () => {
