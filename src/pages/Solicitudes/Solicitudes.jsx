@@ -8,7 +8,7 @@ import './Solicitudes.css';
 
 const Solicitudes = () => {
   const URL = 'https://express-latest-6gmf.onrender.com/settingsRequest';
-  const URLE = 'http://localhost:10101/stateSoli';
+  const URLE = 'https://express-latest-6gmf.onrender.com/stateSoli';
   const token = localStorage.getItem("token");
 
   const [solicitudes, setSolicitudes] = useState([]);

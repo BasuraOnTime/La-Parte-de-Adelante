@@ -1,9 +1,8 @@
 import { io } from "socket.io-client";
 
-// Solo se ejecuta UNA VEZ al importar este archivo.
-export const socket = io('http://localhost:10101', {
+export const socket = io('https://express-latest-6gmf.onrender.com', {
   // Opcional: Si quieres reconexiones automáticas.
   reconnection: true,
   reconnectionAttempts: 5,
-  transports: ["websocket"], // Recomendado para evitar fallback a long-polling
+  transports: ["websocket"], 
 });

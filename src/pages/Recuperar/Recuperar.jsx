@@ -6,7 +6,7 @@ import Swal from 'sweetalert2';
 
 
 export default function ResetPasswordForm() {
-  const URL = "https://express-latest-6gmf.onrender.com/recuperar";
+  const URL = "https://express-latest-6gmf.onrender.com/reset-password";
   const token = localStorage.getItem("token");
 
   const [formData, setFormData] = useState({
