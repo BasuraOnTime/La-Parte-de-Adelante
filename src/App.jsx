@@ -5,12 +5,12 @@ import Home from './pages/Home/Home';
 import Usuario from './pages/Usuario/Usuario';
 import ContraR from './pages/ContraR/ContraR';
 import Register from './pages/Register/Register';
-import Admin from './pages/Admin/Admin'; // Login admin (público)
+import Admin from './pages/Admin/Admin';
 import PanelAdmin from './pages/PanelAdmin/PanelAdmin';
 import Solicitudes from './pages/Solicitudes/Solicitudes';
 import Rutas from './pages/Rutas/Rutas';
 import Camiones from './pages/Camiones/Camiones';
-import InicioS from './pages/InicioS/InicioS'; // Login usuario
+import InicioS from './pages/InicioS/InicioS';
 import SolicitudesE from './pages/SolicitudesE/SolicitudesE';
 import RutasU from './pages/RutasU/RutasU';
 import Conductores from './pages/Conductores/Conductores';
@@ -60,9 +60,9 @@ export function App() {
 
       {/* Rutas protegidas por conductor */}
       <Route path="/PanelC" element={
-        
+      
           <PanelC />
-    
+  
       } />
 
       {/* Rutas protegidas por admin */}

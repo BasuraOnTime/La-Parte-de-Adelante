@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import { FcOk } from "react-icons/fc";
-import { MdOutlineCancel } from "react-icons/md";
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
@@ -9,7 +8,7 @@ import './Solicitudes.css';
 
 const Solicitudes = () => {
   const URL = 'https://express-latest-6gmf.onrender.com/settingsRequest';
-  const URLE = 'https://express-latest-6gmf.onrender.com/stateSoli';
+  const URLE = 'http://localhost:10101/stateSoli';
   const token = localStorage.getItem("token");
 
   const [solicitudes, setSolicitudes] = useState([]);
@@ -36,6 +35,7 @@ const Solicitudes = () => {
   const aceptarSolicitud = async (index) => {
     const solicitud = solicitudes[index];
     const idSolicitud = solicitud.id_solicitud;
+    console.log(idSolicitud);
 
     Swal.fire({
       title: '¿Aceptar esta solicitud?',
@@ -105,18 +105,17 @@ const Solicitudes = () => {
       </div>
 
       {/* Header móvil */}
-      <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-8 pb-5 fixed top-0 left-0 z-50">
+      <div className="md:hidden bg-[var(--Voscuro2)] w-full flex flex-col items-center pt-5 pb-5 fixed top-0 left-0 z-50">
         <div className="absolute top-2 left-2 z-50 scale-80">
           <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
-        <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-28 h-auto mt-2" />
+        <img src={logoBasuraOnTime} alt="Logo Basura On Time" className="w-15 h-auto mt-2" />
         <p className="FontCursive text-base md:text-3xl text-white mt-2">BASURA ON TIME</p>
       </div>
 
       {/* Contenido principal */}
-      <div className="flex-1 flex flex-col items-center justify-start md:pl-[220px] xl:pl-[240px] 2xl:pl-[280px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
-
-        <div className="mt-30 sm:mt-15 w-full max-w-[1100px] bg-[var(--Voscuro2)] p-6 rounded-lg overflow-y-auto overflow-x-auto">
+      <div className="flex-1 flex flex-col items-center justify-start md:pl-[220px] xl:pl-[240px] 2xl:pl-[280px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-hidden">
+        <div className="mt-10 sm:mt-15 w-full max-w-[1100px] bg-[var(--Voscuro2)] p-6 rounded-lg text-white">
           <h1 className="text-xl md:text-5xl text-white mb-6 text-center">Gestión de Solicitudes</h1>
 
           <div className="flex flex-col md:flex-row gap-8 mb-6">

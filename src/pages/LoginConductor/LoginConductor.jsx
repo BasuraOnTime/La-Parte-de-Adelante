@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { data, useNavigate } from 'react-router-dom';
 import { ItemNavBar } from '../../UI/BotonBack/BotonBack';
 import logoBasuraOnTime from '../../assets/img/icons/logoBasuraOnTime.png';
 import Swal from 'sweetalert2';
@@ -31,7 +31,7 @@ export default function LoginConductor() {
     }
 
     try {
-      const response = await axios.post('http://localhost:10101/loginConductor', {
+      const response = await axios.post('https://express-latest-6gmf.onrender.com/loginConductor', {
         email: loginData.correo,
         password: loginData.contraseña
       },);

@@ -10,6 +10,7 @@ export default function MapaRuta({ origenLat, origenLng, destinoLat, destinoLng 
   const mapRef = useRef(null);
   const [directions, setDirections] = useState(null);
   const intervalRef = useRef(null);
+  console.log(destinoLat, destinoLng)
 
   const origen = {
     lat: parseFloat(origenLat),
@@ -74,7 +75,7 @@ export default function MapaRuta({ origenLat, origenLng, destinoLat, destinoLng 
 
   return (
     <>
-      <h1>Mapa Ruta con Línea (Actualiza cada 5 min)</h1>
+      <h1>Usted esta a esta distancia con el camion</h1>
       <GoogleMap
         mapContainerStyle={containerStyle}
         center={safeOrigen}

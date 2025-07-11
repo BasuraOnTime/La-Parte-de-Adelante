@@ -35,7 +35,15 @@ const SolicitudForm = () => {
     });
 
     try {
-      const formData = { zona, fecha_solicitud, cantidad, tipo_residuo, tamano };
+      const formData = {
+        zona,
+        fecha_solicitud,
+        cantidad: parseInt(cantidad), 
+        tipo_residuo,
+        tamano,
+      };
+
+      console.log(typeof(cantidad))
       await axios.post(URL, formData, {
         headers: { Authorization: `Bearer ${token}` },
       });
@@ -81,7 +89,7 @@ const SolicitudForm = () => {
         <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
           <InputField label="Zona" value={zona} onChange={(e) => setZona(e.target.value)} />
           <InputField label="Fecha de Solicitud" type="date" value={fecha_solicitud} onChange={(e) => setFechaSolicitud(e.target.value)} />
-          <InputField label="Cantidad" type="number" value={cantidad} onChange={(e) => setCantidad(e.target.value)} />
+          <InputField label="Cantidad" type="number" value={cantidad} onChange={(e) => setCantidad(parseInt(e.target.value))} />
           <InputField label="Tipo de Residuo" value={tipo_residuo} onChange={(e) => setTipoResiduo(e.target.value)} />
           <InputField label="Tamaño" value={tamano} onChange={(e) => setTamano(e.target.value)} />
           <button

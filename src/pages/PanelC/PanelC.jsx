@@ -7,7 +7,8 @@ export default function PanelConductor() {
   const [encendido, setEncendido] = useState(false);
   const token = localStorage.getItem('token')
   const intervalRef = useRef(null);
-  const URL = "http://localhost:10101/truck_location";
+  const URL = "https://express-latest-6gmf.onrender.com/truck_location";
+  const URLE = 'https://express-latest-6gmf.onrender.com/estadoCambiarE'
 
   const sendTruckLocation = async (lat, lng) => {
     try {
@@ -42,27 +43,43 @@ export default function PanelConductor() {
     } 
   };
 
-  const toggleEncendido = () => {
-  setEncendido((prevEncendido) => {
-    if (!prevEncendido) {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-      }
-      getLocationAndSend()
-      intervalRef.current = setInterval(() => {
-        getLocationAndSend()
-      }, 5 * 60 * 1000); 
-    } else {
-      if (intervalRef.current) {
-        clearInterval(intervalRef.current);
-        intervalRef.current = null;
-      }
+  const toggleEncendido = async () => {
+  if (!encendido) {
+    // ENCENDER
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
     }
 
-    return !prevEncendido;
-  });
-};
+    getLocationAndSend();
 
+    intervalRef.current = setInterval(() => {
+      getLocationAndSend();
+    }, 5 * 60 * 1000);
+
+    setEncendido(true);
+
+  } else {
+    // APAGAR
+    if (intervalRef.current) {
+      clearInterval(intervalRef.current);
+      intervalRef.current = null;
+    }
+
+    // 👇 Aquí sí puedes usar await
+    try {
+      const response = await axios.patch(
+        URLE,
+        { estado: "Inactivo" },
+        { headers: { Authorization: `Bearer ${token}` } }
+      );
+      console.log("✅ Estado cambiado a inactivo:", response.data);
+    } catch (error) {
+      console.error("❌ Error cambiando estado a inactivo:", error);
+    }
+
+    setEncendido(false);
+  }
+};
 
 
   useEffect(() => {
@@ -85,7 +102,7 @@ export default function PanelConductor() {
         <FaUserCircle size={50} className="text-white" />
         <div>
           <h1 className="text-3xl FontGeologica">Panel de Conductor</h1>
-          <p className="text-2xl">Brayan Aguirre</p>
+          <p className="text-2xl">señor conductor</p>
           <p className="text-sm text-gray-300 italic">Control del camión</p>
         </div>
       </div>
