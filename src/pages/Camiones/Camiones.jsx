@@ -233,8 +233,8 @@ const Camiones = () => {
 
           <div className="w-full text-white">
             {/* Tabla cabezal solo desktop */}
-            <div className="hidden md:grid grid-cols-7 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)] min-w-[700px]">
-              <p>Placa</p><p>Modelo</p><p>Capacidad</p><p>Estado</p><p>Tipo</p><p>Marca</p><p>Acción</p>
+            <div className="hidden md:grid grid-cols-6 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)] min-w-[700px]">
+              <p>Placa</p><p>Modelo</p><p>Capacidad</p><p>Tipo</p><p>Marca</p><p>Acción</p>
             </div>
 
             {/* Filas */}
@@ -244,12 +244,11 @@ const Camiones = () => {
               camionesFiltrados.map((camion, index) => (
                 <div
                   key={index}
-                  className="grid grid-cols-1 md:grid-cols-7 gap-3 md:gap-2 text-left md:text-center text-sm md:text-lg p-4 border border-[var(--Vclaro3)] min-w-[220px] md:min-w-[700px]"
+                  className="grid grid-cols-1 md:grid-cols-6 gap-3 md:gap-2 text-left md:text-center text-sm md:text-lg p-4 border border-[var(--Vclaro3)] min-w-[220px] md:min-w-[700px]"
                 >
                   <p><span className="font-bold md:hidden">Placa: </span>{camion.placa}</p>
                   <p><span className="font-bold md:hidden">Modelo: </span>{camion.modelo}</p>
                   <p><span className="font-bold md:hidden">Capacidad: </span>{camion.capacidad}</p>
-                  <p><span className="font-bold md:hidden">Estado: </span>{camion.estado_camion}</p>
                   <p><span className="font-bold md:hidden">Tipo: </span>{camion.tipo_c}</p>
                   <p><span className="font-bold md:hidden">Marca: </span>{camion.marca}</p>
                   <div className="flex gap-2 md:justify-center justify-start mt-2 md:mt-0">

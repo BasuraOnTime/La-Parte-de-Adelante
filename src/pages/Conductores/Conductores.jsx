@@ -107,12 +107,12 @@ const Conductores = () => {
     <section className="sectFirst min-h-screen flex flex-col md:flex-row bg-[var(--Voscuro2)]">
 
       {/* Sidebar PC */}
-      <div className="hidden md:flex flex-col justify-center items-center h-screen bg-[var(--Voscuro2)] fixed left-0 z-10 xl:w-75 2xl:w-140">
-        <div className="absolute top-4 left-4 z-50">
+      <div className="hidden md:flex flex-col justify-center items-center h-screen bg-[var(--Voscuro2)] fixed left-0 z-10 xl:w-30 2xl:w-80">
+        <div className="absolute top-4 left-4 z-50 xl:scale-80 2xl:scale-100">
           <ItemNavBar route="/PanelAdmin" content=" " />
         </div>
-        <img className="xl:w-50 2xl:w-90" src={logoBasuraOnTime} alt="Logo Basura On Time" />
-        <p className="FontCursive xl:text-4xl 2xl:text-5xl text-center text-white">BASURA ON TIME</p>
+        <img className="xl:w-20 2xl:w-50" src={logoBasuraOnTime} alt="Logo Basura On Time" />
+        <p className="FontCursive xl:text-lg 2xl:text-4xl text-center text-white">BASURA ON TIME</p>
       </div>
 
       {/* Header móvil */}
@@ -125,9 +125,9 @@ const Conductores = () => {
       </div>
 
       {/* Contenido */}
-      <div className="flex-1 flex flex-col items-center justify-start xl:ml-25 2xl:ml-[250px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
+      <div className="flex-1 flex flex-col items-center justify-start xl:ml-15 2xl:ml-[250px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-y-auto">
 
-        <div className="mt-35 sm:mt-10 2xl:ml-80 xl:ml-50 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[1100px]">
+        <div className="mt-35 sm:mt-10 2xl:ml-20 xl:ml-20 bg-[var(--Voscuro2)] p-6 rounded-lg w-full max-w-[1100px]">
           <h1 className="text-xl md:text-5xl text-white mb-6 text-center">Gestión de Conductores</h1>
 
           <div className="flex flex-col md:flex-row gap-5 sm:gap-77 mb-6">
@@ -145,8 +145,8 @@ const Conductores = () => {
 
           <div className="w-full text-white">
             {/* Cabecera para desktop */}
-            <div className="hidden md:grid grid-cols-8 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]">
-              <p>Nombres</p><p>Apellidos</p><p>Teléfono</p><p>Licencia</p><p>Vence</p><p>Email</p><p>Estado</p><p>Placa</p>
+            <div className="hidden md:grid grid-cols-9 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)]">
+              <p>Nombres</p><p>Apellidos</p><p>Teléfono</p><p>Licencia</p><p>Vence</p><p>Email</p><p>Estado</p><p>Placa</p><p>Accion</p>
             </div>
 
             {/* Lista conductores */}
@@ -155,14 +155,14 @@ const Conductores = () => {
             ) : conductoresFiltrados.map((conductor, index) => (
               <div
                 key={index}
-                className="border border-[var(--Vclaro3)] rounded-md p-4 mb-4 text-white md:grid md:grid-cols-8 md:text-center md:p-4 md:mb-0 md:items-center"
+                className="border border-[var(--Vclaro3)] rounded-md p-4 mb-4 text-white md:grid md:grid-cols-9 md:text-center md:p-4 md:mb-0 md:items-center"
               >
                 {/* Desktop */}
                 <p className="hidden md:block">{conductor.nombres}</p>
                 <p className="hidden md:block">{conductor.apellidos}</p>
                 <p className="hidden md:block">{conductor.telefono}</p>
                 <p className="hidden md:block">{conductor.tipo_licencia}</p>
-                <p className="hidden md:block">{conductor.fecha_vencimiento_licencia}</p>
+                <p className="hidden md:block truncate max-w-[150px]">{conductor.fecha_vencimiento_licencia}</p>
                 <p className="hidden md:block truncate max-w-[150px]" title={conductor.email}>{conductor.email}</p>
                 <p className="hidden md:block">{conductor.estado}</p>
                 <p className="hidden md:block">{conductor.placa}</p>
@@ -174,7 +174,7 @@ const Conductores = () => {
                   <p><span className="font-bold">Teléfono: </span>{conductor.telefono}</p>
                   <p><span className="font-bold">Licencia: </span>{conductor.tipo_licencia}</p>
                   <p><span className="font-bold">Vence: </span>{conductor.fecha_vencimiento_licencia}</p>
-                  <p><span className="font-bold">Email: </span>{conductor.email}</p>
+                  <p className="break-words"><span className="font-bold">Email: </span>{conductor.email}</p>
                   <p><span className="font-bold">Estado: </span>{conductor.estado}</p>
                   <p><span className="font-bold">Placa: </span>{conductor.placa}</p>
                   <div className="flex gap-2 mt-2">

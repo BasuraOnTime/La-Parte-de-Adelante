@@ -115,7 +115,7 @@ const Solicitudes = () => {
 
       {/* Contenido principal */}
       <div className="flex-1 flex flex-col items-center justify-start md:pl-[220px] xl:pl-[240px] 2xl:pl-[280px] px-4 pt-28 md:pt-6 pb-6 FontGeologica relative w-full overflow-hidden">
-        <div className="mt-10 sm:mt-15 w-full max-w-[1100px] bg-[var(--Voscuro2)] p-6 rounded-lg text-white">
+        <div className="mt-10 sm:mt-5 w-full max-w-[1100px] bg-[var(--Voscuro2)] p-6 rounded-lg text-white">
           <h1 className="text-xl md:text-5xl text-white mb-6 text-center">Gestión de Solicitudes</h1>
 
           <div className="flex flex-col md:flex-row gap-8 mb-6">
@@ -128,8 +128,8 @@ const Solicitudes = () => {
             />
           </div>
 
-          <div className="w-full overflow-x-auto text-white">
-            <div className="hidden md:grid grid-cols-8 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)] min-w-[700px]">
+          <div className="w-full overflow-x-auto text-white max-h-[500px] overflow-y-auto">
+            <div className="hidden md:grid grid-cols-7 gap-2 text-center items-center text-lg rounded-t-md h-14 p-3 border border-[var(--Vclaro3)] bg-[var(--Voscuro4)] min-w-[700px]">
               <p>Zona</p>
               <p>Cant.</p>
               <p>Fecha</p>
@@ -142,11 +142,13 @@ const Solicitudes = () => {
             {filteredSolicitudes.length === 0 ? (
               <p className='text-white text-center mt-3 text-sm'>No hay solicitudes que coincidan.</p>
             ) : filteredSolicitudes.map(({ zona, cantidad, fecha_solicitud, tamano, nombres, estado }, index) => (
-              <div key={index} className={`grid grid-cols-1 md:grid-cols-8 gap-3 md:gap-2 text-left md:text-center text-sm md:text-lg p-4 border border-[var(--Vclaro3)] min-w-[220px] md:min-w-0 ${estado === 'Aceptada' ? 'bg-green-700 bg-opacity-40' : ''}`}>
+              <div key={index} className={`grid grid-cols-1 md:grid-cols-7 gap-3 md:gap-2 text-left md:text-center text-sm md:text-lg p-4 border border-[var(--Vclaro3)] min-w-[220px] md:min-w-0 ${estado === 'Aceptada' ? 'bg-green-700 bg-opacity-40' : ''}`}>
 
                 <div><span className="font-bold md:hidden">Zona: </span>{zona}</div>
                 <div><span className="font-bold md:hidden">Cant.: </span>{cantidad}</div>
-                <div><span className="font-bold md:hidden">Fecha: </span>{fecha_solicitud}</div>
+                <div className="truncate max-w-[120px] overflow-hidden whitespace-nowrap">
+                  <span className="font-bold md:hidden">Fecha: </span>{fecha_solicitud}
+                </div>
                 <div><span className="font-bold md:hidden">Tamaño: </span>{tamano}</div>
                 <div><span className="font-bold md:hidden">Solicitante: </span>{nombres}</div>
                 <div><span className="font-bold md:hidden">Estado: </span>{estado}</div>
